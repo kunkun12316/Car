@@ -1,3 +1,0 @@
-D:/Probjects/Microcontroller/Car/gongxun/cmake-build-debug/CMakeFiles/gongxun.elf.dir
-D:/Probjects/Microcontroller/Car/gongxun/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Probjects/Microcontroller/Car/gongxun/cmake-build-debug/CMakeFiles/rebuild_cache.dir
