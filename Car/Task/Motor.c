@@ -7,8 +7,6 @@ uint8_t Motor_Stop_Flag_Car = 0;// 小车停止标志位
 uint16_t RxBuffer1[10] = {0};
 uint16_t Motor_HuaGui_Current_amount = 0;
 
-float Car_Turn_angle = 0;//当前小车的角度值
-
 uint8_t HuaGui_Motor_State = HuaGui_Motor_State_UP;
 uint8_t Stop_Flag_HuaGui = 1; // 滑轨电机停止标志位
 
@@ -511,7 +509,6 @@ void Car_Clear(void) {
     Motor_Clear(4);
 }
 
-uint8_t Car_Turn_Start_Flag = 1; //使第一次的Last_Yaw为当前的角度值，而不是0
 
 // 小车转弯
 //Tar_Yaw: 目标偏航角度（单位：度）
@@ -525,10 +522,6 @@ uint8_t Car_Turn(int16_t Tar_Yaw, uint16_t Speed_Limit, uint16_t Car_ACC) {
     static uint8_t Stop_Counter = 0;//停止计数器
     static float Temp_Yaw = 0; //临时存储目标偏航角
     static float Last_Yaw = 0; //上一次的偏航角
-    if (JY_Start_Flag == 0 && Car_Turn_Start_Flag == 1) {
-        Last_Yaw = Car_Turn_angle;
-        Car_Turn_Start_Flag = 0;
-    }
     if (Temp_State == 0) {
         Temp_State = 1;
         if (Tar_Yaw >= 90 || Tar_Yaw <= -90) {
@@ -538,7 +531,7 @@ uint8_t Car_Turn(int16_t Tar_Yaw, uint16_t Speed_Limit, uint16_t Car_ACC) {
             Temp_Yaw = Yaw + Tar_Yaw;
         }
     } else if (Temp_State == 1) {
-        float Yaw_Error = Car_Turn_angle - Temp_Yaw;
+        float Yaw_Error = Yaw - Temp_Yaw;
         Yaw_Error *= Motor_Kp;
         if (Yaw_Error > Speed_Limit)
             Yaw_Error = Speed_Limit;
@@ -550,7 +543,7 @@ uint8_t Car_Turn(int16_t Tar_Yaw, uint16_t Speed_Limit, uint16_t Car_ACC) {
         Motor_SetSpeed(4, -Yaw_Error, Car_ACC);
         Motor_Run();
 
-        if (Car_Turn_angle >= Temp_Yaw - 3 && Car_Turn_angle <= Temp_Yaw + 3)
+        if (Yaw >= Temp_Yaw - 3 && Yaw <= Temp_Yaw + 3)
             Stop_Counter++;
         else
             Stop_Counter = 0;
@@ -598,7 +591,7 @@ uint8_t Car_Calibration(uint16_t Speed_Limit, uint16_t Car_ACC) {
     uint8_t ret = 0;
     if (Temp_State == 0) {
         Temp_State++;
-        Temp_Yaw = Car_Turn_angle;
+        Temp_Yaw = Yaw;
     } else if (Temp_State == 1) {
         uint8_t temp = 0;
         if (Temp_Yaw <= 10 && Temp_Yaw >= -10) {

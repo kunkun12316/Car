@@ -1,8 +1,8 @@
-# Install script for directory: D:/app/STM32CubeMX_bck_1/Probject/STM32F407ZET6/Car
+# Install script for directory: /home/fys/CLionProjects/STM32/Car/Car
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Car")
+  set(CMAKE_INSTALL_PREFIX "/usr/local")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/app/STM32CubeMX_bck_1/Probject/STM32F407ZET6/Car/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/fys/CLionProjects/STM32/Car/Car/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

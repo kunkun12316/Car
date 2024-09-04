@@ -238,20 +238,21 @@ void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
 
-    uint32_t temp_flag = 0;
-    uint32_t temp;
-    temp_flag = __HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE);
-    if ((temp_flag != RESET)) {
-        __HAL_UART_CLEAR_IDLEFLAG(&huart3);
-        temp = huart3.Instance->SR;
-        temp = huart3.Instance->DR;
-        HAL_UART_DMAStop(&huart3);
-        temp = hdma_usart3_rx.Instance->NDTR;
-        JY901_data.Rx_len = RXBUFFER_LEN_JY - temp;
-        JY901_Process();
-        LED2_TOGGLE();
+    if(JY_rx_buffer[0] == 0x55 && JY_rx_buffer[1] == 0x53)
+    {
+        Yaw = (float)(JY_rx_buffer[7] << 8 | JY_rx_buffer[6]) / 32768 * 180;
+/*        if (Yaw - Last_Yaw > 180)
+        {
+            Yaw -= 360;
+        }
+        else if (Yaw - Last_Yaw < -180)
+        {
+            Yaw += 360;
+        }*/
+        Last_Yaw = Yaw;
+        Yaw += (float)Yaw_Compensate;
+        JY_Rx_Flag = 0;
     }
-    HAL_UART_Receive_DMA(&huart3, JY901_data.RxBuffer, RXBUFFER_LEN_JY);
 
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);

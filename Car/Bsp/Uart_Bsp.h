@@ -154,26 +154,16 @@ typedef struct
     float w[3];
 }SGyro;
 
-typedef struct JY_USART
-{
-    uint8_t Rx_flag;
-    uint8_t Rx_len;
-    uint8_t frame_head;					//帧头
-    uint8_t RxBuffer[RXBUFFER_LEN_JY];		//接收缓冲
-    Angle angle;						//角度
-    Acc acc;							//加速度
-    SGyro w;							//角速度
-}JY_USART;
 
 extern float Yaw;
 extern float Last_Yaw;
 
-extern uint8_t JY_Start_Flag;
+extern uint8_t JY_rx_buffer[11]; // 数据长度为11字节
 
-extern JY_USART JY901_data;
+extern uint8_t JY_Rx_Flag = 0; // 接收标志位
+extern uint8_t JY_Init_Flag;
 
-void JY901S_USART_Init(JY_USART *Data);
-void JY901_Process();
+extern void Usart_Init(void);
 
 void JY901S_Init(void);
 void IMU_Proc(void);

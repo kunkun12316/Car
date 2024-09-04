@@ -121,11 +121,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-//        printf(" x : %.2f", JY901_data.angle.angle[0]);
-//        printf(" y : %.2f", JY901_data.angle.angle[1]);
-//        printf(" z : %.2f \r\n", JY901_data.angle.angle[2]);
-
-        Tack_mode_Proc_Che();
+        printf("Yaw : %f\n",Yaw);
 
         Control_Proc();
         IMU_Proc();

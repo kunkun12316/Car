@@ -1,0 +1,5 @@
+/home/fys/app/clion-2022.2.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/fys/app/clion-2022.2.4/bin/ninja/linux/ninja -G Ninja -S /home/fys/CLionProjects/STM32/Car/Car -B /home/fys/CLionProjects/STM32/Car/Car/cmake-build-debug
+-- Minimal optimization, debug info included
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/fys/CLionProjects/STM32/Car/Car/cmake-build-debug
