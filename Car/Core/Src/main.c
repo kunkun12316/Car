@@ -124,7 +124,6 @@ int main(void)
         printf("Yaw : %f\n",Yaw);
 
         Control_Proc();
-        IMU_Proc();
 
         Delay_ms(500);
 

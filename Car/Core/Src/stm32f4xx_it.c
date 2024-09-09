@@ -238,9 +238,15 @@ void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
 
-    if(JY_rx_buffer[0] == 0x55 && JY_rx_buffer[1] == 0x53)
+    if(JY_rx_buffer[0] == 0x55 && JY_rx_buffer[1] == 0x51 && JY_rx_buffer[11] == 0x55 && JY_rx_buffer[12] == 0x53)
     {
-        Yaw = (float)(JY_rx_buffer[7] << 8 | JY_rx_buffer[6]) / 32768 * 180;
+        Angle_speed_temp_x = (float)(JY_rx_buffer[3] << 8 | JY_rx_buffer[2])/32768 * 16;
+        Angle_speed_temp_y = (float)(JY_rx_buffer[5] << 8 | JY_rx_buffer[4])/32768 * 16;
+        Angle_speed_temp_z = (float)(JY_rx_buffer[7] << 8 | JY_rx_buffer[6])/32768 * 16;
+
+        Angle_temp_x = (float)(JY_rx_buffer[14] << 8 | JY_rx_buffer[13]) / 32768 * 180;
+        Angle_temp_y = (float)(JY_rx_buffer[16] << 8 | JY_rx_buffer[15]) / 32768 * 180;
+        Angle_temp_z = (float)(JY_rx_buffer[18] << 8 | JY_rx_buffer[17]) / 32768 * 180;
 /*        if (Yaw - Last_Yaw > 180)
         {
             Yaw -= 360;
@@ -251,8 +257,11 @@ void USART3_IRQHandler(void)
         }*/
         Last_Yaw = Yaw;
         Yaw += (float)Yaw_Compensate;
-        JY_Rx_Flag = 0;
+        JY_Rx_Flag = 1;
     }
+
+    // 继续通过DMA接收数据
+    HAL_UART_Receive_DMA(&huart3, JY_rx_buffer, 22);
 
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
