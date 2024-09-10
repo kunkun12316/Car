@@ -121,7 +121,15 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-        printf("Yaw : %f\n",Yaw);
+        //printf("Yaw : %f\n",Yaw);
+
+        printf(" x : %.2f", JY901_data.angle.angle[0]);
+        printf(" y : %.2f", JY901_data.angle.angle[1]);
+        printf(" z : %.2f  ", JY901_data.angle.angle[2]);
+
+        printf(" SP_x : %.2f", JY901_data.acc.a[0]);
+        printf(" SP_y : %.2f", JY901_data.acc.a[1]);
+        printf(" SP_z : %.2f \r\n", JY901_data.acc.a[2]);
 
         Control_Proc();
 

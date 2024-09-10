@@ -1,4 +1,4 @@
-/home/fys/app/clion-2022.2.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/fys/app/clion-2022.2.4/bin/ninja/linux/ninja -G Ninja -S /home/fys/CLionProjects/STM32/Car/Car -B /home/fys/CLionProjects/STM32/Car/Car/cmake-build-debug
+/home/fys/app/clion-2022.2.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/fys/app/clion-2022.2.4/bin/ninja/linux/ninja -DCMAKE_C_COMPILER=/usr/local/arm/10.3/bin/arm-none-eabi-gcc -DCMAKE_CXX_COMPILER=/usr/local/arm/10.3/bin/arm-none-eabi-g++ -G Ninja -S /home/fys/CLionProjects/STM32/Car/Car -B /home/fys/CLionProjects/STM32/Car/Car/cmake-build-debug
 -- Minimal optimization, debug info included
 -- Configuring done
 -- Generating done

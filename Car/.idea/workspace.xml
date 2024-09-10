@@ -21,23 +21,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bdab3d71-31d7-4685-a30b-6cd66900ff2b" name="Changes" comment="Changes">
-      <change afterPath="$PROJECT_DIR$/../pi_code/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bsp/JY901.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bsp/JY901.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/Bsp.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Bsp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/Bsp.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Bsp.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bsp/Uart_Bsp.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Uart_Bsp.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bsp/Uart_Bsp.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Uart_Bsp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Car.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/Car.ioc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/usart.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/usart.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-0592cca2be1e45021d46.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-1f7bb984def6157713d1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-08-28T09-35-41-0567.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Car.elf-Debug-aab7108f2f336fc790af.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Bsp.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Bsp.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Uart_Bsp.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Uart_Bsp.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/main.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/stm32f4xx_it.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/stm32f4xx_it.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/usart.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/usart.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Motor.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Motor.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.elf" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.hex" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.hex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.map" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +96,9 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2iUYWJwgjttnD4xuyPReMSUfBNI" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -95,18 +115,19 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/fys/下载/raccoon-plugin-0.18.0.zip&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/fys/CLionProjects/STM32/Car/Car/Bsp&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.sensetime.sensecode.jetbrains.raccoon.ui.RaccoonConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Bsp" />
       <recent name="D:\app\STM32CubeMX_bck_1\Probject\STM32F407ZET6\Car\Core\Src" />
       <recent name="D:\app\STM32CubeMX_bck_1\Probject\STM32F407ZET6\Car\Core\Inc" />
     </key>
@@ -171,6 +192,9 @@
       <workItem from="1725789893622" duration="2187000" />
       <workItem from="1725864211063" duration="1170000" />
       <workItem from="1725885430617" duration="228000" />
+      <workItem from="1725949748896" duration="5619000" />
+      <workItem from="1725955824972" duration="300000" />
+      <workItem from="1725956623255" duration="1157000" />
     </task>
     <servers />
   </component>

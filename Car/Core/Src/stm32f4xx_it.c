@@ -238,6 +238,22 @@ void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
 
+    uint32_t temp_flag = 0;
+    uint32_t temp;
+    temp_flag = __HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE);
+    if ((temp_flag != RESET)) {
+        __HAL_UART_CLEAR_IDLEFLAG(&huart3);
+        HAL_UART_DMAStop(&huart3);                                            //关闭DMA，防止冲突
+        temp = hdma_usart3_rx.Instance->NDTR;                        //获取DMA中未传输的数据个数
+        JY901_data.Rx_len = RXBUFFER_LEN - temp;                                            //获得一共传输的个数
+        JY901_Process();
+        LED2_TOGGLE();
+    }
+    HAL_UART_Receive_DMA(&huart3, JY901_data.RxBuffer, RXBUFFER_LEN);
+
+
+    //配置只接收加速度和角度
+  /*
     if(JY_rx_buffer[0] == 0x55 && JY_rx_buffer[1] == 0x51 && JY_rx_buffer[11] == 0x55 && JY_rx_buffer[12] == 0x53)
     {
         Angle_speed_temp_x = (float)(JY_rx_buffer[3] << 8 | JY_rx_buffer[2])/32768 * 16;
@@ -247,21 +263,14 @@ void USART3_IRQHandler(void)
         Angle_temp_x = (float)(JY_rx_buffer[14] << 8 | JY_rx_buffer[13]) / 32768 * 180;
         Angle_temp_y = (float)(JY_rx_buffer[16] << 8 | JY_rx_buffer[15]) / 32768 * 180;
         Angle_temp_z = (float)(JY_rx_buffer[18] << 8 | JY_rx_buffer[17]) / 32768 * 180;
-/*        if (Yaw - Last_Yaw > 180)
-        {
-            Yaw -= 360;
-        }
-        else if (Yaw - Last_Yaw < -180)
-        {
-            Yaw += 360;
-        }*/
+
         Last_Yaw = Yaw;
         Yaw += (float)Yaw_Compensate;
         JY_Rx_Flag = 1;
     }
 
-    // ����ͨ��DMA��������
     HAL_UART_Receive_DMA(&huart3, JY_rx_buffer, 22);
+*/
 
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
@@ -292,7 +301,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
         if(huart ->Instance == USART1){
             tem = Motor_RxBuff;
             Motor_Receive_Data(tem);
+
+            HAL_UART_Receive_IT(&huart1, &Motor_RxBuff, 1);
         }
-    HAL_UART_Receive_IT(&huart1, &Motor_RxBuff, 1);
 }
+
 /* USER CODE END 1 */

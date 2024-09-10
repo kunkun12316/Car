@@ -238,6 +238,22 @@
 			"value" : "/home/fys/app/clion-2022.2.4/bin/cmake/linux/bin/ctest"
 		},
 		{
+			"name" : "CMAKE_CXX_COMPILER",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "No help, variable specified on the command line."
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : "/usr/local/arm/10.3/bin/arm-none-eabi-g++"
+		},
+		{
 			"name" : "CMAKE_CXX_COMPILER_AR",
 			"properties" : 
 			[
@@ -348,6 +364,22 @@
 			],
 			"type" : "STRING",
 			"value" : "-O2 -g -DNDEBUG"
+		},
+		{
+			"name" : "CMAKE_C_COMPILER",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "No help, variable specified on the command line."
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : "/usr/local/arm/10.3/bin/arm-none-eabi-gcc"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",

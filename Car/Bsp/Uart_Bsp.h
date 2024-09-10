@@ -14,6 +14,9 @@ extern float Angle_speed_temp_x, Angle_speed_temp_y, Angle_speed_temp_z;
 extern uint8_t JY_Init_Flag;
 extern uint8_t JY_Rx_Flag;
 
+//暂存接收数据
+extern uint8_t JY_Rxdata;
+
 extern void Usart_Init(void);
 
 void JY901S_Init(void);

@@ -13,6 +13,9 @@ float Angle_speed_temp_x, Angle_speed_temp_y, Angle_speed_temp_z;
 uint8_t JY_Rx_Flag = 0; // 接收标志位
 uint8_t JY_Init_Flag = 1; //初始化JY901S，只有当初始化完成后才能使用
 
+//暂存接收数据
+
+
 void Usart_Init(void)
 {
     JY901S_Init();
@@ -22,12 +25,14 @@ void Usart_Init(void)
 
 void JY901S_Init(void)
 {
+    User_USART_Init(&JY901_data);
 
-    __HAL_UART_ENABLE_IT(&huart3,UART_IT_IDLE);
+    __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
+    HAL_UART_Receive_DMA(&huart3, JY901_data.RxBuffer, RXBUFFER_LEN);
 
-    if (HAL_UART_Receive_DMA(&huart3, JY_rx_buffer, 22) != HAL_OK)
-    {
-        //Error_Handler();
-    }
+    //DMA
+//    __HAL_UART_ENABLE_IT(&huart3,UART_IT_IDLE);
+//    if (HAL_UART_Receive_DMA(&huart3, JY_rx_buffer, 22) != HAL_OK)
+//        //Error_Handler();
 
 }
