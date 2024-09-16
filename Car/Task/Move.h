@@ -38,6 +38,7 @@ typedef enum {
 
 } Put_Loads_States;
 
+extern uint8_t Motor_Stop_Flag_Car_Kalman;
 
 void Move_Init(void);
 

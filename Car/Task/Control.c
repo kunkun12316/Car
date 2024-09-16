@@ -5,7 +5,7 @@ int16_t Task_Num_1 = 0;
 int16_t Task_Num_2 = 0;
 uint8_t Running_Flag = 0; // 任务运行标志位
 
-uint8_t Running_Mode = 0; // 速度模式
+uint8_t Running_Mode = 1; // 速度模式
 uint16_t Car_Speed = 250;
 uint16_t Car_Acc = 150;
 uint16_t Car_Speed_Slow = 150;
@@ -35,10 +35,19 @@ int16_t Task_Data2[100] = {0};
 
 extern uint8_t Car_Counter_Enable;
 extern uint16_t Car_Counter_Times;
+extern uint16_t Car_Counter;
 
 
 void Control_Proc(void) {
-    if (Running_Mode == 0) {
+    if (Running_Mode == 0){
+        Car_Speed = 220;
+        Car_Acc = 120;
+        Car_Speed_Slow = 150;
+        Car_Acc_Slow = 100;
+        Car_Turn_Speed_Limit = 50;
+        Motor_HuaGui_Speed = 250;
+        Motor_HuaGui_ACC = 230;
+    } else if (Running_Mode == 1) {
         Car_Speed = 250;
         Car_Acc = 150;
         Car_Speed_Slow = 150;
@@ -46,7 +55,7 @@ void Control_Proc(void) {
         Car_Turn_Speed_Limit = 50;
         Motor_HuaGui_Speed = 250;
         Motor_HuaGui_ACC = 230;
-    } else if (Running_Mode == 1) {
+    } else if (Running_Mode == 2) {
         Car_Speed = 280;
         Car_Acc = 180;
         Car_Speed_Slow = 150;
@@ -54,7 +63,7 @@ void Control_Proc(void) {
         Car_Turn_Speed_Limit = 55;
         Motor_HuaGui_Speed = 250;
         Motor_HuaGui_ACC = 230;
-    } else if (Running_Mode == 2) {
+    } else if (Running_Mode == 3) {
         Car_Speed = 300;
         Car_Acc = 210;
         Car_Speed_Slow = 150;
@@ -62,7 +71,7 @@ void Control_Proc(void) {
         Car_Turn_Speed_Limit = 60;
         Motor_HuaGui_Speed = 250;
         Motor_HuaGui_ACC = 230;
-    } else if (Running_Mode == 3) {
+    } else if (Running_Mode == 4) {
         Car_Speed = 320;
         Car_Acc = 210;
         Car_Speed_Slow = 180;
@@ -70,6 +79,10 @@ void Control_Proc(void) {
         Car_Turn_Speed_Limit = 65;
         Motor_HuaGui_Speed = 260;
         Motor_HuaGui_ACC = 235;
+    }
+
+    if (Running_Flag){
+        Motor_State_Scan(1);
     }
 
     if (Car_Task_Data_0 != 0) {
@@ -95,20 +108,28 @@ void Control_Proc(void) {
                 Car_Go_Target(Task_Data1[1] * 128, 0, Car_Speed, Car_Acc);
                 Car_Counter_Enable = 1;
                 temp = 1;
+                printf("X 先运动!\n");
             } else if (Task_Data1[1] == 0 || Task_Data2[1] == 0) {
-                Car_Go_Target(Task_Data1[1] * 128, Task_Data2[1] * 128, Car_Speed, Car_Acc);
+                if (Task_Data1[1] != 0){
+                    Car_Go_Target(Task_Data1[1] * 128, 0, Car_Speed, Car_Acc);
+                }else if (Task_Data2[1] != 0)
+                {
+                    Car_Go_Target(0, Task_Data2[1] * 128, Car_Speed, Car_Acc);
+                }
+
                 Car_Counter_Enable = 1;
                 temp = 2;
+                printf("X or y 其中一个存在！\n");
             }
 
         } else if (temp == 1) {
-            if (Motor_Stop_Flag_Car == 1 || Car_Counter_Enable == 0) {
+            if (Motor_Stop_Flag_Car == 1 || Car_Counter_Enable == 0 || Motor_Stop_Flag_Car_Kalman == 1) {
                 Car_Go_Target(0, Task_Data2[1] * 128, Car_Speed, Car_Acc);
-                Car_Counter_Enable = 2;
                 temp = 2;
+                printf("Y 后运动！\n");
             }
         } else if (temp == 2) {
-            if (Motor_Stop_Flag_Car == 1 || Car_Counter_Enable == 0) {
+            if (Motor_Stop_Flag_Car == 1 || Car_Counter_Enable == 0 || Motor_Stop_Flag_Car_Kalman == 1) {
                 Car_Counter_Enable = 0;
                 temp = 0;
                 Task_Flag[1] = 0;
@@ -337,13 +358,28 @@ void Control_Proc(void) {
         }
         if (temp == 0)
         {
-            Car_Go_Target(Task_Data1[9] * 13, Task_Data2[9] * 13, Car_Speed_Slow, Car_Acc_Slow);
-            temp = 1;
-            Car_Counter_Enable = 1;
+            if(Task_Data1[9] != 0 && Task_Data2[9] != 0)
+            {
+                Car_Go_Target(Task_Data1[9] * 13, 0, Car_Speed_Slow, Car_Acc_Slow);
+                temp = 1;
+                Car_Counter_Enable = 1;
+            }else if (Task_Data1[9] == 0 || Task_Data2[9] == 0)
+            {
+                Car_Go_Target(Task_Data1[9] * 13, Task_Data2[9] * 13, Car_Speed_Slow, Car_Acc_Slow);
+                temp = 2;
+                Car_Counter_Enable = 1;
+            }
+
+        } else if (temp == 1){
+            if (Motor_Stop_Flag_Car == 1 || Car_Counter_Enable == 0 || Motor_Stop_Flag_Car_Kalman == 1) {
+                Car_Go_Target(0, Task_Data2[9] * 13, Car_Speed_Slow, Car_Acc_Slow);
+                temp = 2;
+                Car_Counter_Enable = 1;
+            }
         }
-        else if (temp == 1)
+        else if (temp == 2)
         {
-            if (Motor_Stop_Flag_Car == 1 || Car_Counter_Enable == 0)
+            if (Motor_Stop_Flag_Car == 1 || Car_Counter_Enable == 0 || Motor_Stop_Flag_Car_Kalman == 1)
             {
                 Car_Counter_Enable = 0;
                 temp = 0;
@@ -358,9 +394,5 @@ void Control_Proc(void) {
                 Running_Flag = 0;
             }
         }
-    }
-
-    if (Running_Flag){
-        Motor_State_Scan(1);
     }
 }

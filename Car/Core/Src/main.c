@@ -107,10 +107,10 @@ int main(void)
     uint8_t time = 0;
     uint8_t flag = 0;
 
-//    Car_Task_Data_0 = 1;
-//    Car_Task_Data_1 = 50;
-//    Car_Task_Data_2 = -50;
-//    printf("send!\r\n");
+    Car_Task_Data_0 = 1;
+    Car_Task_Data_1 = 50;
+    Car_Task_Data_2 = -50;
+    printf("Tar send!\r\n");
 
   /* USER CODE END 2 */
 
@@ -133,7 +133,7 @@ int main(void)
 
         Control_Proc();
 
-        Delay_ms(500);
+        Delay_ms(200);
 
     }
   /* USER CODE END 3 */

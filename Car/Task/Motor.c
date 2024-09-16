@@ -4,6 +4,7 @@
 uint8_t Motor_RxBuff;
 uint8_t Send_Data[20];
 uint8_t Motor_Stop_Flag_Car = 0;// 小车停止标志位
+uint8_t Last_Motor_Stop_Flag_Car = 1;
 uint16_t RxBuffer1[10] = {0};
 uint16_t Motor_HuaGui_Current_amount = 0;
 
@@ -64,14 +65,15 @@ void Motor_Receive_Data(uint8_t com_data) {
 //                    RxBuffer1[i] = 0x00; // 清空数据数组前4个元素
 //                }
             if (RxBuffer1[0] == 0x01 && RxBuffer1[1] == 0x3A) {
-                if (RxBuffer1[2] == 0x01){
-                //此时地盘电机还未停止
+                Last_Motor_Stop_Flag_Car = Motor_Stop_Flag_Car;
+                if (RxBuffer1[2] == 0x01) {
+                    //此时地盘电机还未停止
                     Motor_Stop_Flag_Car = 0;
 #if Serial_Debug == 1
                     printf("Car not Stop!!\r\n"); // 如果开启调试，打印调试信息
 #endif
-                } else if (RxBuffer1[2] == 0x03){
-                //这时底盘电机停止
+                } else if (RxBuffer1[2] == 0x03) {
+                    //这时底盘电机停止
                     Motor_Stop_Flag_Car = 1; // 设置小车停止标志
 #if Serial_Debug == 1
                     printf("Car Stop!\r\n"); // 如果开启调试，打印调试信息
@@ -198,7 +200,7 @@ void Motor_Disable_All(void) {
 }
 
 // 电机状态检测
-void Motor_State_Scan(uint8_t Motor_Num){
+void Motor_State_Scan(uint8_t Motor_Num) {
     Send_Data[0] = Motor_Num;
     Send_Data[1] = 0x3A;
     Send_Data[2] = 0x6B;
@@ -286,7 +288,7 @@ void Motor_SetPosition(uint8_t Motor_Num, uint32_t Pulse, int16_t Speed, uint8_t
     Send_Data[0] = Motor_Num;
     Send_Data[1] = 0xFD;
 
-    if (Motor_Num == 1 || Motor_Num == 4) { // 左前或左后
+    if (Motor_Num == 1 || Motor_Num == 3) { // 左前或左后
         if (Speed >= 0)
             Direction = 0;
         else
@@ -296,6 +298,62 @@ void Motor_SetPosition(uint8_t Motor_Num, uint32_t Pulse, int16_t Speed, uint8_t
             Direction = 1;
         else
             Direction = 0;
+    }
+
+    Send_Data[2] = Direction;
+    Send_Data[3] = Speed_Temp >> 8;
+    Send_Data[4] = (Speed_Temp << 8) >> 8;
+    Send_Data[5] = Acc;
+    Send_Data[6] = Pulse >> 24;
+    Send_Data[7] = (Pulse << 8) >> 24;
+    Send_Data[8] = (Pulse << 16) >> 24;
+    Send_Data[9] = (Pulse << 24) >> 24;
+    Send_Data[10] = 0x00;
+    Send_Data[11] = 0x01;
+    Send_Data[12] = 0x6B;
+    HAL_UART_Transmit(&huart1, Send_Data, 13, 1000);
+    if (Motor_Num == 1) {
+        Motor_Stop_Flag_Car = 0;
+        Delay_ms(10);
+        Motor_Stop_Flag_Car = 0;
+    }
+    Delay_ms(10);
+}
+
+// Speed 单位RPM
+// Acc   0---255 (0代表关闭梯形加减速)
+// Pulse 3200脉冲一圈
+// 相对脉冲
+void Motor_SetPosition_Dir(uint8_t Dir, uint8_t Motor_Num, uint32_t Pulse, int16_t Speed, uint8_t Acc) {
+    uint8_t Direction;
+    uint16_t Speed_Temp = My_ABS(Speed);
+    Send_Data[0] = Motor_Num;
+    Send_Data[1] = 0xFD;
+
+    if (Dir == 0) {
+        if (Motor_Num == 1 || Motor_Num == 3) { // 左前或左后
+            if (Speed >= 0)
+                Direction = 0;
+            else
+                Direction = 1;
+        } else { // 右前或右后
+            if (Speed >= 0)
+                Direction = 1;
+            else
+                Direction = 0;
+        }
+    } else if (Dir == 1){
+        if (Motor_Num == 1 || Motor_Num == 4) {
+            if (Speed >= 0)
+                Direction = 0;
+            else
+                Direction = 1;
+        } else {
+            if (Speed >= 0)
+                Direction = 1;
+            else
+                Direction = 0;
+        }
     }
 
     Send_Data[2] = Direction;
@@ -413,60 +471,80 @@ void Car_Go(int16_t Angle, int16_t Speed, int32_t Distance, uint16_t Car_ACC) {
 //Tar_X 目标位置的X坐标
 //Tar_Y 目标位置的Y坐标
 void Car_Go_Target(int32_t Tar_X, int32_t Tar_Y, int16_t Speed, uint16_t Car_ACC) {
+    if (Tar_X != 0 && Tar_Y == 0) {
+        int32_t V1, V2;
+        V2 = Speed * My_ABS(Tar_Y - Tar_X) / (1.4 * sqrt(Tar_X * Tar_X + Tar_Y * Tar_Y));
+        V1 = Speed * My_ABS(Tar_Y + Tar_X) / (1.4 * sqrt(Tar_X * Tar_X + Tar_Y * Tar_Y));
+
+        if (Tar_X + Tar_Y >= 0) {
+            //DIr 0 X轴运动 1 Y轴运动
+            Motor_SetPosition_Dir(0, 1, Tar_X + Tar_Y, V1, Car_ACC);
+            Motor_SetPosition_Dir(0, 4, Tar_X + Tar_Y, V1, Car_ACC);
+            printf("V1 + \r\n");
+        } else {
+            Motor_SetPosition_Dir(0, 1, -(Tar_X + Tar_Y), -V1, Car_ACC);
+            Motor_SetPosition_Dir(0, 4, -(Tar_X + Tar_Y), -V1, Car_ACC);
+            printf("V1 - \r\n");
+        }
+        if (Tar_Y - Tar_X >= 0) {
+            Motor_SetPosition_Dir(0, 2, Tar_Y - Tar_X, V2, Car_ACC);
+            Motor_SetPosition_Dir(0, 3, Tar_Y - Tar_X, V2, Car_ACC);
+            printf("V2 + \r\n");
+        } else {
+            Motor_SetPosition_Dir(0, 2, Tar_X - Tar_Y, -V2, Car_ACC);
+            Motor_SetPosition_Dir(0, 3, Tar_X - Tar_Y, -V2, Car_ACC);
+            printf("V2 - \r\n");
+        }
+        Motor_Run();
+    } else if (Tar_X == 0 && Tar_Y != 0) {
+        int32_t V1, V2;
+        V2 = Speed * My_ABS(Tar_Y - Tar_X) / (1.4 * sqrt(Tar_X * Tar_X + Tar_Y * Tar_Y));
+        V1 = Speed * My_ABS(Tar_Y + Tar_X) / (1.4 * sqrt(Tar_X * Tar_X + Tar_Y * Tar_Y));
+        if (Tar_Y >= 0) {
+            Motor_SetPosition_Dir(1, 1, Tar_X + Tar_Y, V1, Car_ACC);
+            Motor_SetPosition_Dir(1, 2, Tar_X + Tar_Y, V2, Car_ACC);
+            Motor_SetPosition_Dir(1, 3, Tar_X + Tar_Y, V2, Car_ACC);
+            Motor_SetPosition_Dir(1, 4, Tar_X + Tar_Y, V1, Car_ACC);
+        } else {
+            Motor_SetPosition_Dir(1, 1, My_ABS(Tar_X + Tar_Y), -V1, Car_ACC);
+            Motor_SetPosition_Dir(1, 2, My_ABS(Tar_X + Tar_Y), -V2, Car_ACC);
+            Motor_SetPosition_Dir(1, 3, My_ABS(Tar_X + Tar_Y), -V2, Car_ACC);
+            Motor_SetPosition_Dir(1, 4, My_ABS(Tar_X + Tar_Y), -V1, Car_ACC);
+        }
+        Motor_Run();
+    }
+
+
 //    int32_t V1, V2;
-//    V2 = Speed * My_ABS(Tar_Y - Tar_X) / (1.4 * sqrt(Tar_X * Tar_X + Tar_Y * Tar_Y));
-//    V1 = Speed * My_ABS(Tar_Y + Tar_X) / (1.4 * sqrt(Tar_X * Tar_X + Tar_Y * Tar_Y));
+//    int32_t Magnitude = sqrt(Tar_X * Tar_X + Tar_Y * Tar_Y);
 //
-//    if (Tar_X + Tar_Y >= 0) {
-//        Motor_SetPosition(1, Tar_X + Tar_Y, V1, Car_ACC);
-//        Motor_SetPosition(4, Tar_X + Tar_Y, V1, Car_ACC);
-//        printf("V1 + \r\n");
+//    if (Magnitude != 0) {
+//        V2 = Speed * My_ABS(Tar_Y - Tar_X) / (1.4 * Magnitude);
+//        V1 = Speed * My_ABS(Tar_Y + Tar_X) / (1.4 * Magnitude);
 //    } else {
-//        Motor_SetPosition(1, -(Tar_X + Tar_Y), -V1, Car_ACC);
-//        Motor_SetPosition(4, -(Tar_X + Tar_Y), -V1, Car_ACC);
-//        printf("V1 - \r\n");
+//        V1 = V2 = 0;
 //    }
-//    if (Tar_Y - Tar_X >= 0) {
-//        Motor_SetPosition(2, Tar_Y - Tar_X, V2, Car_ACC);
-//        Motor_SetPosition(3, Tar_Y - Tar_X, V2, Car_ACC);
-//        printf("V2 + \r\n");
-//    } else {
-//        Motor_SetPosition(2, Tar_X - Tar_Y, -V2, Car_ACC);
-//        Motor_SetPosition(3, Tar_X - Tar_Y, -V2, Car_ACC);
-//        printf("V2 - \r\n");
+//
+//    // 前后和左右运动逻辑
+//    // 左前 (Motor 1), 右前 (Motor 2), 左后 (Motor 4), 右后 (Motor 3)
+//
+//    // X 轴方向运动
+//    if (Tar_X != 0) {
+//        Motor_SetPosition(1, My_ABS(Tar_X), (Tar_X > 0) ? -V1 : V1, Car_ACC);
+//        Motor_SetPosition(2, My_ABS(Tar_X), (Tar_X > 0) ? V2 : -V2, Car_ACC);
+//        Motor_SetPosition(3, My_ABS(Tar_X), (Tar_X > 0) ? -V2 : V2, Car_ACC);
+//        Motor_SetPosition(4, My_ABS(Tar_X), (Tar_X > 0) ? V1 : -V1, Car_ACC);
+//
 //    }
+//    // Y 轴方向运动
+//    if (Tar_Y != 0) {
+//        Motor_SetPosition(1, My_ABS(Tar_Y), (Tar_Y > 0) ? V1 : -V1, Car_ACC);
+//        Motor_SetPosition(2, My_ABS(Tar_Y), (Tar_Y > 0) ? V2 : -V2, Car_ACC);
+//        Motor_SetPosition(3, My_ABS(Tar_Y), (Tar_Y > 0) ? V2 : -V2, Car_ACC);
+//        Motor_SetPosition(4, My_ABS(Tar_Y), (Tar_Y > 0) ? V1 : -V1, Car_ACC);
+//    }
+//
 //    Motor_Run();
-
-    int32_t V1, V2;
-    int32_t Magnitude = sqrt(Tar_X * Tar_X + Tar_Y * Tar_Y);
-
-    if (Magnitude != 0) {
-        V2 = Speed * My_ABS(Tar_Y - Tar_X) / (1.4 * Magnitude);
-        V1 = Speed * My_ABS(Tar_Y + Tar_X) / (1.4 * Magnitude);
-    } else {
-        V1 = V2 = 0;
-    }
-
-    // 前后和左右运动逻辑
-    // 左前 (Motor 1), 右前 (Motor 2), 左后 (Motor 4), 右后 (Motor 3)
-
-    // X 轴方向运动
-    if (Tar_X != 0) {
-        Motor_SetPosition(1, My_ABS(Tar_X), (Tar_X > 0) ? -V1 : V1, Car_ACC);
-        Motor_SetPosition(2, My_ABS(Tar_X), (Tar_X > 0) ? V2 : -V2, Car_ACC);
-        Motor_SetPosition(3, My_ABS(Tar_X), (Tar_X > 0) ? -V2 : V2, Car_ACC);
-        Motor_SetPosition(4, My_ABS(Tar_X), (Tar_X > 0) ? V1 : -V1, Car_ACC);
-
-    }
-    // Y 轴方向运动
-    if (Tar_Y != 0) {
-        Motor_SetPosition(1, My_ABS(Tar_Y), (Tar_Y > 0) ? V1 : -V1, Car_ACC);
-        Motor_SetPosition(2, My_ABS(Tar_Y), (Tar_Y > 0) ? V2 : -V2, Car_ACC);
-        Motor_SetPosition(3, My_ABS(Tar_Y), (Tar_Y > 0) ? V2 : -V2, Car_ACC);
-        Motor_SetPosition(4, My_ABS(Tar_Y), (Tar_Y > 0) ? V1 : -V1, Car_ACC);
-    }
-
-    Motor_Run();
 
 }
 

@@ -25,11 +25,14 @@ typedef enum
 extern uint8_t Motor_RxBuff;//
 extern uint8_t Send_Data[20];
 extern uint8_t Motor_Stop_Flag_Car;// 小车停止标志位
+extern uint8_t Last_Motor_Stop_Flag_Car;
 extern uint16_t RxBuffer1[10];
 extern uint16_t Motor_HuaGui_Current_amount;
 
 extern uint8_t HuaGui_Motor_State;
 extern uint8_t Stop_Flag_HuaGui; // 滑轨电机停止标志位
+
+uint32_t My_ABS(int32_t temp);
 
 void Motor_Init(void);
 void Motor_Reset(uint8_t Motor_Num);
@@ -43,6 +46,7 @@ void Motor_Read_Current(uint8_t Motor_Num);
 
 void Motor_SetSpeed(uint8_t Motor_Num, int16_t Speed, uint8_t Acc);
 void Motor_SetPosition(uint8_t Motor_Num, uint32_t Pulse, int16_t Speed, uint8_t Acc);
+void Motor_SetPosition_Dir(uint8_t Dir, uint8_t Motor_Num, uint32_t Pulse, int16_t Speed, uint8_t Acc);
 void Motor_SetPosition_A(uint8_t Motor_Num, uint32_t Pulse, int16_t Speed, uint8_t Acc);
 
 void Motor_Receive_Data(uint8_t com_data);
