@@ -50,4 +50,9 @@ extern uint16_t Car_Task_Time;
 extern uint8_t Car_Counter_Enable;
 extern uint16_t Car_Counter_Times;
 
+extern uint16_t Kalman_time;
+extern uint8_t Kalman_Set_Data_Flag;
+extern uint8_t Kalman_count;
+extern float kalman [20][3];
+
 #endif

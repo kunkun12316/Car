@@ -3,9 +3,7 @@
 
 uint16_t u10ms;
 uint16_t Kalman_time;
-uint8_t Kalman_count = 0;
-float last_Kalman[3] = {0.0};
-float kalman [20][3] = {0.0};
+
 double Yaw_Compensate = 0;//偏航补偿
 
 uint8_t Motor_Stop_Flag_Car_Kalman = 0; //0移动 1静止
@@ -54,7 +52,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         }
 
         Kalman_time++;
-        if (Kalman_time % 10 == 0) {  // 每隔 10 次采样一次
+        if (Kalman_time % 10 == 0 && Kalman_Set_Data_Flag == 0) {  // 每隔 10 次采样一次
             if (Kalman_count < 20) {  // 确保不越界
                 for (int i = 0; i < 3; ++i) {
                     kalman[Kalman_count][i] = JY901_data.acc.a[i];
@@ -66,42 +64,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 Kalman_count = 0;  // 也可以选择其他策略
             }
         }
-
-        if (Kalman_time >= 100) {
-            float Acc[3] = {0.0};
-
-            // 计算均值
-            if (Kalman_count > 0) {  // 避免除以零
-                for (int j = 0; j < 3; ++j) {
-                    for (int i = 0; i < Kalman_count; ++i) {
-                        Acc[j] += kalman[i][j];
-                    }
-                    Acc[j] /= Kalman_count;  // 计算均值
-                }
-
-                // 判断加速度变化是否小于等于0.02
-                if (my_abs_float(Acc[0] - last_Kalman[0]) <= 0.02 &&
-                    my_abs_float(Acc[1] - last_Kalman[1]) <= 0.02 &&
-                    my_abs_float(Acc[2] - last_Kalman[2]) <= 0.02) {
-                    Motor_Stop_Flag_Car_Kalman = 1;  // 小车静止
-                    printf("car kalman stop!\n");
-                } else {
-                    Motor_Stop_Flag_Car_Kalman = 0;  // 小车移动
-                    printf("car kalman running!\n");
-                }
-
-//                printf("Kalman: ax: %f, ay: %f, az: %f\n", my_abs_float(Acc[0] - last_Kalman[0]), my_abs_float(Acc[1] - last_Kalman[1]), my_abs_float(Acc[2] - last_Kalman[2]));
-
-                // 更新最后的加速度均值
-                for (int i = 0; i < 3; ++i) {
-                    last_Kalman[i] = Acc[i];
-                }
-            }
-
-            // 重置计数器
-            Kalman_count = 0;
-            Kalman_time = 0;
+        if (Kalman_time >= 100 && Kalman_count >= 5){
+            Kalman_Set_Data_Flag = 1;
         }
+
 
         Servo_CallBack();
     } else if (htim == (&htim7)) {

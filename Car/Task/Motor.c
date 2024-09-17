@@ -170,6 +170,17 @@ void Motor_Clear(uint8_t Motor_Num) {
     Delay_ms(10);
 }
 
+void Motor_Stop(uint8_t Motor_Num)
+{
+    Send_Data[0] = Motor_Num;
+    Send_Data[1] = 0xFE;
+    Send_Data[2] = 0x98;
+    Send_Data[3] = 0x01;
+    Send_Data[4] = 0x6B;
+    HAL_UART_Transmit(&huart1, Send_Data, 5, 1000);
+    Delay_ms(10);
+}
+
 // 实现初始化电机设置并使能UART。
 void Motor_Init(void) {
     __HAL_UART_ENABLE_IT(&huart1, UART_IT_RXNE);
@@ -199,6 +210,16 @@ void Motor_Disable_All(void) {
     Motor_Disable(5);
 }
 
+//底盘电机停止
+void Motor_Low_Stop(void)
+{
+    Motor_Stop(1);
+    Motor_Stop(2);
+    Motor_Stop(3);
+    Motor_Stop(4);
+    Motor_Run();
+
+}
 // 电机状态检测
 void Motor_State_Scan(uint8_t Motor_Num) {
     Send_Data[0] = Motor_Num;
@@ -257,16 +278,16 @@ void Motor_SetSpeed(uint8_t Motor_Num, int16_t Speed, uint8_t Acc) {
     uint16_t Speed_Temp = My_ABS(Speed);
     Send_Data[0] = Motor_Num;
     Send_Data[1] = 0xF6;
-    if (Motor_Num == 1 || Motor_Num == 3) {
+    if (Motor_Num == 1 || Motor_Num == 4) {
         if (Speed >= 0)
             Direction = 0;
         else
             Direction = 1;
     } else {
         if (Speed >= 0)
-            Direction = 1;
-        else
             Direction = 0;
+        else
+            Direction = 1;
     }
     Send_Data[2] = Direction;
     Send_Data[3] = Speed_Temp >> 8;
@@ -330,6 +351,7 @@ void Motor_SetPosition_Dir(uint8_t Dir, uint8_t Motor_Num, uint32_t Pulse, int16
     Send_Data[0] = Motor_Num;
     Send_Data[1] = 0xFD;
 
+    //Direction 0 顺时针 1 逆时针
     if (Dir == 0) {
         if (Motor_Num == 1 || Motor_Num == 3) { // 左前或左后
             if (Speed >= 0)
@@ -342,7 +364,7 @@ void Motor_SetPosition_Dir(uint8_t Dir, uint8_t Motor_Num, uint32_t Pulse, int16
             else
                 Direction = 0;
         }
-    } else if (Dir == 1){
+    } else if (Dir == 1) {
         if (Motor_Num == 1 || Motor_Num == 4) {
             if (Speed >= 0)
                 Direction = 0;
@@ -598,34 +620,91 @@ uint8_t Car_Turn(int16_t Tar_Yaw, uint16_t Speed_Limit, uint16_t Car_ACC) {
     uint8_t ret = 0;// 返回值,用于指示转向是否完成
     static uint8_t Temp_State = 0; //转向临时状态
     static uint8_t Stop_Counter = 0;//停止计数器
-    static float Temp_Yaw = 0; //临时存储目标偏航角
+    static float Temp_Yaw = 90; //临时存储目标偏航角
     static float Last_Yaw = 0; //上一次的偏航角
     if (Temp_State == 0) {
         Temp_State = 1;
+
+//        Temp_Yaw = Last_Yaw + Tar_Yaw;
+//        if (Temp_Yaw > 180){
+//            Temp_Yaw -= 360;
+//            printf("Tar_Yaw = %.2f\n",Temp_Yaw);
+//        } else if (Temp_Yaw < -180){
+//            Temp_Yaw = 180 - my_abs_float(0-Tar_Yaw);
+//            printf("Tar_Yaw = %.2f\n",Temp_Yaw);
+//        }
+//
+
+
         if (Tar_Yaw >= 90 || Tar_Yaw <= -90) {
             Temp_Yaw = Last_Yaw + Tar_Yaw;
+            if (Temp_Yaw > 180) {
+                Temp_Yaw -= 360;
+                printf("Tar_Yaw = %0.2f\n", Temp_Yaw);
+            } else if (Temp_Yaw < -180) {
+                Temp_Yaw = 360 - my_abs_float(0 - Tar_Yaw);
+                printf("Tar_Yaw = %0.2f\n", Temp_Yaw);
+            }
+            printf("Tar_Yaw = %0.2f\n",Temp_Yaw);
             Last_Yaw += Tar_Yaw;
         } else {
-            Temp_Yaw = Yaw + Tar_Yaw;
+            Temp_Yaw = JY_Yaw + Tar_Yaw;
         }
     } else if (Temp_State == 1) {
-        float Yaw_Error = Yaw - Temp_Yaw;
+        float Yaw_Error = JY_Yaw - Temp_Yaw;
         Yaw_Error *= Motor_Kp;
         if (Yaw_Error > Speed_Limit)
             Yaw_Error = Speed_Limit;
         else if (Yaw_Error < -Speed_Limit)
             Yaw_Error = -Speed_Limit;
-        Motor_SetSpeed(1, -Yaw_Error, Car_ACC);
-        Motor_SetSpeed(2, Yaw_Error, Car_ACC);
-        Motor_SetSpeed(3, Yaw_Error, Car_ACC);
-        Motor_SetSpeed(4, -Yaw_Error, Car_ACC);
+
+        if(Temp_Yaw > 0)
+        {
+            float angle_1 =  JY_Yaw + 180;
+            float angle_2 = 180 - Temp_Yaw;
+            if(angle_1 + angle_2 >= 180){
+                //逆时针
+                printf("CCW!\n");
+                Motor_SetSpeed(1, -Yaw_Error, Car_ACC);
+                Motor_SetSpeed(2, -Yaw_Error, Car_ACC);
+                Motor_SetSpeed(3, -Yaw_Error, Car_ACC);
+                Motor_SetSpeed(4, -Yaw_Error, Car_ACC);
+            } else{
+                //顺时针
+                printf("CW!\n");
+                Motor_SetSpeed(1, Yaw_Error, Car_ACC);
+                Motor_SetSpeed(2, Yaw_Error, Car_ACC);
+                Motor_SetSpeed(3, Yaw_Error, Car_ACC);
+                Motor_SetSpeed(4, Yaw_Error, Car_ACC);
+            }
+        } else if (Temp_Yaw <= 0){
+            float angle_1 = 180 - JY_Yaw;
+            float angle_2 = Temp_Yaw + 180;
+            if(angle_1 + angle_2 <= 180){
+                //逆时针
+                printf("CCW!\n");
+                Motor_SetSpeed(1, -Yaw_Error, Car_ACC);
+                Motor_SetSpeed(2, -Yaw_Error, Car_ACC);
+                Motor_SetSpeed(3, -Yaw_Error, Car_ACC);
+                Motor_SetSpeed(4, -Yaw_Error, Car_ACC);
+            } else{
+                //顺时针
+                printf("CW!\n");
+                Motor_SetSpeed(1, Yaw_Error, Car_ACC);
+                Motor_SetSpeed(2, Yaw_Error, Car_ACC);
+                Motor_SetSpeed(3, Yaw_Error, Car_ACC);
+                Motor_SetSpeed(4, Yaw_Error, Car_ACC);
+            }
+        }
+
         Motor_Run();
 
-        if (Yaw >= Temp_Yaw - 3 && Yaw <= Temp_Yaw + 3)
+        if (JY_Yaw >= Temp_Yaw - 3 && JY_Yaw <= Temp_Yaw + 3)
             Stop_Counter++;
         else
             Stop_Counter = 0;
         if (Stop_Counter >= 10) {
+            Motor_Low_Stop();
             Stop_Counter = 0;
             ret = 1;
             Temp_State = 0;
@@ -653,7 +732,7 @@ uint8_t Car_Turn(int16_t Tar_Yaw, uint16_t Speed_Limit, uint16_t Car_ACC) {
             Motor_Run();
         }
     } else if (Temp_State == 1) {
-        if (Motor_Stop_Flag_Car == 1) {
+        if (Motor_Stop_Flag_Car == 1 || Motor_Stop_Flag_Car_Kalman == 1) {
             ret = 1;
             Temp_State = 0;
         }
@@ -669,7 +748,7 @@ uint8_t Car_Calibration(uint16_t Speed_Limit, uint16_t Car_ACC) {
     uint8_t ret = 0;
     if (Temp_State == 0) {
         Temp_State++;
-        Temp_Yaw = Yaw;
+        Temp_Yaw = JY_Yaw;
     } else if (Temp_State == 1) {
         uint8_t temp = 0;
         if (Temp_Yaw <= 10 && Temp_Yaw >= -10) {

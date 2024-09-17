@@ -1,7 +1,7 @@
 #include "Bsp.h"
 
-float Yaw; //陀螺仪角度值
-float Last_Yaw;//陀螺仪上一次角度值
+float JY_Yaw; //陀螺仪角度值
+float Last_JY_Yaw;//陀螺仪上一次角度值
 
 float Car_Turn_angle = 0;//当前小车的绝对角度值,只有当转向或回正使被调用
 
@@ -26,6 +26,8 @@ void Usart_Init(void)
 void JY901S_Init(void)
 {
     User_USART_Init(&JY901_data);
+
+    Reset_JY901S_Command();
 
     __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
     HAL_UART_Receive_DMA(&huart3, JY901_data.RxBuffer, RXBUFFER_LEN);

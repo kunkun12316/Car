@@ -1,6 +1,5 @@
 #include "JY901.h"
 #include "string.h"
-#include "usart.h"
 #include "Bsp.h"
 
 User_USART JY901_data;//角度值左+右-，180为分水岭
@@ -8,19 +7,10 @@ struct SAcc stcAcc;
 struct SGyro stcGyro;
 struct SAngle stcAngle;
 
-KalmanFilter kf_x, kf_y, kf_z;
-
-// 低通滤波器系数
-float alpha = 0.05;
-
-// 定义前一次滤波后的加速度值
-float prev_filtered_acc_x = 0.0f;
-float prev_filtered_acc_y = 0.0f;
-float prev_filtered_acc_z = 0.0f;
-
-float prev_filtered_ax = 0.0f;
-float prev_filtered_ay = 0.0f;
-float prev_filtered_az = 0.0f;
+uint8_t Kalman_Set_Data_Flag = 0;
+float last_Kalman[3] = {0.0};
+float kalman[20][3] = {0.0};
+uint8_t Kalman_count = 0;
 
 //接收结构体初始化
 void User_USART_Init(User_USART *Data) {
@@ -29,9 +19,6 @@ void User_USART_Init(User_USART *Data) {
     Data->Rx_flag = 0;
     Data->Rx_len = 0;
 
-//    Kalman_Init(&kf_x, 0.0001, 0.5, 0.1, 0); // 初始化 X 轴滤波器
-//    Kalman_Init(&kf_y, 0.0001, 0.5, 0.1, 0); // 初始化 Y 轴滤波器
-//    Kalman_Init(&kf_z, 0.0001, 0.5, 0.1, 9.8); // 初始化 Z 轴滤波器
 }
 
 void JY901_Process() {
@@ -58,29 +45,8 @@ void JY901_Process() {
         }
 
     }
-}
 
-void Kalman_Init(KalmanFilter *kf, float process_noise, float measurement_noise, float estimated_error, float initial_value) {
-    kf->Q = process_noise;     // 过程噪声
-    kf->R = measurement_noise; // 测量噪声
-    kf->P = estimated_error;   // 初始协方差
-    kf->x = initial_value;     // 初始估计
-}
-
-float Kalman_Update(KalmanFilter *kf, float measurement) {
-    // 预测阶段
-    kf->P = kf->P + kf->Q;
-
-    // 计算卡尔曼增益
-    kf->K = kf->P / (kf->P + kf->R);
-
-    // 更新估计值
-    kf->x = kf->x + kf->K * (measurement - kf->x);
-
-    // 更新协方差
-    kf->P = (1 - kf->K) * kf->P;
-
-    return kf->x;
+    JY_Yaw = JY901_data.angle.angle[2];
 }
 
 float my_abs_float(float value) {
@@ -91,3 +57,70 @@ float my_abs_float(float value) {
     }
 }
 
+// 执行 Kalman 滤波
+void process_kalman_filter(void) {
+    if (Kalman_Set_Data_Flag == 1) {
+
+        float Kalman_Acc[3] = {0.0};
+
+        // 计算均值
+        if (Kalman_count > 0) {  // 避免除以零
+            for (int j = 0; j < 3; ++j) {
+                for (int i = 0; i < Kalman_count; ++i) {
+                    Kalman_Acc[j] += kalman[i][j];
+                }
+                Kalman_Acc[j] /= Kalman_count;  // 计算均值
+            }
+
+            // 判断加速度变化是否小于等于0.02
+            if (my_abs_float(Kalman_Acc[0] - last_Kalman[0]) <= 0.02 &&
+                my_abs_float(Kalman_Acc[1] - last_Kalman[1]) <= 0.02 &&
+                my_abs_float(Kalman_Acc[2] - last_Kalman[2]) <= 0.02) {
+                Motor_Stop_Flag_Car_Kalman = 1;  // 小车静止
+                printf("car kalman stop!\n");
+            } else {
+                Motor_Stop_Flag_Car_Kalman = 0;  // 小车移动
+                printf("car kalman running!\n");
+            }
+
+//                printf("Kalman: ax: %f, ay: %f, az: %f\n", my_abs_float(Acc[0] - last_Kalman[0]), my_abs_float(Acc[1] - last_Kalman[1]), my_abs_float(Acc[2] - last_Kalman[2]));
+
+            // 更新最后的加速度均值
+            for (int i = 0; i < 3; ++i) {
+                last_Kalman[i] = Kalman_Acc[i];
+            }
+
+            // 重置计数器
+            Kalman_count = 0;
+            Kalman_time = 0;
+        }
+        Kalman_Set_Data_Flag = 0;
+//        printf("Kalman flag = 0!\n");
+    }
+}
+
+
+// 用于通过UART发送命令的函数
+void JY901S_send_command(uint8_t byte1, uint8_t byte2, uint8_t byte3, uint8_t byte4, uint8_t byte5) {
+    uint8_t command[5] = {byte1, byte2, byte3, byte4, byte5};
+    HAL_UART_Transmit(&huart3, command, 5, HAL_MAX_DELAY);
+}
+
+void Reset_JY901S_Command(void)
+{
+    // 发送解锁指令
+    JY901S_send_command(0xFF, 0xAA, 0x69, 0x88, 0xB5);
+    Delay_ms(200);  // 等待解锁完成的延时
+
+    // 发送校准指令
+    JY901S_send_command(0xFF, 0xAA, 0x01, 0x08, 0x00);
+    Delay_ms(200); // 等待校准完成的延时
+
+    // 发送Z轴归0指令
+    JY901S_send_command(0xFF, 0xAA, 0x01, 0x04, 0x00);
+    Delay_ms(200); // 等待Z轴归0完成的延时
+
+    // 发送保存配置指令
+    JY901S_send_command(0xFF, 0xAA, 0x00, 0x00, 0x00);
+    Delay_ms(200);  // 等待保存完成的延时
+}

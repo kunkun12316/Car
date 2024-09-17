@@ -107,9 +107,9 @@ int main(void)
     uint8_t time = 0;
     uint8_t flag = 0;
 
-    Car_Task_Data_0 = 1;
-    Car_Task_Data_1 = 50;
-    Car_Task_Data_2 = -50;
+    Car_Task_Data_0 = 2;
+    Car_Task_Data_1 = 90;
+    Car_Task_Data_2 = 0;
     printf("Tar send!\r\n");
 
   /* USER CODE END 2 */
@@ -123,18 +123,23 @@ int main(void)
 
         //printf("Yaw : %f\n",Yaw);
 
-        printf(" x : %.2f", JY901_data.angle.angle[0]);
-        printf(" y : %.2f", JY901_data.angle.angle[1]);
-        printf(" z : %.2f  ", JY901_data.angle.angle[2]);
-
-        printf(" SP_x : %.2f", JY901_data.acc.a[0]);
-        printf(" SP_y : %.2f", JY901_data.acc.a[1]);
-        printf(" SP_z : %.2f \r\n", JY901_data.acc.a[2]);
+//        printf(" x : %.2f", JY901_data.angle.angle[0]);
+//        printf(" y : %.2f", JY901_data.angle.angle[1]);
+        printf(" z : %.2f  \n", JY901_data.angle.angle[2]);
+//
+//        printf(" SP_x : %.2f", JY901_data.acc.a[0]);
+//        printf(" SP_y : %.2f", JY901_data.acc.a[1]);
+//        printf(" SP_z : %.2f \r\n", JY901_data.acc.a[2]);
 
         Control_Proc();
+        process_kalman_filter();
+        Delay_ms(500);
 
-        Delay_ms(200);
-
+        if (Motor_Stop_Flag_Car_Kalman == 1){
+            Car_Task_Data_0 = 7;
+            Car_Task_Data_1 = 0;
+            Car_Task_Data_2 = 0;
+        }
     }
   /* USER CODE END 3 */
 }

@@ -3,7 +3,7 @@
 
 #include "../Bsp/Bsp.h"
 
-#define Car_Turn_Use_IMU 1
+#define Car_Turn_Use_IMU 0
 void Control_Proc(void);
 extern uint8_t Task_Num_0;
 extern int16_t Task_Num_1;

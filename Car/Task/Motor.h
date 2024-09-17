@@ -38,6 +38,7 @@ void Motor_Init(void);
 void Motor_Reset(uint8_t Motor_Num);
 void Motor_Enable(uint8_t Motor_Num);
 void Motor_Disable(uint8_t Motor_Num);
+void Motor_Stop(uint8_t Motor_Num);
 void Motor_Enable_All(void);
 void Motor_Disable_All(void);
 void Motor_State_Scan(uint8_t Motor_Num);

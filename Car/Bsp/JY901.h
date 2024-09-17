@@ -159,27 +159,14 @@ typedef struct {
     float K;  // 卡尔曼增益
 } KalmanFilter;
 
-extern KalmanFilter kf_x, kf_y, kf_z;
-// 低通滤波器系数
-extern float alpha;
-
-// 定义前一次滤波后的加速度值
-extern float prev_filtered_acc_x;
-extern float prev_filtered_acc_y;
-extern float prev_filtered_acc_z;
-
-extern float prev_filtered_ax;
-extern float prev_filtered_ay;
-extern float prev_filtered_az;
-
-void Kalman_Init(KalmanFilter *kf, float process_noise, float measurement_noise, float estimated_error, float initial_value);
-float Kalman_Update(KalmanFilter *kf, float measurement);
-
 extern User_USART JY901_data;
 
 void User_USART_Init(User_USART *Data);
 void JY901_Process();
 float my_abs_float(float value);
+void process_kalman_filter(void);
+
+void Reset_JY901S_Command(void);
 
 #endif
 

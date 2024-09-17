@@ -3,8 +3,8 @@
 
 #include "Bsp.h"
 
-extern float Yaw;
-extern float Last_Yaw;
+extern float JY_Yaw;
+extern float Last_JY_Yaw;
 
 extern uint8_t JY_rx_buffer[22]; // 数据长度为22位
 extern float Angle_temp_x, Angle_temp_y, Angle_temp_z;
