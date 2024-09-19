@@ -6,7 +6,7 @@ uint8_t Send_Data[20];
 uint8_t Motor_Stop_Flag_Car = 0;// 小车停止标志位
 uint8_t Last_Motor_Stop_Flag_Car = 1;
 uint16_t RxBuffer1[10] = {0};
-uint16_t Motor_HuaGui_Current_amount = 0;
+uint16_t Motor_HuaGui_Current_amount = 0; //电机电流值
 
 uint8_t HuaGui_Motor_State = HuaGui_Motor_State_UP;
 uint8_t Stop_Flag_HuaGui = 1; // 滑轨电机停止标志位
@@ -83,20 +83,20 @@ void Motor_Receive_Data(uint8_t com_data) {
                     RxBuffer1[i] = 0x00; // 清空数据数组前4个元素
                 }
 
-            } else if (RxBuffer1[0] == 0x01 && RxBuffer1[1] == 0xFF && RxBuffer1[2] == 0x02) { //同步运动正确返回 01 FF 02 6B
-                //这个返回的命令并不是电机停止的标志，而是小车命令发送成功的命令
-                //Motor_Stop_Flag_Car = 1; // 设置小车停止标志
+            } else if (RxBuffer1[0] == 0x05 && RxBuffer1[1] == 0x3A){
+                if (RxBuffer1[2] == 0x01) {
+                    //此时滑轨电机还未停止
+                    Stop_Flag_HuaGui = 0;
 #if Serial_Debug == 1
-                printf("Send success!\r\n"); // 如果开启调试，打印调试信息
+                    printf("HuaGui not Stop!!\r\n"); // 如果开启调试，打印调试信息
 #endif
-                for (i = 0; i < 4; i++) {
-                    RxBuffer1[i] = 0x00; // 清空数据数组前4个元素
+                } else if (RxBuffer1[2] == 0x03) {
+                    //这时滑轨电机停止
+                    Stop_Flag_HuaGui = 1; // 设置滑轨停止标志
+#if Serial_Debug == 1
+                    printf("HuaGui Stop!\r\n"); // 如果开启调试，打印调试信息
+#endif
                 }
-            } else if (RxBuffer1[0] == 0x05 && RxBuffer1[1] == 0xFD && RxBuffer1[2] == 0x9F && Stop_Flag_HuaGui == 0) {
-                Stop_Flag_HuaGui = 1; // 设置滑轨停止标志
-#if Serial_Debug == 1
-                printf("HuaGui_Stop\r\n"); // 如果开启调试，打印调试信息
-#endif
                 for (i = 0; i < 4; i++) {
                     RxBuffer1[i] = 0x00; // 清空数据数组前4个元素
                 }

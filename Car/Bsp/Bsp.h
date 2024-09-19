@@ -22,6 +22,9 @@
 
 #include "retarget.h"
 
+extern uint8_t HuaGui_Init_State;
+
+void HuaGui_Init_Proc(void);
 void Bsp_Init(void);
 
 #endif

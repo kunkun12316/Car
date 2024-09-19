@@ -7,7 +7,6 @@ import time
 class Onnx:
     def __init__(self, model_path='model.onnx', obj=0.25, nms=0.45, obj_class=("red", "green", "blue")):
         """
-
         :param model_path:模型路径
         :param obj:目标检测的置信度阈值（OBJ_THRESH），默认值为 0.25
         :param nms:非最大抑制的阈值（NMS_THRESH），默认值为 0.45

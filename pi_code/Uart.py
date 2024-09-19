@@ -114,7 +114,7 @@ class Uart:
         """
         取物料
         :param disc_id: 目标颜色代号
-        :param height: 高1 低0
+        :param height: 转盘位 高1 暂存区 低0
         :param wait:
         :return:
         """

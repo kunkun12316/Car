@@ -107,9 +107,11 @@ int main(void)
     uint8_t time = 0;
     uint8_t flag = 0;
 
-    Car_Task_Data_0 = 2;
-    Car_Task_Data_1 = 90;
-    Car_Task_Data_2 = 0;
+//    Car_Task_Data_0 = 3;
+//    Car_Task_Data_1 = 1;
+//    Car_Task_Data_2 = 0;
+
+    HuaGui_Init_State = 1;
     printf("Tar send!\r\n");
 
   /* USER CODE END 2 */
@@ -125,7 +127,7 @@ int main(void)
 
 //        printf(" x : %.2f", JY901_data.angle.angle[0]);
 //        printf(" y : %.2f", JY901_data.angle.angle[1]);
-        printf(" z : %.2f  \n", JY901_data.angle.angle[2]);
+//        printf(" z : %.2f  \n", JY901_data.angle.angle[2]);
 //
 //        printf(" SP_x : %.2f", JY901_data.acc.a[0]);
 //        printf(" SP_y : %.2f", JY901_data.acc.a[1]);
@@ -133,13 +135,9 @@ int main(void)
 
         Control_Proc();
         process_kalman_filter();
+        HuaGui_Init_Proc();
         Delay_ms(500);
 
-        if (Motor_Stop_Flag_Car_Kalman == 1){
-            Car_Task_Data_0 = 7;
-            Car_Task_Data_1 = 0;
-            Car_Task_Data_2 = 0;
-        }
     }
   /* USER CODE END 3 */
 }

@@ -83,6 +83,7 @@ void Control_Proc(void) {
 
     if (Running_Flag){
         Motor_State_Scan(1);
+        Motor_State_Scan(5);
     }
 
     if (Car_Task_Data_0 != 0) {
@@ -168,7 +169,7 @@ void Control_Proc(void) {
             Running_Flag = 0;
         }
     }
-    if (Task_Flag[3]) // 滑轨上下移动
+    if (Task_Flag[3]) // 滑轨上下移动(滑轨电机正转[顺时针]向下，反转[逆时针]向上)
     {
         static uint8_t temp = 0;
         static uint8_t Last_Data1 = 0;

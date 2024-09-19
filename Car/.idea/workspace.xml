@@ -22,29 +22,34 @@
   <component name="ChangeListManager">
     <list default="true" id="bdab3d71-31d7-4685-a30b-6cd66900ff2b" name="Changes" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/Bsp.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Bsp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/Bsp.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Bsp.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bsp/JY901.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/JY901.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bsp/JY901.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/JY901.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bsp/Uart_Bsp.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Uart_Bsp.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bsp/Uart_Bsp.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Uart_Bsp.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task/Control.h" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Control.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task/Control.c" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Control.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task/Motor.c" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Motor.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task/Motor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Motor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task/Move.c" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Move.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task/Move.h" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Move.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task/Servo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Servo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-09-10T07-54-04-0967.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Bsp.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Bsp.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/JY901.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/JY901.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Uart_Bsp.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Uart_Bsp.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/jy901s.c.obj" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/main.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/stm32f4xx_it.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/stm32f4xx_it.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Control.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Control.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Motor.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Motor.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Move.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Move.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Servo.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Servo.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.elf" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.hex" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.hex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.map" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pi_code/Car.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pi_code/Car.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pi_code/Onnx.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pi_code/Onnx.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pi_code/Uart.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pi_code/Uart.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +116,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CPPToolchains&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;proofread&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -126,8 +131,8 @@
       <recent name="D:\app\STM32CubeMX_bck_1\Probject\STM32F407ZET6\Car\Bsp" />
     </key>
   </component>
-  <component name="RunManager" selected="OpenOCD 下载并运行.OCD Car">
-    <configuration name="Car.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Car" TARGET_NAME="Car.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Car" RUN_TARGET_NAME="Car.elf">
+  <component name="RunManager">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -140,10 +145,6 @@
         <option name="CLION.COMPOUND.BUILD" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="CMake 应用程序.Car.elf" />
-      <item itemvalue="OpenOCD 下载并运行.OCD Car" />
-    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -190,7 +191,14 @@
       <workItem from="1726370348026" duration="13394000" />
       <workItem from="1726391223336" duration="2547000" />
       <workItem from="1726460947018" duration="14694000" />
-      <workItem from="1726549492245" duration="51000" />
+      <workItem from="1726549492245" duration="903000" />
+      <workItem from="1726639516649" duration="3120000" />
+      <workItem from="1726643206834" duration="2568000" />
+      <workItem from="1726646336567" duration="6307000" />
+      <workItem from="1726730543933" duration="2887000" />
+      <workItem from="1726733749774" duration="216000" />
+      <workItem from="1726733972705" duration="1039000" />
+      <workItem from="1726743476176" duration="3995000" />
     </task>
     <servers />
   </component>

@@ -46,6 +46,7 @@ class Car:
         车辆行驶到原料区域
         :return:
         """
+        self.uart.arm_move_angle(angle="out", wait=True)
         self.uart.arm_move_height(height="high", wait=False)
         self.uart.car_move_xy_cm(10,83)
 
