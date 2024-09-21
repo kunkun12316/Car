@@ -39,6 +39,7 @@ class Car:
         等待接收STM32返回二维码数据
         :return:
         """
+        self.task = self.uart.uart_read_data()
 
 
     def move_to_material(self):

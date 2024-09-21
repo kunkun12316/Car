@@ -6,16 +6,20 @@
 extern float JY_Yaw;
 extern float Last_JY_Yaw;
 
-extern uint8_t JY_rx_buffer[22]; // Êı¾İ³¤¶ÈÎª22Î»
+extern uint8_t JY_rx_buffer[22]; // æ•°æ®é•¿åº¦ä¸º22ä½
 extern float Angle_temp_x, Angle_temp_y, Angle_temp_z;
 extern float Angle_speed_temp_x, Angle_speed_temp_y, Angle_speed_temp_z;
 
-// ½ÓÊÕ±êÖ¾Î»
+// æ¥æ”¶æ ‡å¿—ä½
 extern uint8_t JY_Init_Flag;
 extern uint8_t JY_Rx_Flag;
 
-//Ôİ´æ½ÓÊÕÊı¾İ
+//æš‚å­˜æ¥æ”¶æ•°æ®
 extern uint8_t JY_Rxdata;
+
+//äºŒç»´ç æ•°æ®
+extern uint8_t QR_Data_1[3];
+extern uint8_t QR_Data_2[3];
 
 extern void Usart_Init(void);
 

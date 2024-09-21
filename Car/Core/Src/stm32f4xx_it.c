@@ -243,16 +243,16 @@ void USART3_IRQHandler(void)
     temp_flag = __HAL_UART_GET_FLAG(&huart3, UART_FLAG_IDLE);
     if ((temp_flag != RESET)) {
         __HAL_UART_CLEAR_IDLEFLAG(&huart3);
-        HAL_UART_DMAStop(&huart3);                                            //关闭DMA，防止冲突
-        temp = hdma_usart3_rx.Instance->NDTR;                        //获取DMA中未传输的数据个数
-        JY901_data.Rx_len = RXBUFFER_LEN - temp;                                            //获得一共传输的个数
+        HAL_UART_DMAStop(&huart3);                                            //关闭DMA，防止冲�?
+        temp = hdma_usart3_rx.Instance->NDTR;                        //获取DMA中未传输的数据个�?
+        JY901_data.Rx_len = RXBUFFER_LEN - temp;                                            //获得�?共传输的个数
         JY901_Process();
         LED2_TOGGLE();
     }
     HAL_UART_Receive_DMA(&huart3, JY901_data.RxBuffer, RXBUFFER_LEN);
 
 
-    //配置只接收加速度和角度
+    //配置只接收加速度和角�?
   /*
     if(JY_rx_buffer[0] == 0x55 && JY_rx_buffer[1] == 0x51 && JY_rx_buffer[11] == 0x55 && JY_rx_buffer[12] == 0x53)
     {

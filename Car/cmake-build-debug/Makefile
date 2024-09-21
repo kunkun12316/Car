@@ -56,10 +56,10 @@ RM = "D:\app\JetBrains\CLion 2023.3.2\bin\cmake\win\x64\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\app\STM32CubeMX_bck_1\Probject\STM32F407ZET6\Car
+CMAKE_SOURCE_DIR = D:\app\STM32CubeMX_bck_1\Probject\Car-main\Car
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\app\STM32CubeMX_bck_1\Probject\STM32F407ZET6\Car\cmake-build-debug
+CMAKE_BINARY_DIR = D:\app\STM32CubeMX_bck_1\Probject\Car-main\Car\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\app\STM32CubeMX_bck_1\Probject\STM32F407ZET6\Car\cmake-build-debug\CMakeFiles D:\app\STM32CubeMX_bck_1\Probject\STM32F407ZET6\Car\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\app\STM32CubeMX_bck_1\Probject\Car-main\Car\cmake-build-debug\CMakeFiles D:\app\STM32CubeMX_bck_1\Probject\Car-main\Car\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\app\STM32CubeMX_bck_1\Probject\STM32F407ZET6\Car\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\app\STM32CubeMX_bck_1\Probject\Car-main\Car\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -127,102 +127,6 @@ Car.elf: cmake_check_build_system
 Car.elf/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/build
 .PHONY : Car.elf/fast
-
-Bsp/Bsp.obj: Bsp/Bsp.c.obj
-.PHONY : Bsp/Bsp.obj
-
-# target to build an object file
-Bsp/Bsp.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/Bsp.c.obj
-.PHONY : Bsp/Bsp.c.obj
-
-Bsp/Bsp.i: Bsp/Bsp.c.i
-.PHONY : Bsp/Bsp.i
-
-# target to preprocess a source file
-Bsp/Bsp.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/Bsp.c.i
-.PHONY : Bsp/Bsp.c.i
-
-Bsp/Bsp.s: Bsp/Bsp.c.s
-.PHONY : Bsp/Bsp.s
-
-# target to generate assembly for a file
-Bsp/Bsp.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/Bsp.c.s
-.PHONY : Bsp/Bsp.c.s
-
-Bsp/My_Delay.obj: Bsp/My_Delay.c.obj
-.PHONY : Bsp/My_Delay.obj
-
-# target to build an object file
-Bsp/My_Delay.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/My_Delay.c.obj
-.PHONY : Bsp/My_Delay.c.obj
-
-Bsp/My_Delay.i: Bsp/My_Delay.c.i
-.PHONY : Bsp/My_Delay.i
-
-# target to preprocess a source file
-Bsp/My_Delay.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/My_Delay.c.i
-.PHONY : Bsp/My_Delay.c.i
-
-Bsp/My_Delay.s: Bsp/My_Delay.c.s
-.PHONY : Bsp/My_Delay.s
-
-# target to generate assembly for a file
-Bsp/My_Delay.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/My_Delay.c.s
-.PHONY : Bsp/My_Delay.c.s
-
-Bsp/Uart_Bsp.obj: Bsp/Uart_Bsp.c.obj
-.PHONY : Bsp/Uart_Bsp.obj
-
-# target to build an object file
-Bsp/Uart_Bsp.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/Uart_Bsp.c.obj
-.PHONY : Bsp/Uart_Bsp.c.obj
-
-Bsp/Uart_Bsp.i: Bsp/Uart_Bsp.c.i
-.PHONY : Bsp/Uart_Bsp.i
-
-# target to preprocess a source file
-Bsp/Uart_Bsp.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/Uart_Bsp.c.i
-.PHONY : Bsp/Uart_Bsp.c.i
-
-Bsp/Uart_Bsp.s: Bsp/Uart_Bsp.c.s
-.PHONY : Bsp/Uart_Bsp.s
-
-# target to generate assembly for a file
-Bsp/Uart_Bsp.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/Uart_Bsp.c.s
-.PHONY : Bsp/Uart_Bsp.c.s
-
-Bsp/retarget.obj: Bsp/retarget.c.obj
-.PHONY : Bsp/retarget.obj
-
-# target to build an object file
-Bsp/retarget.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/retarget.c.obj
-.PHONY : Bsp/retarget.c.obj
-
-Bsp/retarget.i: Bsp/retarget.c.i
-.PHONY : Bsp/retarget.i
-
-# target to preprocess a source file
-Bsp/retarget.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/retarget.c.i
-.PHONY : Bsp/retarget.c.i
-
-Bsp/retarget.s: Bsp/retarget.c.s
-.PHONY : Bsp/retarget.s
-
-# target to generate assembly for a file
-Bsp/retarget.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Bsp/retarget.c.s
-.PHONY : Bsp/retarget.c.s
 
 Core/Src/dma.obj: Core/Src/dma.c.obj
 .PHONY : Core/Src/dma.obj
@@ -856,126 +760,6 @@ Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.s
 .PHONY : Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.s
 
-Task/Control.obj: Task/Control.c.obj
-.PHONY : Task/Control.obj
-
-# target to build an object file
-Task/Control.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Control.c.obj
-.PHONY : Task/Control.c.obj
-
-Task/Control.i: Task/Control.c.i
-.PHONY : Task/Control.i
-
-# target to preprocess a source file
-Task/Control.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Control.c.i
-.PHONY : Task/Control.c.i
-
-Task/Control.s: Task/Control.c.s
-.PHONY : Task/Control.s
-
-# target to generate assembly for a file
-Task/Control.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Control.c.s
-.PHONY : Task/Control.c.s
-
-Task/Control_Logic.obj: Task/Control_Logic.c.obj
-.PHONY : Task/Control_Logic.obj
-
-# target to build an object file
-Task/Control_Logic.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Control_Logic.c.obj
-.PHONY : Task/Control_Logic.c.obj
-
-Task/Control_Logic.i: Task/Control_Logic.c.i
-.PHONY : Task/Control_Logic.i
-
-# target to preprocess a source file
-Task/Control_Logic.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Control_Logic.c.i
-.PHONY : Task/Control_Logic.c.i
-
-Task/Control_Logic.s: Task/Control_Logic.c.s
-.PHONY : Task/Control_Logic.s
-
-# target to generate assembly for a file
-Task/Control_Logic.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Control_Logic.c.s
-.PHONY : Task/Control_Logic.c.s
-
-Task/Motor.obj: Task/Motor.c.obj
-.PHONY : Task/Motor.obj
-
-# target to build an object file
-Task/Motor.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Motor.c.obj
-.PHONY : Task/Motor.c.obj
-
-Task/Motor.i: Task/Motor.c.i
-.PHONY : Task/Motor.i
-
-# target to preprocess a source file
-Task/Motor.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Motor.c.i
-.PHONY : Task/Motor.c.i
-
-Task/Motor.s: Task/Motor.c.s
-.PHONY : Task/Motor.s
-
-# target to generate assembly for a file
-Task/Motor.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Motor.c.s
-.PHONY : Task/Motor.c.s
-
-Task/Move.obj: Task/Move.c.obj
-.PHONY : Task/Move.obj
-
-# target to build an object file
-Task/Move.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Move.c.obj
-.PHONY : Task/Move.c.obj
-
-Task/Move.i: Task/Move.c.i
-.PHONY : Task/Move.i
-
-# target to preprocess a source file
-Task/Move.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Move.c.i
-.PHONY : Task/Move.c.i
-
-Task/Move.s: Task/Move.c.s
-.PHONY : Task/Move.s
-
-# target to generate assembly for a file
-Task/Move.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Move.c.s
-.PHONY : Task/Move.c.s
-
-Task/Servo.obj: Task/Servo.c.obj
-.PHONY : Task/Servo.obj
-
-# target to build an object file
-Task/Servo.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Servo.c.obj
-.PHONY : Task/Servo.c.obj
-
-Task/Servo.i: Task/Servo.c.i
-.PHONY : Task/Servo.i
-
-# target to preprocess a source file
-Task/Servo.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Servo.c.i
-.PHONY : Task/Servo.c.i
-
-Task/Servo.s: Task/Servo.c.s
-.PHONY : Task/Servo.s
-
-# target to generate assembly for a file
-Task/Servo.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Car.elf.dir\build.make CMakeFiles/Car.elf.dir/Task/Servo.c.s
-.PHONY : Task/Servo.c.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -985,18 +769,6 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Car.elf
-	@echo ... Bsp/Bsp.obj
-	@echo ... Bsp/Bsp.i
-	@echo ... Bsp/Bsp.s
-	@echo ... Bsp/My_Delay.obj
-	@echo ... Bsp/My_Delay.i
-	@echo ... Bsp/My_Delay.s
-	@echo ... Bsp/Uart_Bsp.obj
-	@echo ... Bsp/Uart_Bsp.i
-	@echo ... Bsp/Uart_Bsp.s
-	@echo ... Bsp/retarget.obj
-	@echo ... Bsp/retarget.i
-	@echo ... Bsp/retarget.s
 	@echo ... Core/Src/dma.obj
 	@echo ... Core/Src/dma.i
 	@echo ... Core/Src/dma.s
@@ -1076,21 +848,6 @@ help:
 	@echo ... Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.obj
 	@echo ... Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.i
 	@echo ... Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.s
-	@echo ... Task/Control.obj
-	@echo ... Task/Control.i
-	@echo ... Task/Control.s
-	@echo ... Task/Control_Logic.obj
-	@echo ... Task/Control_Logic.i
-	@echo ... Task/Control_Logic.s
-	@echo ... Task/Motor.obj
-	@echo ... Task/Motor.i
-	@echo ... Task/Motor.s
-	@echo ... Task/Move.obj
-	@echo ... Task/Move.i
-	@echo ... Task/Move.s
-	@echo ... Task/Servo.obj
-	@echo ... Task/Servo.i
-	@echo ... Task/Servo.s
 .PHONY : help
 
 

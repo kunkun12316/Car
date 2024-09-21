@@ -57,10 +57,44 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define KEY1_Pin GPIO_PIN_3
+#define KEY1_GPIO_Port GPIOE
+#define KEY3_Pin GPIO_PIN_4
+#define KEY3_GPIO_Port GPIOE
+#define BUZ_Pin GPIO_PIN_5
+#define BUZ_GPIO_Port GPIOE
+#define BUSY_Pin GPIO_PIN_6
+#define BUSY_GPIO_Port GPIOE
+#define LED_1_Pin GPIO_PIN_0
+#define LED_1_GPIO_Port GPIOF
+#define LED_2_Pin GPIO_PIN_1
+#define LED_2_GPIO_Port GPIOF
+#define KEY_1_Pin GPIO_PIN_2
+#define KEY_1_GPIO_Port GPIOF
+#define KEY_2_Pin GPIO_PIN_3
+#define KEY_2_GPIO_Port GPIOF
+#define KEY_3_Pin GPIO_PIN_4
+#define KEY_3_GPIO_Port GPIOF
+#define KEY_4_Pin GPIO_PIN_5
+#define KEY_4_GPIO_Port GPIOF
+#define PI_1_Pin GPIO_PIN_6
+#define PI_1_GPIO_Port GPIOF
+#define PI_2_Pin GPIO_PIN_7
+#define PI_2_GPIO_Port GPIOF
+#define PI_3_Pin GPIO_PIN_8
+#define PI_3_GPIO_Port GPIOF
 #define LED2_Pin GPIO_PIN_9
 #define LED2_GPIO_Port GPIOF
 #define LED1_Pin GPIO_PIN_10
 #define LED1_GPIO_Port GPIOF
+#define PB_TX_Pin GPIO_PIN_0
+#define PB_TX_GPIO_Port GPIOA
+#define PB_RX_Pin GPIO_PIN_1
+#define PB_RX_GPIO_Port GPIOA
+#define GM65_TX_Pin GPIO_PIN_2
+#define GM65_TX_GPIO_Port GPIOA
+#define GM65_RX_Pin GPIO_PIN_3
+#define GM65_RX_GPIO_Port GPIOA
 #define Servo_A_Pin GPIO_PIN_6
 #define Servo_A_GPIO_Port GPIOA
 #define Servo_B_Pin GPIO_PIN_7
@@ -73,6 +107,18 @@ void Error_Handler(void);
 #define JY_TX_GPIO_Port GPIOB
 #define JY_RX_Pin GPIO_PIN_11
 #define JY_RX_GPIO_Port GPIOB
+#define PI_TX_Pin GPIO_PIN_6
+#define PI_TX_GPIO_Port GPIOC
+#define PI_RX_Pin GPIO_PIN_7
+#define PI_RX_GPIO_Port GPIOC
+#define Motor_TX_Pin GPIO_PIN_9
+#define Motor_TX_GPIO_Port GPIOA
+#define Motor_RX_Pin GPIO_PIN_10
+#define Motor_RX_GPIO_Port GPIOA
+#define OLED_SCL_Pin GPIO_PIN_6
+#define OLED_SCL_GPIO_Port GPIOB
+#define OLED_SDA_Pin GPIO_PIN_7
+#define OLED_SDA_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

@@ -11,8 +11,9 @@ class Uart:
     def closs(self):
         self.uart.close()
 
-    def car_ready(self,wart=True):
+    def car_ready(self,wait=True):
         print("car is ready")
+        self.uart_send_command(task_id=99, param1=0, param2=0, wait=wait, timeout=99999)
 
 
     def uart_send_command(self,task_id,param1,param2,wait=True,timeout=10):
@@ -50,6 +51,27 @@ class Uart:
                 time.sleep(0.02) # 没有数据可读时暂停 20 毫秒
 
         print(f"get ack {args}") # 打印所有预期的确认信号
+
+    def uart_read_data(self, wait=True):
+        while True:
+            if self.uart.in_waiting >= 9:
+                data = self.uart.read(9)  # 读取9字节的数据
+
+                start_data = data[0:2]  # 取前两个字节
+                valid_data_1 = data[2:5]  # 取有效数据1（3字节）
+                valid_data_2 = data[5:8]  # 取有效数据2（3字节）
+                end_data = data[8]  # 取结束字节
+
+                # 检查起始位和结束位
+                if start_data != b'\x3B\xB3' or end_data != 0x6B:
+                    print("Invalid QR data!")
+                    continue
+
+                # 返回处理后的数据
+                task_data = [[valid_data_1[i] - 1 for i in range(3)],
+                             [valid_data_2[i] - 1 for i in range(3)]]
+
+                return task_data  # 返回解析后的任务数据
 
 
     def car_move_xy_cm(self,x,y,wait=True):

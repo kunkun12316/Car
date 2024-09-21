@@ -16,7 +16,7 @@ void HuaGui_Init_Proc(void)
 {
     if(HuaGui_Init_State == 1){
         printf("HuaGui Task");
-        Motor_SetPosition(5,8000,-50,0);
+        Motor_SetPosition(5,15000,-50,0);
         Motor_Run();
         HuaGui_Init_State = 2;
     } else if (HuaGui_Init_State == 2){
@@ -34,5 +34,59 @@ void HuaGui_Init_Proc(void)
         if (HuaGui_Turn(HuaGui_IN) == 1) {
             HuaGui_Init_State = 0;
         }
+    }
+}
+
+//按键相关配置
+uint8_t Motor_State = 1;
+extern uint8_t Running_Mode; // 运动模式
+uint8_t temp1 = 0, temp2 = 0, temp3 = 0, temp4 = 0;
+void Key_Proc(void)
+{
+    if(HAL_GPIO_ReadPin(KEY_1_GPIO_Port,KEY_1_Pin) == GPIO_PIN_RESET)
+    {
+        while(HAL_GPIO_ReadPin(KEY_1_GPIO_Port,KEY_1_Pin) == GPIO_PIN_RESET);
+        Motor_State = !Motor_State;
+        if(Motor_State == 1){
+            Motor_Enable_All();
+        } else {
+            Motor_Disable_All();
+        }
+        temp1 = 1;
+        temp2 = 0;
+        temp3 = 0;
+        temp4 = 0;
+    }
+    if (HAL_GPIO_ReadPin(KEY_2_GPIO_Port,KEY_2_Pin) == GPIO_PIN_RESET)
+    {
+        while (HAL_GPIO_ReadPin(KEY_2_GPIO_Port,KEY_2_Pin) == GPIO_PIN_RESET);
+        temp1 = 0;
+        temp2 = 1;
+        temp3 = 0;
+        temp4 = 0;
+    }
+    if (HAL_GPIO_ReadPin(KEY_3_GPIO_Port, KEY_3_Pin) == GPIO_PIN_RESET) {
+        while (HAL_GPIO_ReadPin(KEY_3_GPIO_Port, KEY_3_Pin) == GPIO_PIN_RESET);
+        // Temp_Val += 5;
+        Running_Mode++;
+        if (Running_Mode > 3)
+            Running_Mode = 0;
+        temp1 = 0;
+        temp2 = 0;
+        temp3 = 1;
+        temp4 = 0;
+    }
+    if (HAL_GPIO_ReadPin(KEY_4_GPIO_Port, KEY_4_Pin) == GPIO_PIN_RESET) // 小车启动
+    {
+        while (HAL_GPIO_ReadPin(KEY_4_GPIO_Port, KEY_4_Pin) == GPIO_PIN_RESET);
+        HAL_UART_Transmit(&huart4, "99", 2, 0xffff);
+#if Serial_Debug == 1
+        printf("GO!!!!!\r\n");
+#endif
+
+        temp1 = 0;
+        temp2 = 0;
+        temp3 = 0;
+        temp4 = 1;
     }
 }

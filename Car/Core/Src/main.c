@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dma.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -100,6 +101,10 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM7_Init();
   MX_USART3_UART_Init();
+  MX_I2C1_Init();
+  MX_UART4_Init();
+  MX_USART2_UART_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
     Bsp_Init();
 
@@ -107,9 +112,7 @@ int main(void)
     uint8_t time = 0;
     uint8_t flag = 0;
 
-//    Car_Task_Data_0 = 3;
-//    Car_Task_Data_1 = 1;
-//    Car_Task_Data_2 = 0;
+//Task_Num_0
 
     HuaGui_Init_State = 1;
     printf("Tar send!\r\n");

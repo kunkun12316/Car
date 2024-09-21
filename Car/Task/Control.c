@@ -86,17 +86,17 @@ void Control_Proc(void) {
         Motor_State_Scan(5);
     }
 
-    if (Car_Task_Data_0 != 0) {
-        Task_Flag[Car_Task_Data_0] = 1;
-        Task_Data1[Car_Task_Data_0] = Car_Task_Data_1;
-        Task_Data2[Car_Task_Data_0] = Car_Task_Data_2;
-        Task_Num_0 = Car_Task_Data_0;
-        Task_Num_1 = Car_Task_Data_1;
-        Task_Num_2 = Car_Task_Data_2;
+    if (Task_Num_0 != 0) {
+        Task_Flag[Task_Num_0] = 1;
+        Task_Data1[Task_Num_0] = Task_Num_1;
+        Task_Data2[Task_Num_0] = Task_Num_2;
+        Task_Num_0 = Task_Num_0;
+        Task_Num_1 = Task_Num_1;
+        Task_Num_2 = Task_Num_2;
 
-        Car_Task_Data_0 = 0;
-        Car_Task_Data_1 = 0;
-        Car_Task_Data_2 = 0;
+        Task_Num_0 = 0;
+        Task_Num_1 = 0;
+        Task_Num_2 = 0;
         Running_Flag = 1;
     }
     if (Task_Flag[1]) // 小车移动（x，y）
@@ -395,5 +395,10 @@ void Control_Proc(void) {
                 Running_Flag = 0;
             }
         }
+    }
+    if (Task_Flag[10]) //扫描二维码任务
+    {
+//QR_Data_1;
+//QR_Data_2;
     }
 }
