@@ -43,7 +43,7 @@ void Servo_SetAngle(uint8_t servo, float angle) {
     }
 }
 
-float JiaZhua_Angle = JiaZhua_Angle_Open;
+float JiaZhua_Angle = JiaZhua_Angle_Close;
 int8_t JiaZhua_Servo_Flag = 0;
 #define JiaZhua_Servo_Speed 1.3f;
 

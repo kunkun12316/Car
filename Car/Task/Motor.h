@@ -14,12 +14,12 @@ typedef enum
 } Motor_HuaGui_States;
 
 
-#define Motor_HuaGui_Pulse_DEFAULT 100
-#define Motor_HuaGui_Pulse_GROUND 13000
-#define Motor_HuaGui_Pulse_ZhuanPan 5000
-#define Motor_HuaGui_Pulse_Fang 4000
-#define Motor_HuaGui_Pulse_Qu 5000
-#define Motor_HuaGui_Pulse_DOWN2 5500
+#define Motor_HuaGui_Pulse_DEFAULT 100 //滑轨最高位
+#define Motor_HuaGui_Pulse_GROUND 6200 //滑轨夹取地上物块
+#define Motor_HuaGui_Pulse_ZhuanPan 600 //取转盘物块位置
+#define Motor_HuaGui_Pulse_Fang 1500 //小车载物盘放位置
+#define Motor_HuaGui_Pulse_Qu 1800 //小车载物盘取位置
+#define Motor_HuaGui_Pulse_DOWN2 2500 //第二次放置物块的位置
 
 
 extern uint8_t Motor_RxBuff;//

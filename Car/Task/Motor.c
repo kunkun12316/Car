@@ -3,8 +3,8 @@
 
 uint8_t Motor_RxBuff;
 uint8_t Send_Data[20];
-uint8_t Motor_Stop_Flag_Car = 0;// 小车停止标志位
-uint8_t Last_Motor_Stop_Flag_Car = 1;
+uint8_t Motor_Stop_Flag_Car = 0;// 小车停止标志位 1停止 0运行
+uint8_t Last_Motor_Stop_Flag_Car = 1; // 1停止 0运行
 uint16_t RxBuffer1[10] = {0};
 uint16_t Motor_HuaGui_Current_amount = 0; //电机电流值
 
@@ -817,7 +817,7 @@ void HuaGui_DOWN(uint16_t Motor_HuaGui_Speed, uint16_t Motor_HuaGui_Acc) {
     Motor_Run();
 }
 
-// 滑轨移动到第二个取物位置
+// 滑轨移动到第二个放物位置
 void HuaGui_DOWN2(uint16_t Motor_HuaGui_Speed, uint16_t Motor_HuaGui_Acc) {
     HuaGui_Motor_State = HuaGui_Motor_State_DOWN2;
     Motor_SetPosition_A(5, Motor_HuaGui_Pulse_DOWN2, Motor_HuaGui_Speed, Motor_HuaGui_Acc);

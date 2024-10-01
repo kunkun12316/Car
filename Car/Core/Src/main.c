@@ -60,9 +60,6 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 
-
-
-
 /* USER CODE END 0 */
 
 /**
@@ -117,6 +114,8 @@ int main(void)
     HuaGui_Init_State = 1;
     printf("Tar send!\r\n");
 
+    static uint8_t flag_huagui = 0;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -130,7 +129,7 @@ int main(void)
 
 //        printf(" x : %.2f", JY901_data.angle.angle[0]);
 //        printf(" y : %.2f", JY901_data.angle.angle[1]);
-//        printf(" z : %.2f  \n", JY901_data.angle.angle[2]);
+//        printf(" z : %.2f ", JY901_data.angle.angle[2]);
 //
 //        printf(" SP_x : %.2f", JY901_data.acc.a[0]);
 //        printf(" SP_y : %.2f", JY901_data.acc.a[1]);
@@ -139,7 +138,36 @@ int main(void)
         Control_Proc();
         process_kalman_filter();
         HuaGui_Init_Proc();
-        Delay_ms(500);
+
+        if (HuaGui_Init_State == 0){
+//            printf("HuaGui Task 0!\n");
+            JiaZhua_Turn(JiaZhua_Close);
+            HuaGui_Turn(HuaGui_OUT);
+//            ZaiWu_Turn(ZaiWu_Left);
+//            flag_huagui = 1;
+        }
+
+//        if(HuaGui_Init_State == 0 && flag_huagui == 1)
+//        {
+//            static uint8_t num = 0;
+////            if (num == 0 && Running_Flag == 0)
+////            {
+////                //滑轨向外
+////                Task_Num_0 = 4;
+////                Task_Num_1 = 1;
+////                num = 1;
+////            } else
+//            if (num == 0 && Running_Flag == 0)
+//            {
+//                printf("Jia wukuai!\n");
+//                Task_Num_0 = 5;
+//                Task_Num_1 = 1;
+//                Task_Num_2 = 0;
+//                num = 1;
+//            }
+//        }
+
+        Delay_ms(100);
 
     }
   /* USER CODE END 3 */

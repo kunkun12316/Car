@@ -15,8 +15,8 @@ uint8_t HuaGui_Init_State = 0;
 void HuaGui_Init_Proc(void)
 {
     if(HuaGui_Init_State == 1){
-        printf("HuaGui Task");
-        Motor_SetPosition(5,15000,-50,0);
+        printf("HuaGui Task 1 \n");
+        Motor_SetPosition(5,4000,-50,0);
         Motor_Run();
         HuaGui_Init_State = 2;
     } else if (HuaGui_Init_State == 2){
@@ -24,14 +24,16 @@ void HuaGui_Init_Proc(void)
 #if Serial_Debug == 1
         printf("Current_amount : %d\r\n", Motor_HuaGui_Current_amount); // 200
 #endif
-        if (Motor_HuaGui_Current_amount >= 520) {
+        if (Motor_HuaGui_Current_amount >= 150) { //默认520
+            printf("HuaGui Task 2\n");
             HuaGui_Init_State = 3;
             Motor_Reset(5);
             HuaGui_JiaoZhun();
             Servo_Init();
         }
     }else if (HuaGui_Init_State == 3) {
-        if (HuaGui_Turn(HuaGui_IN) == 1) {
+        printf("HuaGui Task 3!\n");
+        if (HuaGui_Turn(HuaGui_IN) == 1 && JiaZhua_Turn(JiaZhua_Open) == 1) {
             HuaGui_Init_State = 0;
         }
     }

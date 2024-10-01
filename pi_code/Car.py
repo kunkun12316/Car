@@ -33,6 +33,7 @@ class Car:
         """
         self.uart.car_move_xy_cm(-21, 0, True)
         self.uart.car_move_xy_cm(0, 65, False)
+        self.uart.arm_move_angle(angle="in", wait=True)
 
     def qr_task(self):
         """
@@ -93,7 +94,7 @@ class Car:
 
     def material_second_times_task(self):
         """
-        第二次到达原料区任务
+        第二次到达原料区任务 载物盘位置
         """
         print("material_second_times_task")
         self.material_task(1)
