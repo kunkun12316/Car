@@ -50,6 +50,10 @@ extern uint16_t Car_Task_Time;
 extern uint8_t Car_Counter_Enable;
 extern uint16_t Car_Counter_Times;
 
+extern uint8_t HuaGui_Counter_Enable;//控制车载计数器的启用和禁用。
+extern uint16_t HuaGui_Counter_Times;//车载计数器，用于记录车载事件次数。
+extern uint16_t HuaGui_Counter;//车载计数器计数的目标值。
+
 extern uint16_t Kalman_time;
 extern uint8_t Kalman_Set_Data_Flag;
 extern uint8_t Kalman_count;

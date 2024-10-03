@@ -15,22 +15,25 @@ typedef enum
 
 
 #define Motor_HuaGui_Pulse_DEFAULT 100 //滑轨最高位
-#define Motor_HuaGui_Pulse_GROUND 6200 //滑轨夹取地上物块
-#define Motor_HuaGui_Pulse_ZhuanPan 600 //取转盘物块位置
-#define Motor_HuaGui_Pulse_Fang 1500 //小车载物盘放位置
-#define Motor_HuaGui_Pulse_Qu 1800 //小车载物盘取位置
-#define Motor_HuaGui_Pulse_DOWN2 2500 //第二次放置物块的位置
+#define Motor_HuaGui_Pulse_GROUND 6900 //滑轨夹取地上物块
+#define Motor_HuaGui_Pulse_ZhuanPan 1000 //取转盘物块位置
+#define Motor_HuaGui_Pulse_Fang 2000 //小车载物盘放位置
+#define Motor_HuaGui_Pulse_Qu 2300 //小车载物盘取位置
+#define Motor_HuaGui_Pulse_DOWN2 2700 //第二次放置物块的位置
 
 
 extern uint8_t Motor_RxBuff;//
 extern uint8_t Send_Data[20];
 extern uint8_t Motor_Stop_Flag_Car;// 小车停止标志位
 extern uint8_t Last_Motor_Stop_Flag_Car;
-extern uint16_t RxBuffer1[10];
+extern uint16_t RxBuffer1[40];
 extern uint16_t Motor_HuaGui_Current_amount;
 
 extern uint8_t HuaGui_Motor_State;
 extern uint8_t Stop_Flag_HuaGui; // 滑轨电机停止标志位
+extern uint8_t HuaGui_Run_Task_Flag;
+extern uint16_t HuaGui_Speed;
+extern uint16_t HuaGui_Last_Speed;
 
 uint32_t My_ABS(int32_t temp);
 
@@ -42,6 +45,8 @@ void Motor_Stop(uint8_t Motor_Num);
 void Motor_Enable_All(void);
 void Motor_Disable_All(void);
 void Motor_State_Scan(uint8_t Motor_Num);
+void Motor_Speed_Scan(uint8_t Motor_Num);
+void Motor_System_Status_Scan(uint8_t Motor_Num);
 void Motor_Set_PID(uint8_t Motor_Num, uint32_t KP, uint32_t KI, uint32_t KD);
 void Motor_Read_Current(uint8_t Motor_Num);
 

@@ -83,7 +83,12 @@ void Control_Proc(void) {
 
     if (Running_Flag){
         Motor_State_Scan(1);
+        if (HuaGui_Counter_Enable && HuaGui_Counter > 500)
+        {
+//            Motor_System_Status_Scan(5);
+        }
         Motor_State_Scan(5);
+//        Motor_Speed_Scan(5);
     }
 
     if (Task_Num_0 != 0) {

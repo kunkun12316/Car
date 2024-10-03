@@ -137,9 +137,9 @@ uint8_t ZaiWu_Turn(ZaiWu_State state) {
             ret = 1;
         }
     } else if (state == ZaiWu_Mid) {
-        if (ZaiWu_Angle < ZaiWu_Angle_Mid - 4) {
+        if (ZaiWu_Angle < ZaiWu_Angle_Mid - 6) {
             ZaiWu_Servo_Flag = 1;
-        } else if (ZaiWu_Angle > ZaiWu_Angle_Mid + 4) {
+        } else if (ZaiWu_Angle > ZaiWu_Angle_Mid + 6) {
             ZaiWu_Servo_Flag = -1;
         } else {
             ZaiWu_Servo_Flag = 0;

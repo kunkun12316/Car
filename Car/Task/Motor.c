@@ -5,11 +5,14 @@ uint8_t Motor_RxBuff;
 uint8_t Send_Data[20];
 uint8_t Motor_Stop_Flag_Car = 0;// 小车停止标志位 1停止 0运行
 uint8_t Last_Motor_Stop_Flag_Car = 1; // 1停止 0运行
-uint16_t RxBuffer1[10] = {0};
+uint16_t RxBuffer1[40] = {0};
 uint16_t Motor_HuaGui_Current_amount = 0; //电机电流值
 
 uint8_t HuaGui_Motor_State = HuaGui_Motor_State_UP;
 uint8_t Stop_Flag_HuaGui = 1; // 滑轨电机停止标志位
+uint8_t HuaGui_Run_Task_Flag = 0; //1运行 0停止
+uint16_t HuaGui_Speed = 0; //滑轨实时速度
+uint16_t HuaGui_Last_Speed = 0; // 滑轨上次速度
 
 /*
 ---------------------------------电机发送指令函数---------------------------------
@@ -36,7 +39,7 @@ void Motor_Receive_Data(uint8_t com_data) {
         // 状态1：接收数据
     else if (RxState == 1) {
         RxBuffer1[RxCounter1++] = com_data; // 存储接收到的数据并增加计数器
-        if (RxCounter1 >= 10 || com_data == 0x6B) // 判断是否接收完毕或接收到结束标志
+        if (RxCounter1 >= 40 || com_data == 0x6B) // 判断是否接收完毕或接收到结束标志
         {
 #if Serial_Debug == 1
             for (int j = 0; j < RxCounter1; ++j) {
@@ -83,18 +86,18 @@ void Motor_Receive_Data(uint8_t com_data) {
                     RxBuffer1[i] = 0x00; // 清空数据数组前4个元素
                 }
 
-            } else if (RxBuffer1[0] == 0x05 && RxBuffer1[1] == 0x3A){
-                if (RxBuffer1[2] == 0x01) {
-                    //此时滑轨电机还未停止
-                    Stop_Flag_HuaGui = 0;
-#if Serial_Debug == 1
-                    printf("HuaGui not Stop!!\r\n"); // 如果开启调试，打印调试信息
-#endif
-                } else if (RxBuffer1[2] == 0x03) {
+            } else if (RxBuffer1[0] == 0x05 && RxBuffer1[1] == 0x3A) {
+                if (RxBuffer1[2] == 0x03) {
                     //这时滑轨电机停止
                     Stop_Flag_HuaGui = 1; // 设置滑轨停止标志
 #if Serial_Debug == 1
                     printf("HuaGui Stop!\r\n"); // 如果开启调试，打印调试信息
+#endif
+                } else {
+                    //此时滑轨电机还未停止
+                    Stop_Flag_HuaGui = 0;
+#if Serial_Debug == 1
+                    printf("HuaGui not Stop!!\r\n"); // 如果开启调试，打印调试信息
 #endif
                 }
                 for (i = 0; i < 4; i++) {
@@ -102,6 +105,32 @@ void Motor_Receive_Data(uint8_t com_data) {
                 }
             } else if (RxBuffer1[0] == 0x05 && RxBuffer1[1] == 0x27) {
                 Motor_HuaGui_Current_amount = RxBuffer1[2] << 8 | RxBuffer1[3]; // 合成当前电流量
+            } else if (RxBuffer1[0] == 0x05 && RxBuffer1[1] == 0x43) {
+
+                HuaGui_Speed = (RxBuffer1[16] << 8) | RxBuffer1[17];
+
+                if (HuaGui_Speed == 0 && HuaGui_Counter > 100) {
+                    Stop_Flag_HuaGui = 1; // 设置滑轨停止标志
+                    printf("HuaGui Counter : %d\n",HuaGui_Counter);
+                    HuaGui_Counter_Enable = 0;
+#if Serial_Debug == 1
+                    printf("HuaGui Stop!\r\n"); // 如果开启调试，打印调试信息
+#endif
+                } else {
+                    Stop_Flag_HuaGui = 0; // 设置滑轨运行标志
+#if Serial_Debug == 1
+                    printf("HuaGui No Stop!\r\n"); // 如果开启调试，打印调试信息
+#endif
+                }
+#ifdef Serial_Debug
+                printf("HuaGui Speed : %d\n", HuaGui_Speed);
+#endif
+
+                printf("Stop_Flag_HuaGui : %d\n",Stop_Flag_HuaGui);
+                HuaGui_Last_Speed = HuaGui_Speed;
+                for (i = 0; i < 32; i++) {
+                    RxBuffer1[i] = 0x00; // 清空数据数组前5个元素
+                }
             } else {
                 for (i = 0; i < 10; i++) {
                     RxBuffer1[i] = 0x00; // 清空数据数组
@@ -112,7 +141,7 @@ void Motor_Receive_Data(uint8_t com_data) {
             RxState = 0; // 返回初始状态
             RxCounter1 = 0; // 重置计数器
             Motor_Stop_Flag_Car = 2; // 设置小车停止错误标志
-            for (i = 0; i < 10; i++) {
+            for (i = 0; i < 40; i++) {
                 RxBuffer1[i] = 0x00; // 清空数据数组
             }
         }
@@ -170,8 +199,7 @@ void Motor_Clear(uint8_t Motor_Num) {
     Delay_ms(10);
 }
 
-void Motor_Stop(uint8_t Motor_Num)
-{
+void Motor_Stop(uint8_t Motor_Num) {
     Send_Data[0] = Motor_Num;
     Send_Data[1] = 0xFE;
     Send_Data[2] = 0x98;
@@ -211,8 +239,7 @@ void Motor_Disable_All(void) {
 }
 
 //底盘电机停止
-void Motor_Low_Stop(void)
-{
+void Motor_Low_Stop(void) {
     Motor_Stop(1);
     Motor_Stop(2);
     Motor_Stop(3);
@@ -220,12 +247,32 @@ void Motor_Low_Stop(void)
     Motor_Run();
 
 }
+
 // 电机状态检测
 void Motor_State_Scan(uint8_t Motor_Num) {
     Send_Data[0] = Motor_Num;
     Send_Data[1] = 0x3A;
     Send_Data[2] = 0x6B;
     HAL_UART_Transmit(&huart1, Send_Data, 3, 1000);
+    Delay_ms(20);
+}
+
+// 电机速度检测
+void Motor_Speed_Scan(uint8_t Motor_Num) {
+    Send_Data[0] = Motor_Num;
+    Send_Data[1] = 0x35;
+    Send_Data[2] = 0x6B;
+    HAL_UART_Transmit(&huart1, Send_Data, 3, 1000);
+    Delay_ms(20);
+}
+
+//电机系统状态
+void Motor_System_Status_Scan(uint8_t Motor_Num) {
+    Send_Data[0] = Motor_Num;
+    Send_Data[1] = 0x43;
+    Send_Data[2] = 0x7A;
+    Send_Data[3] = 0x6B;
+    HAL_UART_Transmit(&huart1, Send_Data, 4, 1000);
     Delay_ms(20);
 }
 

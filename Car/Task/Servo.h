@@ -13,9 +13,9 @@
 #define HuaGui_Angle_OUT 36
 #define HuaGui_Angle_IN 155
 //载物舵机的左、中、右角度
-#define ZaiWu_Angle_Left 25
-#define ZaiWu_Angle_Right 140
-#define ZaiWu_Angle_Mid 83
+#define ZaiWu_Angle_Left 20 //默认20
+#define ZaiWu_Angle_Right 138
+#define ZaiWu_Angle_Mid 80
 
 typedef enum {
     SERVO_ZaiWu = 0,
@@ -49,5 +49,8 @@ uint8_t ZaiWu_Turn(ZaiWu_State state);
 
 void Servo_CallBack(void);
 
+extern float JiaZhua_Angle;
+extern float HuaGui_Angle;
+extern float ZaiWu_Angle;
 
 #endif

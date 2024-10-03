@@ -1,7 +1,6 @@
 #include "Bsp.h"
 
-void Bsp_Init(void)
-{
+void Bsp_Init(void) {
     Delay_Init(168);
     Motor_Init();
     HAL_TIM_Base_Start_IT(&htim6);
@@ -12,27 +11,26 @@ void Bsp_Init(void)
 }
 
 uint8_t HuaGui_Init_State = 0;
-void HuaGui_Init_Proc(void)
-{
-    if(HuaGui_Init_State == 1){
-        printf("HuaGui Task 1 \n");
-        Motor_SetPosition(5,4000,-50,0);
+
+void HuaGui_Init_Proc(void) {
+    if (HuaGui_Init_State == 1) {
+        Motor_SetPosition(5, 4500, -50, 0);
         Motor_Run();
         HuaGui_Init_State = 2;
-    } else if (HuaGui_Init_State == 2){
+    } else if (HuaGui_Init_State == 2) {
         Motor_Read_Current(5);
 #if Serial_Debug == 1
         printf("Current_amount : %d\r\n", Motor_HuaGui_Current_amount); // 200
 #endif
-        if (Motor_HuaGui_Current_amount >= 150) { //默认520
-            printf("HuaGui Task 2\n");
+        HuaGui_Counter_Enable = 1;
+        if (Motor_HuaGui_Current_amount >= 50 && HuaGui_Counter > 200) { //默认520
+            HuaGui_Counter_Enable = 0;
             HuaGui_Init_State = 3;
             Motor_Reset(5);
-            HuaGui_JiaoZhun();
+//            HuaGui_JiaoZhun();
             Servo_Init();
         }
-    }else if (HuaGui_Init_State == 3) {
-        printf("HuaGui Task 3!\n");
+    } else if (HuaGui_Init_State == 3) {
         if (HuaGui_Turn(HuaGui_IN) == 1 && JiaZhua_Turn(JiaZhua_Open) == 1) {
             HuaGui_Init_State = 0;
         }
@@ -43,13 +41,12 @@ void HuaGui_Init_Proc(void)
 uint8_t Motor_State = 1;
 extern uint8_t Running_Mode; // 运动模式
 uint8_t temp1 = 0, temp2 = 0, temp3 = 0, temp4 = 0;
-void Key_Proc(void)
-{
-    if(HAL_GPIO_ReadPin(KEY_1_GPIO_Port,KEY_1_Pin) == GPIO_PIN_RESET)
-    {
-        while(HAL_GPIO_ReadPin(KEY_1_GPIO_Port,KEY_1_Pin) == GPIO_PIN_RESET);
+
+void Key_Proc(void) {
+    if (HAL_GPIO_ReadPin(KEY_1_GPIO_Port, KEY_1_Pin) == GPIO_PIN_RESET) {
+        while (HAL_GPIO_ReadPin(KEY_1_GPIO_Port, KEY_1_Pin) == GPIO_PIN_RESET);
         Motor_State = !Motor_State;
-        if(Motor_State == 1){
+        if (Motor_State == 1) {
             Motor_Enable_All();
         } else {
             Motor_Disable_All();
@@ -59,9 +56,8 @@ void Key_Proc(void)
         temp3 = 0;
         temp4 = 0;
     }
-    if (HAL_GPIO_ReadPin(KEY_2_GPIO_Port,KEY_2_Pin) == GPIO_PIN_RESET)
-    {
-        while (HAL_GPIO_ReadPin(KEY_2_GPIO_Port,KEY_2_Pin) == GPIO_PIN_RESET);
+    if (HAL_GPIO_ReadPin(KEY_2_GPIO_Port, KEY_2_Pin) == GPIO_PIN_RESET) {
+        while (HAL_GPIO_ReadPin(KEY_2_GPIO_Port, KEY_2_Pin) == GPIO_PIN_RESET);
         temp1 = 0;
         temp2 = 1;
         temp3 = 0;
