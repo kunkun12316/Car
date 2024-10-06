@@ -19,6 +19,7 @@ uint8_t QR_Data_2[3] = {0};
 
 void Usart_Init(void) {
     JY901S_Init();
+    PI_Init();
     //OpenMV_Init();
 }
 

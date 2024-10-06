@@ -27,11 +27,11 @@ void HuaGui_Init_Proc(void) {
             HuaGui_Counter_Enable = 0;
             HuaGui_Init_State = 3;
             Motor_Reset(5);
-//            HuaGui_JiaoZhun();
             Servo_Init();
         }
     } else if (HuaGui_Init_State == 3) {
         if (HuaGui_Turn(HuaGui_IN) == 1 && JiaZhua_Turn(JiaZhua_Open) == 1) {
+            HuaGui_Turn(HuaGui_OUT);
             HuaGui_Init_State = 0;
         }
     }

@@ -43,7 +43,7 @@ void Motor_Receive_Data(uint8_t com_data) {
         {
 #if Serial_Debug == 1
             for (int j = 0; j < RxCounter1; ++j) {
-                printf("%X\n", RxBuffer1[j]);
+                printf("%X ", RxBuffer1[j]);
             }
             printf("\r\n");
 #endif

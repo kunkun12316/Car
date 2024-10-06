@@ -18,22 +18,21 @@ class Uart:
 
     def uart_send_command(self,task_id,param1,param2,wait=True,timeout=10):
         print(f"@{task_id:02d}!{param1:+04d}|{param2:+04d}#")
-        self.uart.write(f"@{task_id:02d}!{param1:+04d}|{param2:+04d}#".encode("utf-8"))
+        self.uart.write(f"@{task_id:02d}!{param1:+04d}|{param2:+04d}#\n".encode("utf-8"))
         time.sleep(0.1)
         if wait is True:
-            self.wait_for_32_ack(timeout=timeout,task_id=task_id)
+            self.wait_for_32_ack(task_id,timeout=timeout)
 
-    def wait_for_32_ack(self,timeout=10,*args,**kwargs):
+    def wait_for_32_ack(self,task_id,timeout=10):
         """
         等待通过 UART（通用异步收发传输器）接口接收到特定的确认信号（ACK）。
+        :param task_id: 任务代号
         :param timeout:默认超时时间为 10 秒
-        :param args:代表传入的所有位置参数，这些参数通常是预期接收到的确认信号（ACK）的 ID。
-        :param kwargs:代表传入的所有关键字参数，虽然在这个函数中未使用，但可以用于扩展。
         :return:
         """
         time_begin = time.time() #记录当前时间
         time_end = time.time() + timeout #计算超时时间
-        task = list(args) #将预期确认信号转换为列表(task_id)
+        task = [task_id] #将预期确认信号转换为列表(task_id)
 
         while task: # 进入循环，直到所有确认信号接收到或超时
             if time.time() > time_end: # 检查是否超时
@@ -50,7 +49,7 @@ class Uart:
             else:
                 time.sleep(0.02) # 没有数据可读时暂停 20 毫秒
 
-        print(f"get ack {args}") # 打印所有预期的确认信号
+        print(f"get ack {task_id}") # 打印所有预期的确认信号
 
     def uart_read_data(self, wait=True):
         while True:
