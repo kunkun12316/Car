@@ -40,6 +40,7 @@ class Car:
         等待接收STM32返回二维码数据
         :return:
         """
+        self.uart.car_qr_read()
         self.task = self.uart.uart_read_data()
 
 

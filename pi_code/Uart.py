@@ -1,5 +1,7 @@
 import time
 import serial
+from sympy import false
+
 
 class Uart:
     def __init__(self,com="/dev/serial0"):
@@ -20,6 +22,7 @@ class Uart:
         print(f"@{task_id:02d}!{param1:+04d}|{param2:+04d}#")
         self.uart.write(f"@{task_id:02d}!{param1:+04d}|{param2:+04d}#\n".encode("utf-8"))
         time.sleep(0.1)
+        print(f"Send OK")
         if wait is True:
             self.wait_for_32_ack(task_id,timeout=timeout)
 
@@ -42,9 +45,16 @@ class Uart:
 
             if self.uart.in_waiting >= 2: # 检查UART串口是否有数据
                 rx_buf = self.uart.read(2).decode("utf-8") # 读取两个字节并解码
-                ack = int(rx_buf) # 将字符串转换为整数
+                # ack = int(rx_buf) # 将字符串转换为整数
+                try:
+                    ack = int(rx_buf)  # 尝试解码
+                    print(f"uart get ack:{ack}")
+                except UnicodeDecodeError:
+                    print(f"Received invalid data: {rx_buf}")
+                    continue  # 继续循环，等待下一个数据
+
                 if ack in task: # 如果接收到的确认信号在任务列表中
-                    print(f"get {ack}")
+                    print(f"get {ack} ok")
                     task.remove(ack) ## 从任务列表中移除该确认信号
             else:
                 time.sleep(0.02) # 没有数据可读时暂停 20 毫秒
@@ -55,6 +65,8 @@ class Uart:
         while True:
             if self.uart.in_waiting >= 9:
                 data = self.uart.read(9)  # 读取9字节的数据
+
+                print(f"get data: {data}")
 
                 start_data = data[0:2]  # 取前两个字节
                 valid_data_1 = data[2:5]  # 取有效数据1（3字节）
@@ -70,6 +82,8 @@ class Uart:
                 task_data = [[valid_data_1[i] - 1 for i in range(3)],
                              [valid_data_2[i] - 1 for i in range(3)]]
 
+                print(f"Qr Data {task_data}")
+
                 return task_data  # 返回解析后的任务数据
 
 
@@ -81,6 +95,9 @@ class Uart:
         print(f"car X{x} Y{y}")
         self.uart_send_command(task_id=9, param1=x, param2=y, wait=wait)
 
+    def car_qr_read(self, wait=True):
+        print("car qr read")
+        self.uart_send_command(task_id=10, param1=0, param2=0, wait=false)
 
     def car_move_calibration(self, wait=True):
         """
