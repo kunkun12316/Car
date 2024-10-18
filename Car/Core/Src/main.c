@@ -98,10 +98,10 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM7_Init();
   MX_USART3_UART_Init();
-  MX_I2C1_Init();
   MX_UART4_Init();
   MX_USART2_UART_Init();
   MX_USART6_UART_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
     Bsp_Init();
 
@@ -111,7 +111,7 @@ int main(void)
 
 //Task_Num_0
 
-    HuaGui_Init_State = 1;
+//    HuaGui_Init_State = 1;
     printf("Tar send!\r\n");
 
     static uint8_t flag_huagui = 0;
@@ -130,7 +130,7 @@ int main(void)
 //        printf(" x : %.2f", JY901_data.angle.angle[0]);
 //        printf(" y : %.2f", JY901_data.angle.angle[1]);
 //        printf(" z : %.2f ", JY901_data.angle.angle[2]);
-//
+
 //        printf(" SP_x : %.2f", JY901_data.acc.a[0]);
 //        printf(" SP_y : %.2f", JY901_data.acc.a[1]);
 //        printf(" SP_z : %.2f \r\n", JY901_data.acc.a[2]);
@@ -198,21 +198,66 @@ int main(void)
 //        }
 
 
-        //HuaGui_Init_Proc(); //
+        HuaGui_Init_Proc();
         Control_Proc();
         process_kalman_filter();
-//        PI_Data_Receive_Proc();
+        PI_Data_Receive_Proc();
 
-        if (HuaGui_Init_State == 0) {
-//            printf("HuaGui Task 0!\n");
-//            JiaZhua_Turn(JiaZhua_Close);
-//            HuaGui_Turn(HuaGui_OUT);
-//            ZaiWu_Turn(ZaiWu_Right);
-//            flag_huagui = 1;
-        }
+//        if (HuaGui_Init_State == 0) {
+////            printf("HuaGui Task 0!\n");
+////            JiaZhua_Turn(JiaZhua_Close);
+////            HuaGui_Turn(HuaGui_OUT);
+////            ZaiWu_Turn(ZaiWu_Right);
+////            flag_huagui = 1;
+//
+//
+//
+//            HuaGui_Init_State = 20;
+//        } else if (HuaGui_Init_State == 10 && Running_Flag == 0) {
+//
+//            PI_Data0 = 10;
+//            PI_Data1 = 0;
+//            PI_Data2 = 0;
+//
+//            HuaGui_Init_State = 20;
+//        } else if (HuaGui_Init_State == 20 && Running_Flag == 0) {
+//
+//            PI_Data0 = 1;
+//            PI_Data1 = -30;
+//            PI_Data2 = 100;
+//
+//            HuaGui_Init_State = 30;
+//        } else if (HuaGui_Init_State == 30 && Running_Flag == 0) {
+//            PI_Data0 = 1;
+//            PI_Data1 = 40;
+//            PI_Data2 = 50;
+//
+//            HuaGui_Init_State = 40;
+//        } else if (HuaGui_Init_State == 40 && Running_Flag == 0){
+//            PI_Data0 = 2;
+//            PI_Data1 = 90;
+//            PI_Data2 = 0;
+//
+//            HuaGui_Init_State = 50;
+//        }else if (HuaGui_Init_State == 50 && Running_Flag == 0){
+//            PI_Data0 = 7;
+//            PI_Data1 = 0;
+//            PI_Data2 = 0;
+//            HuaGui_Init_State = 60;
+//        }else if (HuaGui_Init_State == 60 && Running_Flag == 0){
+//            PI_Data0 = 2;
+//            PI_Data1 = 90;
+//            PI_Data2 = 0;
+//            HuaGui_Init_State = 70;
+//
+//        }else if (HuaGui_Init_State == 70 && Running_Flag == 0) {
+//            PI_Data0 = 7;
+//            PI_Data1 = 0;
+//            PI_Data2 = 0;
+//            HuaGui_Init_State = 100;
+//        }
 
-
-        Delay_ms(100);
+//        Delay_ms(100);
 
     }
   /* USER CODE END 3 */

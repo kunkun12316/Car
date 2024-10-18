@@ -23,8 +23,8 @@ class Camera:
         self.center_sz = center_sz
         self.center_wk = center_wk
         if self.model:
-            self.onnx_wk = Onnx.Onnx("model.onnx",obj_class=("red", "green", "blue"))
-            self.onnx_sz = Onnx.Onnx("model.onnx",obj_class=("red","green","blue","center_red","center_green","center_blue"))
+            self.onnx_wk = Onnx.Onnx("wk.onnx",obj_class=0.6,nms=0.6)
+            self.onnx_sh = Onnx.Onnx("sh.onnx",obj_class=0.7,nms=0.5)
         #使用threading的Thread方法创建一个新的线程，函数是self.update，args=()表明函数没有传入参数
         self.thread = threading.Thread(target=self.update,args=())
         for _ in range(10):
@@ -80,7 +80,7 @@ class Camera:
         center=self.center_wk if mod == "wk" else self.center_sz
         print(mod)
         while True:
-            boxes,classes = self.onnx_wk.onnx_detect(frame=self.frame) if mod == "wk" else self.onnx_sz.onnx_detect(frame=self.frame)
+            boxes,classes = self.onnx_wk.onnx_detect(frame=self.frame) if mod == "wk" else self.onnx_sh.onnx_detect(frame=self.frame)
             color, pos = Vision.find_closest_rectangle(boxes, classes, center, center)
             print(f"target_scan{color} {pos}")
             if color and pos is not None:
@@ -102,7 +102,7 @@ class Camera:
         """
         center = self.center_wk if mod == "wk" else self.center_sz
         while True:
-            boxes, classes = self.onnx_wk.onnx_detect(frame=self.frame) if mod == "wk" else self.onnx_sz.onnx_detect(frame=self.frame)
+            boxes, classes = self.onnx_wk.onnx_detect(frame=self.frame) if mod == "wk" else self.onnx_sh.onnx_detect(frame=self.frame)
             pos = Vision.find_target_color(boxes, classes, center,target_color)
             if pos is not None:
                 print(f"target_scan_color {pos}")

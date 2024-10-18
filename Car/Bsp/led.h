@@ -10,4 +10,8 @@
 #define LED1_TOGGLE() do{HAL_GPIO_TogglePin(LED1_GPIO_Port,LED1_Pin);}while(0)
 #define LED2_TOGGLE() do{HAL_GPIO_TogglePin(LED2_GPIO_Port,LED2_Pin);}while(0)
 
+//补光灯
+#define LED_1(x) do{x ? HAL_GPIO_WritePin(LED_1_GPIO_Port,LED_1_Pin,GPIO_PIN_SET) : HAL_GPIO_WritePin(LED_1_GPIO_Port,LED_1_Pin,GPIO_PIN_RESET) ; }while(0)
+#define LED_2(x) do{x ? HAL_GPIO_WritePin(LED_2_GPIO_Port,LED_2_Pin,GPIO_PIN_SET) : HAL_GPIO_WritePin(LED_2_GPIO_Port,LED_2_Pin,GPIO_PIN_RESET) ; }while(0)
+
 #endif

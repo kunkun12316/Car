@@ -3,6 +3,7 @@
 
 uint16_t u10ms;
 uint16_t Kalman_time;
+uint8_t OLED_time;
 
 double Yaw_Compensate = 0;//偏航补偿
 
@@ -48,10 +49,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
         if (HuaGui_Counter_Enable == 1) {
             HuaGui_Counter++;
+            printf("HuaGui_Counter : %d \n",HuaGui_Counter);
         }
 
-        if (HuaGui_Counter_Enable == 0)
-        {
+        if (HuaGui_Counter_Enable == 0) {
             HuaGui_Counter = 0;
         }
 
@@ -62,6 +63,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
             LED1_TOGGLE();
             Yaw_Compensate += 0.007;
             u10ms = 0;
+        }
+
+        OLED_time++;
+        if (OLED_time >= 50)
+        {
+            OLED_proc();
+            OLED_time = 0;
         }
 
         Kalman_time++;
@@ -77,7 +85,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
                 Kalman_count = 0;  // 也可以选择其他策略
             }
         }
-        if (Kalman_time >= 100 && Kalman_count >= 5){
+        if (Kalman_time >= 30 && Kalman_count >= 2) {
             Kalman_Set_Data_Flag = 1;
         }
 
@@ -107,6 +115,7 @@ uint8_t Get_Loads(uint8_t Dir, uint8_t From, uint16_t Motor_HuaGui_Speed, uint16
     if (Get_Loads_State == Stop_State) {
         HuaGui_UP(Motor_HuaGui_Speed, Motor_HuaGui_Acc);
         Counter_Enable = 1;
+        HuaGui_Counter_Enable = 1;
         Get_Loads_State = Get_JiaoZhun_State;
     } else if (Get_Loads_State == Get_JiaoZhun_State) {
         if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0) {
@@ -125,7 +134,8 @@ uint8_t Get_Loads(uint8_t Dir, uint8_t From, uint16_t Motor_HuaGui_Speed, uint16
         temp2 = JiaZhua_Turn(JiaZhua_Open);
         temp3 = HuaGui_Turn(HuaGui_OUT);
 //        printf("temp2 : %d, temp3 : %d, Stop_Flag_HuaGui : %d\n",temp2,temp3,Stop_Flag_HuaGui);
-        if (temp2 == 1 && temp3 == 1 && Stop_Flag_HuaGui == 1) {
+        if (temp2 == 1 && temp3 == 1 && (Stop_Flag_HuaGui == 1 || HuaGui_Counter > 30)) {
+            HuaGui_Counter = 0;
             if (From == 0) {
                 HuaGui_DOWN(Motor_HuaGui_Speed, Motor_HuaGui_Acc);
                 Counter_Enable = 1;
@@ -138,13 +148,13 @@ uint8_t Get_Loads(uint8_t Dir, uint8_t From, uint16_t Motor_HuaGui_Speed, uint16
             }
         }
     } else if (Get_Loads_State == Get_State1_5) {
-        if (Stop_Flag_HuaGui == 1 || HuaGui_Counter > 100) {
+        if (Stop_Flag_HuaGui == 1 || HuaGui_Counter > 30) {
             Get_Loads_State = Get_State2;
             Counter_Enable = 0;
             HuaGui_Counter_Enable = 0;
         }
     } else if (Get_Loads_State == Get_State1) {
-        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 100) {
+        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 50) {
             Get_Loads_State = Get_State2;
             Counter_Enable = 0;
             HuaGui_Counter_Enable = 0;
@@ -165,7 +175,7 @@ uint8_t Get_Loads(uint8_t Dir, uint8_t From, uint16_t Motor_HuaGui_Speed, uint16
             Counter_Enable = 1;
         }
     } else if (Get_Loads_State == Get_State3) {
-        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 100) {
+        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 30) {
             Get_Loads_State = Get_State4;
             Get_Loads_Return = 2;
             Counter_Enable = 0;
@@ -187,7 +197,7 @@ uint8_t Get_Loads(uint8_t Dir, uint8_t From, uint16_t Motor_HuaGui_Speed, uint16
             HuaGui_Counter_Enable = 1;
         }
     } else if (Get_Loads_State == Get_State5) {
-        if (Stop_Flag_HuaGui == 1 || HuaGui_Counter > 100) {
+        if (Stop_Flag_HuaGui == 1 || HuaGui_Counter > 20) {
             HuaGui_Counter_Enable = 0;
             Get_Loads_State = Get_State6;
         }
@@ -201,7 +211,7 @@ uint8_t Get_Loads(uint8_t Dir, uint8_t From, uint16_t Motor_HuaGui_Speed, uint16
             HuaGui_Counter_Enable = 1;
         }
     } else if (Get_Loads_State == Get_State7) {
-        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 100) {
+        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 20) {
             Get_Loads_State = Get_State8;
             Counter_Enable = 0;
             HuaGui_Counter_Enable = 0;
@@ -227,17 +237,16 @@ uint8_t Put_Loads(uint8_t Dir, uint8_t Tar, uint16_t Motor_HuaGui_Speed, uint16_
 
     if (Put_Loads_State == Put_State) {
         HuaGui_UP(Motor_HuaGui_Speed, Motor_HuaGui_Acc);
-        Counter_Enable = 1;
-        HuaGui_Counter_Enable = 1;
+        HuaGui_Turn(HuaGui_OUT);
         Put_Loads_State = Put_JiaoZhun_State;
+        printf("Put_JiaoZhun_State");
     } else if (Put_Loads_State == Put_JiaoZhun_State) {
-        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 100) {
-            Put_Loads_State = Put_Ready_State;
-            Counter_Enable = 0;
-            HuaGui_Counter = 0;
-        }
+        Put_Loads_State = Put_Ready_State;
+        HuaGui_Counter_Enable = 1;
+        printf("Put_Ready_State");
     } else if (Put_Loads_State == Put_Ready_State) {
-        if (Stop_Flag_HuaGui == 1 || HuaGui_Counter > 100) {
+        if (HuaGui_Counter > 30) {
+            HuaGui_Counter_Enable = 0;
             uint8_t temp1, temp2, temp3;
             if (Dir == 0)
                 temp1 = ZaiWu_Turn(ZaiWu_Mid);
@@ -247,29 +256,35 @@ uint8_t Put_Loads(uint8_t Dir, uint8_t Tar, uint16_t Motor_HuaGui_Speed, uint16_
                 temp1 = ZaiWu_Turn(ZaiWu_Right);
             temp2 = JiaZhua_Turn(JiaZhua_Open);
             temp3 = HuaGui_Turn(HuaGui_IN);
-//            printf("temp1 : %d,temp2 : %d, temp3 : %d\n",temp1,temp2,temp3);
+            printf("temp1 : %d,temp2 : %d, temp3 : %d\n",temp1,temp2,temp3);
             if (temp1 == 1 && temp2 == 1 && temp3 == 1) {
                 Put_Loads_State = Put_State1;
+                printf("Put_State1");
                 HuaGui_Qu(Motor_HuaGui_Speed, Motor_HuaGui_Acc);
+                HuaGui_Counter_Enable = 1;
+            } else {
                 HuaGui_Counter_Enable = 1;
             }
         }
     } else if (Put_Loads_State == Put_State1) {
-        if (Stop_Flag_HuaGui == 1 || HuaGui_Counter > 100) {
+        if (Stop_Flag_HuaGui == 1 || HuaGui_Counter > 20) {
             Put_Loads_State = Put_State2;
+            printf("Put_State2");
             HuaGui_Counter_Enable = 0;
         }
     } else if (Put_Loads_State == Put_State2) {
         uint8_t temp1 = JiaZhua_Turn(JiaZhua_Close);
         if (temp1 == 1) {
             Put_Loads_State = Put_State3;
+            printf("Put_State3");
             HuaGui_UP(Motor_HuaGui_Speed, Motor_HuaGui_Acc);
             Counter_Enable = 1;
             HuaGui_Counter_Enable = 1;
         }
     } else if (Put_Loads_State == Put_State3) {
-        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 100) {
+        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 30) {
             Put_Loads_State = Put_State4;
+            printf("Put_State4");
             Counter_Enable = 0;
             HuaGui_Counter_Enable = 0;
         }
@@ -281,31 +296,48 @@ uint8_t Put_Loads(uint8_t Dir, uint8_t Tar, uint16_t Motor_HuaGui_Speed, uint16_
                 Counter_Enable = 1;
                 HuaGui_Counter_Enable = 1;
                 Put_Loads_State = Put_State5;
+                printf("Put_State5");
             } else if (Tar == 1) {
                 HuaGui_DOWN2(Motor_HuaGui_Speed, Motor_HuaGui_Acc);
                 HuaGui_Counter_Enable = 1;
                 Put_Loads_State = Put_State5_5;
+                printf("Put_State5_5");
             }
         }
     } else if (Put_Loads_State == Put_State5_5) {
         uint8_t temp1 = ZaiWu_Turn(ZaiWu_Mid);
 
-        if ( (Stop_Flag_HuaGui == 1 || HuaGui_Counter > 100) && temp1 == 1 ) {
+        if ((Stop_Flag_HuaGui == 1 || HuaGui_Counter > 50) && temp1 == 1) {
             HuaGui_Counter_Enable = 0;
             Put_Loads_State = Put_State6;
+            printf("Put_State6");
         }
     } else if (Put_Loads_State == Put_State5) {
         uint8_t temp1 = ZaiWu_Turn(ZaiWu_Mid);
+        HuaGui_Counter_Enable = 1;
+        if (Dir == 0) {
+            if (temp1 == 1 && HuaGui_Counter > 50) {
+                Put_Loads_State = Put_State6;
+                printf("Put_State6");
 
-        if ((HuaGui_Counter || Stop_Flag_HuaGui == 1) && temp1 == 1 || Counter_Enable == 0) {
-            Put_Loads_State = Put_State6;
-            Counter_Enable = 0;
-            HuaGui_Counter_Enable = 0;
+                Counter_Enable = 0;
+                HuaGui_Counter_Enable = 0;
+            }
+        } else {
+            if (temp1 == 1 && HuaGui_Counter > 50) {
+                Put_Loads_State = Put_State6;
+                printf("Put_State6");
+
+                Counter_Enable = 0;
+                HuaGui_Counter_Enable = 0;
+            }
         }
+
     } else if (Put_Loads_State == Put_State6) {
         uint8_t temp1 = JiaZhua_Turn(JiaZhua_Open);
         if (temp1 == 1) {
             Put_Loads_State = Put_State7;
+            printf("Put_State7");
             HuaGui_UP(Motor_HuaGui_Speed, Motor_HuaGui_Acc);
             Counter_Enable = 1;
             HuaGui_Counter_Enable = 1;
@@ -313,13 +345,15 @@ uint8_t Put_Loads(uint8_t Dir, uint8_t Tar, uint16_t Motor_HuaGui_Speed, uint16_
             Put_Loads_Return = 2;
         }
     } else if (Put_Loads_State == Put_State7) {
-        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 100) {
+        if (Stop_Flag_HuaGui == 1 || Counter_Enable == 0 || HuaGui_Counter > 50) {
             Put_Loads_State = Put_End_State;
+            printf("Put_End_State");
             Counter_Enable = 0;
             HuaGui_Counter_Enable = 0;
         }
     } else if (Put_Loads_State == Put_End_State) {
         Put_Loads_State = Put_State;
+        printf("Put_State");
         Put_Loads_Return = 1;
     }
     return Put_Loads_Return;

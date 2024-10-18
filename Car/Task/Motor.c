@@ -3,7 +3,7 @@
 
 uint8_t Motor_RxBuff;
 uint8_t Send_Data[20];
-uint8_t Motor_Stop_Flag_Car = 0;// 小车停止标志位 1停止 0运行
+uint8_t Motor_Stop_Flag_Car = 1;// 小车停止标志位 1停止 0运行
 uint8_t Last_Motor_Stop_Flag_Car = 1; // 1停止 0运行
 uint16_t RxBuffer1[40] = {0};
 uint16_t Motor_HuaGui_Current_amount = 0; //电机电流值
@@ -42,10 +42,10 @@ void Motor_Receive_Data(uint8_t com_data) {
         if (RxCounter1 >= 40 || com_data == 0x6B) // 判断是否接收完毕或接收到结束标志
         {
 #if Serial_Debug == 1
-            for (int j = 0; j < RxCounter1; ++j) {
-                printf("%X ", RxBuffer1[j]);
-            }
-            printf("\r\n");
+//            for (int j = 0; j < RxCounter1; ++j) {
+//                printf("%X ", RxBuffer1[j]);
+//            }
+//            printf("\r\n");
 #endif
             RxState = 2; // 转换到状态2
         }

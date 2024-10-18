@@ -12,6 +12,11 @@ float last_Kalman[3] = {0.0};
 float kalman[20][3] = {0.0};
 uint8_t Kalman_count = 0;
 
+#define STABILITY_TIME_THRESHOLD 50 // 稳定时间阈值（例如，50个周期）
+#define ACCELERATION_THRESHOLD 0.02 // 加速度变化阈值
+
+int stability_counter = 0; // 稳定计数器
+
 //接收结构体初始化
 void User_USART_Init(User_USART *Data) {
     for (uint16_t i = 0; i < RXBUFFER_LEN; i++) Data->RxBuffer[i] = 0;
@@ -79,10 +84,10 @@ void process_kalman_filter(void) {
                 my_abs_float(Kalman_Acc[1] - last_Kalman[1]) <= 0.02 &&
                 my_abs_float(Kalman_Acc[2] - last_Kalman[2]) <= 0.02) {
                 Motor_Stop_Flag_Car_Kalman = 1;  // 小车静止
-                printf("car kalman stop!\n");
+                printf("car kalman stop!  stop!  stop!   stop!   stop!\n");
             } else {
                 Motor_Stop_Flag_Car_Kalman = 0;  // 小车移动
-                printf("car kalman running!\n");
+                printf("car kalman running!  running!  running!  running!\n");
             }
 
 //                printf("Kalman: ax: %f, ay: %f, az: %f\n", my_abs_float(Acc[0] - last_Kalman[0]), my_abs_float(Acc[1] - last_Kalman[1]), my_abs_float(Acc[2] - last_Kalman[2]));

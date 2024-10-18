@@ -10,12 +10,12 @@
 #define JiaZhua_Angle_Open  45   //45
 #define JiaZhua_Angle_Close 153    //153
 //滑轨舵机的内外角度
-#define HuaGui_Angle_OUT 36
+#define HuaGui_Angle_OUT 37.7 //初始36
 #define HuaGui_Angle_IN 155
 //载物舵机的左、中、右角度
 #define ZaiWu_Angle_Left 20 //默认20
+#define ZaiWu_Angle_Mid 83
 #define ZaiWu_Angle_Right 138
-#define ZaiWu_Angle_Mid 80
 
 typedef enum {
     SERVO_ZaiWu = 0,

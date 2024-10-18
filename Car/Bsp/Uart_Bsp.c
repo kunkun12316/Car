@@ -20,6 +20,8 @@ uint8_t QR_Data_2[3] = {0};
 void Usart_Init(void) {
     JY901S_Init();
     PI_Init();
+//    GM65_Init();
+//    UART_LCD();
     //OpenMV_Init();
 }
 
@@ -40,7 +42,7 @@ void JY901S_Init(void) {
 }
 
 //将二维码信息发送给树莓派
-void Send_QR_Data_to_RB(void) {
+uint8_t Send_QR_Data_to_RB(void) {
     uint8_t Start_Byte[2] = {0x3B, 0xB3};  // 起始字节
     uint8_t End_Byte = 0x6B;               // 结束字节
 
@@ -62,5 +64,18 @@ void Send_QR_Data_to_RB(void) {
     Send_Data[8] = End_Byte;
 
     // 通过 UART 发送数据
-    HAL_UART_Transmit(&huart4, Send_Data, 9, HAL_MAX_DELAY);
+    HAL_StatusTypeDef status;
+    status = HAL_UART_Transmit(&huart4, Send_Data, 9, HAL_MAX_DELAY);
+
+    if (status == HAL_OK) {
+        // 传输成功
+        return 1;
+    } else {
+        return 0;
+    }
+
 }
+
+uint8_t task_num_show_0 = 0;
+uint8_t task_num_show_1 = 0;
+uint8_t task_num_show_2 = 0;

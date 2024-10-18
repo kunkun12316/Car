@@ -1,19 +1,22 @@
 #include "Bsp.h"
 
 void Bsp_Init(void) {
+    ssd1306_Init();
+
     Delay_Init(168);
     Motor_Init();
     HAL_TIM_Base_Start_IT(&htim6);
 
     Usart_Init();
 
-    Delay_ms(1000);
+    Delay_ms(500);
 }
 
 uint8_t HuaGui_Init_State = 0;
 
 void HuaGui_Init_Proc(void) {
     if (HuaGui_Init_State == 1) {
+
         Motor_SetPosition(5, 4500, -50, 0);
         Motor_Run();
         HuaGui_Init_State = 2;
@@ -31,8 +34,13 @@ void HuaGui_Init_Proc(void) {
         }
     } else if (HuaGui_Init_State == 3) {
         if (HuaGui_Turn(HuaGui_IN) == 1 && JiaZhua_Turn(JiaZhua_Open) == 1) {
-            HuaGui_Turn(HuaGui_OUT);
+            LED_2(1);
+            LED_1(1);
+//            HuaGui_Turn(HuaGui_OUT);
             HuaGui_Init_State = 0;
+            Running_Flag = 0;
+            printf("HuaGui Init Over!\n");
+            HAL_UART_Transmit(&huart4, "99", 2, 0xffff);
         }
     }
 }
@@ -87,4 +95,45 @@ void Key_Proc(void) {
         temp3 = 0;
         temp4 = 1;
     }
+}
+
+char OLED_buffer[3]; // 用于存放转换后的字符串
+
+void OLED_proc(void)
+{
+    ssd1306_Fill(White);
+
+    ssd1306_SetCursor(3, 1);
+    ssd1306_WriteString("Car : ", Font_11x18, Black);
+    ssd1306_SetCursor(70, 1);
+    snprintf(OLED_buffer, sizeof(OLED_buffer), "%d", Motor_Stop_Flag_Car);
+    ssd1306_WriteString(OLED_buffer, Font_11x18, Black);
+
+
+    ssd1306_SetCursor(3, 20);
+    ssd1306_WriteString("HG  : ", Font_11x18, Black);
+    ssd1306_SetCursor(70, 20);
+    snprintf(OLED_buffer, sizeof(OLED_buffer), "%d", Stop_Flag_HuaGui);
+    ssd1306_WriteString(OLED_buffer, Font_11x18, Black);
+
+    ssd1306_SetCursor(3, 40);
+    ssd1306_WriteString("IMU : ", Font_11x18, Black);
+    ssd1306_SetCursor(70, 40);
+    snprintf(OLED_buffer, sizeof(OLED_buffer), "%d", Motor_Stop_Flag_Car_Kalman);
+    ssd1306_WriteString(OLED_buffer, Font_11x18, Black);
+
+    ssd1306_SetCursor(100, 1);
+    snprintf(OLED_buffer, sizeof(OLED_buffer), "%d", task_num_show_0);
+    ssd1306_WriteString(OLED_buffer, Font_11x18, Black);
+
+    ssd1306_SetCursor(100, 20);
+    snprintf(OLED_buffer, sizeof(OLED_buffer), "%d", task_num_show_1);
+    ssd1306_WriteString(OLED_buffer, Font_11x18, Black);
+
+    ssd1306_SetCursor(100, 40);
+    snprintf(OLED_buffer, sizeof(OLED_buffer), "%d", task_num_show_2);
+    ssd1306_WriteString(OLED_buffer, Font_11x18, Black);
+
+
+    ssd1306_UpdateScreen(); // 确保调用此函数来更新显示
 }

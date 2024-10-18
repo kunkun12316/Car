@@ -22,8 +22,28 @@
   <component name="ChangeListManager">
     <list default="true" id="6a652ae4-533b-4eb6-a7cd-cc56cf75cd07" name="Changes" comment="Changes">
       <change afterPath="$PROJECT_DIR$/../../1/.idea/1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Bsp/PI.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Bsp/PI.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bsp/ssd1306.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bsp/ssd1306.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bsp/ssd1306_conf.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bsp/ssd1306_fonts.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bsp/ssd1306_fonts.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bsp/ssd1306_tests.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Bsp/ssd1306_tests.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PI/123.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PI/Camera.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PI/Car.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PI/Rknn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PI/Uart.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PI/Vision.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PI/frames.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/OLED/.idea/runConfigurations/OCD_OLED.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/OLED/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/OLED/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/OLED/CMakeLists_template.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/OLED/Core/Inc/oled.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/OLED/Core/Inc/oledfont.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/OLED/Core/Src/oled.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/OLED/stm32f4discovery.cfg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Init/PWM_OUT/.idea/PWM_OUT.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Init/PWM_OUT/.idea/misc.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Init/PWM_OUT/.idea/modules.xml" afterDir="false" />
@@ -35,38 +55,63 @@
       <change afterPath="$PROJECT_DIR$/../../Init/PWM_OUT/Core/Inc/servo.h" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Init/PWM_OUT/Core/Src/servo.c" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../Init/PWM_OUT/stm32f4discovery.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/abcd/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/abcd/CMakeLists_template.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Init/abcd/stm32f4discovery.cfg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../try/.idea/try.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bsp/Bsp.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Bsp.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bsp/Bsp.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Bsp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/JY901.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/JY901.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/PI.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/PI.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Bsp/Uart_Bsp.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Uart_Bsp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/Uart_Bsp.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Uart_Bsp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/gm65.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/gm65.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/gm65.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/gm65.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/led.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/led.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Car.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/Car.ioc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/stm32f4xx_it.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/stm32f4xx_it.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/i2c.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/i2c.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/i2c.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/i2c.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/usart.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/usart.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task/Control.c" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Control.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task/Motor.c" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Motor.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-b195b88bb9edfa62dbec.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-10-01T04-03-55-0683.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Car.elf-Debug-20e25da10b91d559fbb1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task/Motor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Motor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task/Move.c" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Move.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task/Servo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Servo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-60baebb6c783357ca857.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-10-05T06-22-22-0443.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Car.elf-Debug-48242e862d44c9515a10.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeSystem.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeSystem.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Bsp.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Bsp.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/JY901.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/JY901.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/PI.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/PI.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Uart_Bsp.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Uart_Bsp.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/i2c.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/i2c.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/main.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/main.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/stm32f4xx_it.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/stm32f4xx_it.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/usart.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/usart.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Control.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Control.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Motor.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Motor.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Move.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Move.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Servo.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Servo.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.elf" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.hex" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.hex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.map" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pi_code/Camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pi_code/Camera.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pi_code/Uart.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pi_code/Uart.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pi_code/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pi_code/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pi_code/hpc_SH.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pi_code/hpc_SH.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pi_code/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pi_code/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pi_code/test.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,6 +171,7 @@
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/fys/CLionProjects/STM32/Car/Car/Bsp&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -136,8 +182,18 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Bsp" />
+    </key>
+  </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.OCD Car">
     <configuration name="Car.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Car" TARGET_NAME="Car.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Car" RUN_TARGET_NAME="Car.elf">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -181,7 +237,37 @@
       <workItem from="1728021793629" duration="3294000" />
       <workItem from="1728109188885" duration="2286000" />
       <workItem from="1728114807515" duration="9612000" />
-      <workItem from="1728217456883" duration="1397000" />
+      <workItem from="1728217456883" duration="9810000" />
+      <workItem from="1728216476028" duration="475000" />
+      <workItem from="1728217527031" duration="143000" />
+      <workItem from="1728218141287" duration="2490000" />
+      <workItem from="1728266712310" duration="2709000" />
+      <workItem from="1728270916269" duration="6137000" />
+      <workItem from="1728301487534" duration="622000" />
+      <workItem from="1728437857774" duration="3308000" />
+      <workItem from="1728471843713" duration="4076000" />
+      <workItem from="1728503318258" duration="604000" />
+      <workItem from="1728565882712" duration="1055000" />
+      <workItem from="1728596871123" duration="244000" />
+      <workItem from="1728637811783" duration="602000" />
+      <workItem from="1728681144263" duration="462000" />
+      <workItem from="1728698513341" duration="1071000" />
+      <workItem from="1728700474402" duration="2246000" />
+      <workItem from="1728726287983" duration="2346000" />
+      <workItem from="1728794954757" duration="609000" />
+      <workItem from="1728834065829" duration="730000" />
+      <workItem from="1728996142960" duration="1542000" />
+      <workItem from="1729056501472" duration="13000" />
+      <workItem from="1729057818419" duration="582000" />
+      <workItem from="1729058510023" duration="1000" />
+      <workItem from="1729061433590" duration="2680000" />
+      <workItem from="1729095164251" duration="599000" />
+      <workItem from="1729126904849" duration="719000" />
+      <workItem from="1729167734272" duration="678000" />
+      <workItem from="1729234431361" duration="4001000" />
+      <workItem from="1729238583077" duration="6560000" />
+      <workItem from="1729248103165" duration="8263000" />
+      <workItem from="1729290075447" duration="2060000" />
     </task>
     <servers />
   </component>

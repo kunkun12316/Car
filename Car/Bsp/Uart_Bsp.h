@@ -21,7 +21,13 @@ extern uint8_t JY_Rxdata;
 extern uint8_t QR_Data_1[3];
 extern uint8_t QR_Data_2[3];
 
+//OLED显示数据
+extern uint8_t task_num_show_0;
+extern uint8_t task_num_show_1;
+extern uint8_t task_num_show_2;
+
 extern void Usart_Init(void);
+uint8_t Send_QR_Data_to_RB(void);
 
 void JY901S_Init(void);
 void IMU_Proc(void);

@@ -97,7 +97,7 @@ class yolov5_lite():
                 # print(f"Detected {self.classes[classIds[i]]} at center ({center_x}, {center_y})")
         else:
             print("No valid boxes after NMS")
-        return frame , detected_objects
+        return frame , boxes, classIds
 
     def drawPred(self, frame, classId, conf, left, top, right, bottom):
         # Draw a bounding box.
@@ -135,8 +135,8 @@ class yolov5_lite():
             row_ind += length
 
         # 调用修改后的 postprocess 返回检测结果和中心点
-        frame , detected_objects = self.postprocess(srcimg, outs, (newh, neww, top, left))
-        return frame , detected_objects
+        frame , boxes, classIds = self.postprocess(srcimg, outs, (newh, neww, top, left))
+        return frame , boxes, classIds
 
 
 
@@ -157,21 +157,20 @@ def detect_objects_from_camera(modelpath, classfile, confThreshold=0.5, nmsThres
     ret, frame = cap.read()
 
     print("Capturing image...")
-    detected_frame , detected_objects = net.detect(frame)
+    detected_frame , boxes, classIds = net.detect(frame)
     cv2.imwrite("frame.jpg", detected_frame)  # 保存图像
 
     cap.release()
     cv2.destroyAllWindows()
 
-    return detected_frame , detected_objects
+    return detected_frame , boxes, classIds
 
 # 使用示例
 if __name__ == "__main__":
     model_path = "sh.onnx"  # 模型路径
     class_file = "color.names"  # 类别文件路径
-    detected_frame , detected_objects = detect_objects_from_camera(model_path, class_file)
-    # # 打印检测到的类别和中心点
-    for obj_class, center in detected_objects:
-        print(f"Class: {obj_class}, Center: {center}")
+    detected_frame , boxes, classIds = detect_objects_from_camera(model_path, class_file)
+    print(f"classIds : {classIds}")
+    print(f"boxes : {boxes}")
 
     cv2.imshow("Camera", detected_frame)

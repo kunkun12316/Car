@@ -65,14 +65,14 @@ void PI_Receive_Data(char com_data[]) {
         PI_RawData2[3] = com_data[12];
         PI_RawData2[4] = '\0'; // 添加字符串结束符
 
-        printf("PI_RawData0 : %s \n",PI_RawData0);
-        printf("PI_RawData1 : %s \n",PI_RawData1);
-        printf("PI_RawData2 : %s \n",PI_RawData2);
+//        printf("PI_RawData0 : %s \n",PI_RawData0);
+//        printf("PI_RawData1 : %s \n",PI_RawData1);
+//        printf("PI_RawData2 : %s \n",PI_RawData2);
 
 
-        for (int j = 0; j < 14; ++j) {
-            printf("Rev %d : %c \n",j,com_data[j]);
-        }
+//        for (int j = 0; j < 14; ++j) {
+//            printf("Rev %d : %c \n",j,com_data[j]);
+//        }
 
         RxFlag = 1;
     }

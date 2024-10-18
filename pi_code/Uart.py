@@ -79,8 +79,8 @@ class Uart:
                     continue
 
                 # 返回处理后的数据
-                task_data = [[valid_data_1[i] - 1 for i in range(3)],
-                             [valid_data_2[i] - 1 for i in range(3)]]
+                task_data = [[valid_data_1[i]  for i in range(3)],
+                             [valid_data_2[i]  for i in range(3)]]
 
                 print(f"Qr Data {task_data}")
 
