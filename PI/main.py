@@ -1,18 +1,22 @@
 import Car
 
 if __name__ == '__main__':
-    car = Car.Car(com="/dev/ttyS2",cam=0,correct_times=5)
+    car = Car.Car(com="/dev/ttyS0",cam=0,correct_times=5)
 
     car.car_ready()
 
     # 前往二维码区
-    car.move_to_qr()
-    car.qr_task()
+    #car.move_to_qr()
+    #car.qr_task()
+    
+    #car.move_to_material()
+    
+    car.temp_first_times_task()
 
     # 前往原料区
-    car.move_to_material()
-    car.material_first_times_task()
-
+    #car.move_to_material()
+    #car.material_first_times_task()
+"""
     # 前往粗加工区
     car.move_to_temp()
     car.temp_first_times_task()
@@ -36,3 +40,4 @@ if __name__ == '__main__':
     # 返回起点
     car.back_to_begin()
     del car
+"""

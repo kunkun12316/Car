@@ -141,7 +141,7 @@ void Control_Proc(void) {
                 Car_Counter_Enable = 0;
                 temp = 0;
                 Task_Flag[1] = 0;
-                HAL_UART_Transmit(&huart4, "01", 2, 0xffff);
+//                HAL_UART_Transmit(&huart4, "01", 2, 0xffff);
 #if Serial_Debug == 1
                 printf("Task 1 End\r\n");
 #endif
@@ -168,7 +168,7 @@ void Control_Proc(void) {
             Car_Counter_Enable = 0;
             temp = 0;
             Task_Flag[2] = 0;
-            HAL_UART_Transmit(&huart4, "02", 2, 0xffff);
+//            HAL_UART_Transmit(&huart4, "02", 2, 0xffff);
 #if Serial_Debug == 1
             printf("Task 2 End\r\n");
 #endif
@@ -214,7 +214,7 @@ void Control_Proc(void) {
                 HuaGui_Counter_Enable = 0;
                 temp = 0;
                 Task_Flag[3] = 0;
-                HAL_UART_Transmit(&huart4, "03", 2, 0xffff);
+//                HAL_UART_Transmit(&huart4, "03", 2, 0xffff);
 #if Serial_Debug == 1
                 printf("Task 3 End\r\n");
 #endif
@@ -244,7 +244,7 @@ void Control_Proc(void) {
             HuaGui_Counter_Enable = 0;
             temp = 0;
             Task_Flag[4] = 0;
-            HAL_UART_Transmit(&huart4, "04", 2, 0xffff);
+//            HAL_UART_Transmit(&huart4, "04", 2, 0xffff);
 #if Serial_Debug == 1
             printf("Task 4 End\r\n");
 #endif
@@ -266,16 +266,16 @@ void Control_Proc(void) {
             if (temp_state == 1) {
                 temp = 1;
             } else if (temp_state == 2) {
-//                HAL_UART_Transmit(&huart4, "95", 2, 0xffff);
+                HAL_UART_Transmit(&huart6, "95", 2, 0xffff);
             } else if (temp_state == 3) {
-//                HAL_UART_Transmit(&huart4, "85", 2, 0xffff);
+                HAL_UART_Transmit(&huart6, "85", 2, 0xffff);
             }
         } else if (temp == 1) {
             temp = 0;
             temp1 = 0;
             temp2 = 0;
             Task_Flag[5] = 0;
-            HAL_UART_Transmit(&huart4, "05", 2, 0xffff);
+//            HAL_UART_Transmit(&huart4, "05", 2, 0xffff);
 #if Serial_Debug == 1
             printf("Task 5 End\r\n");
 #endif
@@ -297,14 +297,14 @@ void Control_Proc(void) {
             if (temp_state == 1) {
                 temp = 1;
             } else if (temp_state == 2) {
-//                HAL_UART_Transmit(&huart4, "96", 2, 0xffff);
+                HAL_UART_Transmit(&huart4, "96", 2, 0xffff);
             }
         } else if (temp == 1) {
             temp = 0;
             temp1 = 0;
             temp2 = 0;
             Task_Flag[6] = 0;
-            HAL_UART_Transmit(&huart4, "06", 2, 0xffff);
+//            HAL_UART_Transmit(&huart4, "06", 2, 0xffff);
 #if Serial_Debug == 1
             printf("Task 6 End\r\n");
 #endif
@@ -321,7 +321,7 @@ void Control_Proc(void) {
         if (temp == 1  && Car_Counter > 50) {
             Car_Counter_Enable = 0;
             Task_Flag[7] = 0;
-            HAL_UART_Transmit(&huart4, "07", 2, 0xffff);
+//            HAL_UART_Transmit(&huart4, "07", 2, 0xffff);
 #if Serial_Debug == 1
             printf("Task 7 End\r\n");
 #endif
@@ -361,7 +361,7 @@ void Control_Proc(void) {
                 Car_Counter_Enable = 0;
                 temp = 0;
                 Task_Flag[9] = 0;
-                HAL_UART_Transmit(&huart4, "09", 2, 0xffff);
+//                HAL_UART_Transmit(&huart4, "09", 2, 0xffff);
 #if Serial_Debug == 1
                 printf("Task 9 End\r\n");
 #endif
@@ -420,7 +420,7 @@ void Control_Proc(void) {
             Running_Flag = 0;
         }
     }
-    if (Task_Flag[99]) //扫描二维码任务
+    if (Task_Flag[99]) //初始化任务
     {
         HuaGui_Init_State = 1;
         Task_Flag[99] = 0;

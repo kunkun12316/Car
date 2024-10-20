@@ -28,6 +28,7 @@ extern uint8_t task_num_show_2;
 
 extern void Usart_Init(void);
 uint8_t Send_QR_Data_to_RB(void);
+uint8_t Send_Task_ID_To_RB(uint8_t task_id);
 
 void JY901S_Init(void);
 void IMU_Proc(void);

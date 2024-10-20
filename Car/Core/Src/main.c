@@ -111,7 +111,6 @@ int main(void)
 
 //Task_Num_0
 
-//    HuaGui_Init_State = 1;
     printf("Tar send!\r\n");
 
     static uint8_t flag_huagui = 0;
@@ -197,11 +196,12 @@ int main(void)
 //            }
 //        }
 
-
+        Key_Proc();
+        Process_OP_Data();
+        PI_Data_Receive_Proc();
         HuaGui_Init_Proc();
         Control_Proc();
         process_kalman_filter();
-        PI_Data_Receive_Proc();
 
 //        if (HuaGui_Init_State == 0) {
 ////            printf("HuaGui Task 0!\n");

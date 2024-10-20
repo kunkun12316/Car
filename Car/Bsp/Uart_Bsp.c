@@ -79,3 +79,28 @@ uint8_t Send_QR_Data_to_RB(void) {
 uint8_t task_num_show_0 = 0;
 uint8_t task_num_show_1 = 0;
 uint8_t task_num_show_2 = 0;
+
+uint8_t Send_Task_ID_To_RB(uint8_t task_id)
+{
+    // 定义包含起始位、数据位和结束位的发送数据
+    uint8_t data_to_send[3];
+
+    // 起始位
+    data_to_send[0] = 0x3B;  // 你可以将起始位设为其他值
+
+    // 数据位，直接为 task_id 的值
+    data_to_send[1] = task_id;  // 数据位
+
+    // 结束位
+    data_to_send[2] = 0x6B;  // 你可以将结束位设为其他值
+
+    // 通过UART发送完整的3字节数据 (起始位 + 数据位 + 结束位)
+    if (HAL_UART_Transmit(&huart4, data_to_send, sizeof(data_to_send), HAL_MAX_DELAY) == HAL_OK)
+    {
+        return 1;  // 发送成功返回1
+    }
+    else
+    {
+        return 0;  // 发送失败返回0
+    }
+}

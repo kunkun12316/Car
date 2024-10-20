@@ -73,13 +73,13 @@ void Motor_Receive_Data(uint8_t com_data) {
                     //此时地盘电机还未停止
                     Motor_Stop_Flag_Car = 0;
 #if Serial_Debug == 1
-                    printf("Car not Stop!!\r\n"); // 如果开启调试，打印调试信息
+//                    printf("Car not Stop!!\r\n"); // 如果开启调试，打印调试信息
 #endif
                 } else if (RxBuffer1[2] == 0x03) {
                     //这时底盘电机停止
                     Motor_Stop_Flag_Car = 1; // 设置小车停止标志
 #if Serial_Debug == 1
-                    printf("Car Stop!\r\n"); // 如果开启调试，打印调试信息
+//                    printf("Car Stop!\r\n"); // 如果开启调试，打印调试信息
 #endif
                 }
                 for (i = 0; i < 4; i++) {
@@ -91,13 +91,13 @@ void Motor_Receive_Data(uint8_t com_data) {
                     //这时滑轨电机停止
                     Stop_Flag_HuaGui = 1; // 设置滑轨停止标志
 #if Serial_Debug == 1
-                    printf("HuaGui Stop!\r\n"); // 如果开启调试，打印调试信息
+//                    printf("HuaGui Stop!\r\n"); // 如果开启调试，打印调试信息
 #endif
                 } else {
                     //此时滑轨电机还未停止
                     Stop_Flag_HuaGui = 0;
 #if Serial_Debug == 1
-                    printf("HuaGui not Stop!!\r\n"); // 如果开启调试，打印调试信息
+//                    printf("HuaGui not Stop!!\r\n"); // 如果开启调试，打印调试信息
 #endif
                 }
                 for (i = 0; i < 4; i++) {

@@ -73,128 +73,115 @@ extern UART_HandleTypeDef huart6;
 /**
   * @brief This function handles Non maskable interrupt.
   */
-void NMI_Handler(void)
-{
-  /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
+void NMI_Handler(void) {
+    /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
 
-  /* USER CODE END NonMaskableInt_IRQn 0 */
-  /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
+    /* USER CODE END NonMaskableInt_IRQn 0 */
+    /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
     while (1) {
     }
-  /* USER CODE END NonMaskableInt_IRQn 1 */
+    /* USER CODE END NonMaskableInt_IRQn 1 */
 }
 
 /**
   * @brief This function handles Hard fault interrupt.
   */
-void HardFault_Handler(void)
-{
-  /* USER CODE BEGIN HardFault_IRQn 0 */
+void HardFault_Handler(void) {
+    /* USER CODE BEGIN HardFault_IRQn 0 */
 
-  /* USER CODE END HardFault_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_HardFault_IRQn 0 */
-    /* USER CODE END W1_HardFault_IRQn 0 */
-  }
+    /* USER CODE END HardFault_IRQn 0 */
+    while (1) {
+        /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+        /* USER CODE END W1_HardFault_IRQn 0 */
+    }
 }
 
 /**
   * @brief This function handles Memory management fault.
   */
-void MemManage_Handler(void)
-{
-  /* USER CODE BEGIN MemoryManagement_IRQn 0 */
+void MemManage_Handler(void) {
+    /* USER CODE BEGIN MemoryManagement_IRQn 0 */
 
-  /* USER CODE END MemoryManagement_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
-    /* USER CODE END W1_MemoryManagement_IRQn 0 */
-  }
+    /* USER CODE END MemoryManagement_IRQn 0 */
+    while (1) {
+        /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
+        /* USER CODE END W1_MemoryManagement_IRQn 0 */
+    }
 }
 
 /**
   * @brief This function handles Pre-fetch fault, memory access fault.
   */
-void BusFault_Handler(void)
-{
-  /* USER CODE BEGIN BusFault_IRQn 0 */
+void BusFault_Handler(void) {
+    /* USER CODE BEGIN BusFault_IRQn 0 */
 
-  /* USER CODE END BusFault_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_BusFault_IRQn 0 */
-    /* USER CODE END W1_BusFault_IRQn 0 */
-  }
+    /* USER CODE END BusFault_IRQn 0 */
+    while (1) {
+        /* USER CODE BEGIN W1_BusFault_IRQn 0 */
+        /* USER CODE END W1_BusFault_IRQn 0 */
+    }
 }
 
 /**
   * @brief This function handles Undefined instruction or illegal state.
   */
-void UsageFault_Handler(void)
-{
-  /* USER CODE BEGIN UsageFault_IRQn 0 */
+void UsageFault_Handler(void) {
+    /* USER CODE BEGIN UsageFault_IRQn 0 */
 
-  /* USER CODE END UsageFault_IRQn 0 */
-  while (1)
-  {
-    /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
-    /* USER CODE END W1_UsageFault_IRQn 0 */
-  }
+    /* USER CODE END UsageFault_IRQn 0 */
+    while (1) {
+        /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
+        /* USER CODE END W1_UsageFault_IRQn 0 */
+    }
 }
 
 /**
   * @brief This function handles System service call via SWI instruction.
   */
-void SVC_Handler(void)
-{
-  /* USER CODE BEGIN SVCall_IRQn 0 */
+void SVC_Handler(void) {
+    /* USER CODE BEGIN SVCall_IRQn 0 */
 
-  /* USER CODE END SVCall_IRQn 0 */
-  /* USER CODE BEGIN SVCall_IRQn 1 */
+    /* USER CODE END SVCall_IRQn 0 */
+    /* USER CODE BEGIN SVCall_IRQn 1 */
 
-  /* USER CODE END SVCall_IRQn 1 */
+    /* USER CODE END SVCall_IRQn 1 */
 }
 
 /**
   * @brief This function handles Debug monitor.
   */
-void DebugMon_Handler(void)
-{
-  /* USER CODE BEGIN DebugMonitor_IRQn 0 */
+void DebugMon_Handler(void) {
+    /* USER CODE BEGIN DebugMonitor_IRQn 0 */
 
-  /* USER CODE END DebugMonitor_IRQn 0 */
-  /* USER CODE BEGIN DebugMonitor_IRQn 1 */
+    /* USER CODE END DebugMonitor_IRQn 0 */
+    /* USER CODE BEGIN DebugMonitor_IRQn 1 */
 
-  /* USER CODE END DebugMonitor_IRQn 1 */
+    /* USER CODE END DebugMonitor_IRQn 1 */
 }
 
 /**
   * @brief This function handles Pendable request for system service.
   */
-void PendSV_Handler(void)
-{
-  /* USER CODE BEGIN PendSV_IRQn 0 */
+void PendSV_Handler(void) {
+    /* USER CODE BEGIN PendSV_IRQn 0 */
 
-  /* USER CODE END PendSV_IRQn 0 */
-  /* USER CODE BEGIN PendSV_IRQn 1 */
+    /* USER CODE END PendSV_IRQn 0 */
+    /* USER CODE BEGIN PendSV_IRQn 1 */
 
-  /* USER CODE END PendSV_IRQn 1 */
+    /* USER CODE END PendSV_IRQn 1 */
 }
 
 /**
   * @brief This function handles System tick timer.
   */
-void SysTick_Handler(void)
-{
-  /* USER CODE BEGIN SysTick_IRQn 0 */
+void SysTick_Handler(void) {
+    /* USER CODE BEGIN SysTick_IRQn 0 */
 
-  /* USER CODE END SysTick_IRQn 0 */
-  HAL_IncTick();
-  /* USER CODE BEGIN SysTick_IRQn 1 */
+    /* USER CODE END SysTick_IRQn 0 */
+    HAL_IncTick();
+    /* USER CODE BEGIN SysTick_IRQn 1 */
 
-  /* USER CODE END SysTick_IRQn 1 */
+    /* USER CODE END SysTick_IRQn 1 */
 }
 
 /******************************************************************************/
@@ -207,52 +194,48 @@ void SysTick_Handler(void)
 /**
   * @brief This function handles DMA1 stream1 global interrupt.
   */
-void DMA1_Stream1_IRQHandler(void)
-{
-  /* USER CODE BEGIN DMA1_Stream1_IRQn 0 */
+void DMA1_Stream1_IRQHandler(void) {
+    /* USER CODE BEGIN DMA1_Stream1_IRQn 0 */
 
-  /* USER CODE END DMA1_Stream1_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_usart3_rx);
-  /* USER CODE BEGIN DMA1_Stream1_IRQn 1 */
+    /* USER CODE END DMA1_Stream1_IRQn 0 */
+    HAL_DMA_IRQHandler(&hdma_usart3_rx);
+    /* USER CODE BEGIN DMA1_Stream1_IRQn 1 */
 
-  /* USER CODE END DMA1_Stream1_IRQn 1 */
+    /* USER CODE END DMA1_Stream1_IRQn 1 */
 }
 
 /**
   * @brief This function handles USART1 global interrupt.
   */
-void USART1_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART1_IRQn 0 */
+void USART1_IRQHandler(void) {
+    /* USER CODE BEGIN USART1_IRQn 0 */
 
 
-  /* USER CODE END USART1_IRQn 0 */
-  HAL_UART_IRQHandler(&huart1);
-  /* USER CODE BEGIN USART1_IRQn 1 */
+    /* USER CODE END USART1_IRQn 0 */
+    HAL_UART_IRQHandler(&huart1);
+    /* USER CODE BEGIN USART1_IRQn 1 */
 
-  /* USER CODE END USART1_IRQn 1 */
+    /* USER CODE END USART1_IRQn 1 */
 }
 
 /**
   * @brief This function handles USART2 global interrupt.
   */
-void USART2_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART2_IRQn 0 */
+void USART2_IRQHandler(void) {
+    /* USER CODE BEGIN USART2_IRQn 0 */
 
-  /* USER CODE END USART2_IRQn 0 */
-  HAL_UART_IRQHandler(&huart2);
-  /* USER CODE BEGIN USART2_IRQn 1 */
+    /* USER CODE END USART2_IRQn 0 */
+    HAL_UART_IRQHandler(&huart2);
+    /* USER CODE BEGIN USART2_IRQn 1 */
 
-  /* USER CODE END USART2_IRQn 1 */
+    /* USER CODE END USART2_IRQn 1 */
 }
 
 /**
   * @brief This function handles USART3 global interrupt.
   */
-void USART3_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART3_IRQn 0 */
+void USART3_IRQHandler(void) {
+    /* USER CODE BEGIN USART3_IRQn 0 */
 
     uint32_t temp_flag = 0;
     uint32_t temp;
@@ -288,53 +271,50 @@ void USART3_IRQHandler(void)
       HAL_UART_Receive_DMA(&huart3, JY_rx_buffer, 22);
   */
 
-  /* USER CODE END USART3_IRQn 0 */
-  HAL_UART_IRQHandler(&huart3);
-  /* USER CODE BEGIN USART3_IRQn 1 */
+    /* USER CODE END USART3_IRQn 0 */
+    HAL_UART_IRQHandler(&huart3);
+    /* USER CODE BEGIN USART3_IRQn 1 */
 
-  /* USER CODE END USART3_IRQn 1 */
+    /* USER CODE END USART3_IRQn 1 */
 }
 
 /**
   * @brief This function handles UART4 global interrupt.
   */
-void UART4_IRQHandler(void)
-{
-  /* USER CODE BEGIN UART4_IRQn 0 */
+void UART4_IRQHandler(void) {
+    /* USER CODE BEGIN UART4_IRQn 0 */
 
-  /* USER CODE END UART4_IRQn 0 */
-  HAL_UART_IRQHandler(&huart4);
-  /* USER CODE BEGIN UART4_IRQn 1 */
+    /* USER CODE END UART4_IRQn 0 */
+    HAL_UART_IRQHandler(&huart4);
+    /* USER CODE BEGIN UART4_IRQn 1 */
 
-  /* USER CODE END UART4_IRQn 1 */
+    /* USER CODE END UART4_IRQn 1 */
 }
 
 /**
   * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
   */
-void TIM6_DAC_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+void TIM6_DAC_IRQHandler(void) {
+    /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
 
-  /* USER CODE END TIM6_DAC_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim6);
-  /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
+    /* USER CODE END TIM6_DAC_IRQn 0 */
+    HAL_TIM_IRQHandler(&htim6);
+    /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
 
-  /* USER CODE END TIM6_DAC_IRQn 1 */
+    /* USER CODE END TIM6_DAC_IRQn 1 */
 }
 
 /**
   * @brief This function handles USART6 global interrupt.
   */
-void USART6_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART6_IRQn 0 */
+void USART6_IRQHandler(void) {
+    /* USER CODE BEGIN USART6_IRQn 0 */
 
-  /* USER CODE END USART6_IRQn 0 */
-  HAL_UART_IRQHandler(&huart6);
-  /* USER CODE BEGIN USART6_IRQn 1 */
+    /* USER CODE END USART6_IRQn 0 */
+    HAL_UART_IRQHandler(&huart6);
+    /* USER CODE BEGIN USART6_IRQn 1 */
 
-  /* USER CODE END USART6_IRQn 1 */
+    /* USER CODE END USART6_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
@@ -343,6 +323,7 @@ void USART6_IRQHandler(void)
 char uart4_buffer[BUFFER_SIZE];
 uint8_t uart4_index = 0;
 uint8_t usart_rev_flag = 0; // 状态变量，表示是否开始接收
+
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
@@ -353,29 +334,42 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
         HAL_UART_Receive_IT(&huart1, &Motor_RxBuff, 1);
     }
+
     if (huart->Instance == UART4) {
-        char rxChar = uart4_rxbuff;
+//        char rxChar = uart4_rxbuff;
+//
+//        // 存储接收到的字符
+//        if (rxChar == '@') {
+//            uart4_buffer[0] = rxChar; // 将 '@' 放到缓冲区开头
+//            uart4_index = 1; // 重置索引，从1开始接收后续字符
+//            usart_rev_flag = 1; // 设置接收 状态为真
+//        } else if (usart_rev_flag && uart4_index < BUFFER_SIZE - 1) {
+//            uart4_buffer[uart4_index++] = rxChar; // 添加字符到缓冲区
+//            uart4_buffer[uart4_index] = '\0'; // 末尾添加字符串结束符
+//        }
+//
+//        if (rxChar == '#' && uart4_index > 0) {
+//            printf("len_str : %d \n", strlen(uart4_buffer));
+//            printf("Received string: %s\n", uart4_buffer); // 输出当前字符串
+//
+//            PI_Receive_Data(uart4_buffer);
+//
+//            // 重置索引以接收下一个字符串
+//            usart_rev_flag = 0;
+//            uart4_index = 0;
+//        }
+//
+//        tem = uart4_rxbuff;
+//        printf("%d ",tem);
 
-        // 存储接收到的字符
-        if (rxChar == '@') {
-            uart4_buffer[0] = rxChar; // 将 '@' 放到缓冲区开头
-            uart4_index = 1; // 重置索引，从1开始接收后续字符
-            usart_rev_flag = 1; // 设置接收状态为真
-        } else if (usart_rev_flag && uart4_index < BUFFER_SIZE - 1) {
-            uart4_buffer[uart4_index++] = rxChar; // 添加字符到缓冲区
-            uart4_buffer[uart4_index] = '\0'; // 末尾添加字符串结束符
-        }
+//        char uart_data = uart4_rxbuff;
+//        printf("%c ", uart_data);
 
-        if (rxChar == '#' && uart4_index > 0) {
-            printf("len_str : %d \n", strlen(uart4_buffer));
-            printf("Received string: %s\n", uart4_buffer); // 输出当前字符串
+//         将数据存入缓冲区
+        uart_buffer[write_pos] = uart4_rxbuff;
+        write_pos = (write_pos + 1) % OP_BUFFER_SIZE;  // 更新写入位置，且实现环形
 
-            PI_Receive_Data(uart4_buffer);
-
-            // 重置索引以接收下一个字符串
-            usart_rev_flag = 0;
-            uart4_index = 0;
-        }
+// //PI_Receive_Data(uart4_rxbuff);
 
         HAL_UART_Receive_IT(&huart4, &uart4_rxbuff, 1);
     }

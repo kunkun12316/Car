@@ -43,9 +43,9 @@ class Uart:
                 break # 超时跳出循环
 
 
-            if self.uart.in_waiting >= 2: # 检查UART串口是否有数据
-                rx_buf = self.uart.read(2).decode("utf-8") # 读取两个字节并解码
-                # ack = int(rx_buf) # 将字符串转换为整数
+            if self.uart.in_waiting > 0: # 检查UART串口是否有数据
+                rx_buf = self.uart.readline().decode("utf-8").strip()  # 读取整行并解码
+                print(f"Raw data received: {rx_buf}")  # 打印原始数据
                 try:
                     ack = int(rx_buf)  # 尝试解码
                     print(f"uart get ack:{ack}")

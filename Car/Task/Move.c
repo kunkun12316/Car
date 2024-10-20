@@ -49,7 +49,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
         if (HuaGui_Counter_Enable == 1) {
             HuaGui_Counter++;
-            printf("HuaGui_Counter : %d \n",HuaGui_Counter);
+//            printf("HuaGui_Counter : %d \n",HuaGui_Counter);
         }
 
         if (HuaGui_Counter_Enable == 0) {
@@ -66,7 +66,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         }
 
         OLED_time++;
-        if (OLED_time >= 50)
+        if (OLED_time >= 50 && Bsp_Flag)
         {
             OLED_proc();
             OLED_time = 0;

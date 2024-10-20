@@ -1,5 +1,7 @@
 #include "Bsp.h"
 
+uint8_t Bsp_Flag = 0;
+
 void Bsp_Init(void) {
     ssd1306_Init();
 
@@ -15,15 +17,21 @@ void Bsp_Init(void) {
 uint8_t HuaGui_Init_State = 0;
 
 void HuaGui_Init_Proc(void) {
-    if (HuaGui_Init_State == 1) {
+    if (HuaGui_Init_State == 0 && Bsp_Flag == 0){
+        ssd1306_Fill(White);
+        ssd1306_SetCursor(3, 20);
+        ssd1306_WriteString("Init..... ", Font_16x24, Black);
+        ssd1306_UpdateScreen(); // 确保调用此函数来更新显示
+    }
 
+    if (HuaGui_Init_State == 1) {
         Motor_SetPosition(5, 4500, -50, 0);
         Motor_Run();
         HuaGui_Init_State = 2;
     } else if (HuaGui_Init_State == 2) {
         Motor_Read_Current(5);
 #if Serial_Debug == 1
-        printf("Current_amount : %d\r\n", Motor_HuaGui_Current_amount); // 200
+//        printf("Current_amount : %d\r\n", Motor_HuaGui_Current_amount); // 200
 #endif
         HuaGui_Counter_Enable = 1;
         if (Motor_HuaGui_Current_amount >= 50 && HuaGui_Counter > 200) { //默认520
@@ -36,11 +44,13 @@ void HuaGui_Init_Proc(void) {
         if (HuaGui_Turn(HuaGui_IN) == 1 && JiaZhua_Turn(JiaZhua_Open) == 1) {
             LED_2(1);
             LED_1(1);
-//            HuaGui_Turn(HuaGui_OUT);
+
             HuaGui_Init_State = 0;
             Running_Flag = 0;
             printf("HuaGui Init Over!\n");
-            HAL_UART_Transmit(&huart4, "99", 2, 0xffff);
+            Bsp_Flag = 1;
+
+            HAL_UART_Transmit(&huart4,"99",2,0xffff);
         }
     }
 }
@@ -85,7 +95,7 @@ void Key_Proc(void) {
     if (HAL_GPIO_ReadPin(KEY_4_GPIO_Port, KEY_4_Pin) == GPIO_PIN_RESET) // 小车启动
     {
         while (HAL_GPIO_ReadPin(KEY_4_GPIO_Port, KEY_4_Pin) == GPIO_PIN_RESET);
-        HAL_UART_Transmit(&huart4, "99", 2, 0xffff);
+        HuaGui_Init_State = 1;
 #if Serial_Debug == 1
         printf("GO!!!!!\r\n");
 #endif

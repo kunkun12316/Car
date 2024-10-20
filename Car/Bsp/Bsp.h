@@ -30,7 +30,9 @@
 #include "retarget.h"
 
 extern uint8_t HuaGui_Init_State;
+extern uint8_t Bsp_Flag;
 
+void Key_Proc(void);
 void HuaGui_Init_Proc(void);
 void Bsp_Init(void);
 void OLED_proc(void);

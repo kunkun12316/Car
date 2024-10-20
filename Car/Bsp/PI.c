@@ -11,72 +11,109 @@ uint8_t PI_Data0 = 0;
 int16_t PI_Data1;
 int16_t PI_Data2;
 
+
+volatile uint8_t uart_buffer[OP_BUFFER_SIZE];  // 环形缓冲区
+volatile uint8_t write_pos = 0;  // 缓冲区写入位置
+volatile uint8_t read_pos = 0;   // 缓冲区读取位置
+
 void PI_Init(void) {
     __HAL_UART_ENABLE_IT(&huart4, UART_IT_RXNE);
     HAL_UART_Receive_IT(&huart4, &uart4_rxbuff, 1);
 }
 
-void PI_Receive_Data(char com_data[]) {
-    uint8_t i;
-    static uint8_t RxCounter = 0; // 计数
-    static uint8_t RxState = 0;
+//void PI_Receive_Data(char com_data[]) {
+//    uint8_t i;
+//    static uint8_t RxCounter = 0; // 计数
+//    static uint8_t RxState = 0;
+//
+//    if (RxState == 0 && com_data[0] == '@' && RxFlag == 0) // @ 帧头
+//    {
+//        // 清空数据存储
+//        memset(PI_RawData0, 0, sizeof(PI_RawData0));
+//        memset(PI_RawData1, 0, sizeof(PI_RawData1));
+//        memset(PI_RawData2, 0, sizeof(PI_RawData2));
+//
+//        // 提取数据
+//        PI_RawData0[0] = com_data[1]; // @ 后两位
+//        PI_RawData0[1] = com_data[2];
+//        PI_RawData0[2] = '\0'; // 添加字符串结束符
+//
+//        PI_RawData1[0] = com_data[4]; // ! 后四位
+//        PI_RawData1[1] = com_data[5];
+//        PI_RawData1[2] = com_data[6];
+//        PI_RawData1[3] = com_data[7];
+//        PI_RawData1[4] = '\0'; // 添加字符串结束符
+//
+//        PI_RawData2[0] = com_data[9]; // | 后四位
+//        PI_RawData2[1] = com_data[10];
+//        PI_RawData2[2] = com_data[11];
+//        PI_RawData2[3] = com_data[12];
+//        PI_RawData2[4] = '\0'; // 添加字符串结束符
+//
+////        printf("PI_RawData0 : %s \n",PI_RawData0);
+////        printf("PI_RawData1 : %s \n",PI_RawData1);
+////        printf("PI_RawData2 : %s \n",PI_RawData2);
+//
+//
+////        for (int j = 0; j < 14; ++j) {
+////            printf("Rev %d : %c \n",j,com_data[j]);
+////        }
+//
+//        RxFlag = 1;
+//    }
+//}
 
-    if (RxState == 0 && com_data[0] == '@' && RxFlag == 0) // @ 帧头
-    {
-//        for (i = 0; i < 4; i++) {
-//            PI_RawData1[i] = 0x00; // 将存放数据数组清零
-//        }
-//        for (i = 0; i < 4; i++) {
-//            PI_RawData2[i] = 0x00; // 将存放数据数组清零
-//        }
-//        for (i = 0; i < 2; i++) {
-//            PI_RawData0[i] = 0x00; // 将存放数据数组清零
-//        }
+void Process_OP_Data(void) {
+    if (read_pos != write_pos) {  // 读取到所有未处理的数据
+        // 从缓冲区读取数据
+        uint8_t data_buf = uart_buffer[read_pos];
+        read_pos = (read_pos + 1) % OP_BUFFER_SIZE;  // 更新读取位置，环形读取
 
-//        for (int j = 0; j < 2; ++j) {
-//            PI_RawData0[j] = com_data[j + 1];
-//        }
-//        for (int j = 0; j < 4; ++j) {
-//            PI_RawData1[j] = com_data[j + 4];
-//        }
-//        for (int j = 0; j < 4; ++j) {
-//            PI_RawData2[j] = com_data[j + 9];
-//        }
+        printf("Read Pos : %d  ____  Write Pos : %d \n",read_pos,write_pos);
 
-        // 清空数据存储
-        memset(PI_RawData0, 0, sizeof(PI_RawData0));
-        memset(PI_RawData1, 0, sizeof(PI_RawData1));
-        memset(PI_RawData2, 0, sizeof(PI_RawData2));
-
-        // 提取数据
-        PI_RawData0[0] = com_data[1]; // @ 后两位
-        PI_RawData0[1] = com_data[2];
-        PI_RawData0[2] = '\0'; // 添加字符串结束符
-
-        PI_RawData1[0] = com_data[4]; // ! 后四位
-        PI_RawData1[1] = com_data[5];
-        PI_RawData1[2] = com_data[6];
-        PI_RawData1[3] = com_data[7];
-        PI_RawData1[4] = '\0'; // 添加字符串结束符
-
-        PI_RawData2[0] = com_data[9]; // | 后四位
-        PI_RawData2[1] = com_data[10];
-        PI_RawData2[2] = com_data[11];
-        PI_RawData2[3] = com_data[12];
-        PI_RawData2[4] = '\0'; // 添加字符串结束符
-
-//        printf("PI_RawData0 : %s \n",PI_RawData0);
-//        printf("PI_RawData1 : %s \n",PI_RawData1);
-//        printf("PI_RawData2 : %s \n",PI_RawData2);
-
-
-//        for (int j = 0; j < 14; ++j) {
-//            printf("Rev %d : %c \n",j,com_data[j]);
-//        }
-
-        RxFlag = 1;
+        // 调用数据解析函数
+        PI_Receive_Data(data_buf);
     }
 }
+
+
+
+void PI_Receive_Data(uint8_t com_data) {
+    static uint8_t RxCounter = 0;  // 计数
+    static uint8_t RxState = 0;    // 状态机
+    if (RxState == 0 && com_data == '@' && RxFlag == 0) {
+        // 帧头检测到，清空数据
+        memset(PI_RawData1, 0, sizeof(PI_RawData1));
+        memset(PI_RawData2, 0, sizeof(PI_RawData2));
+        memset(PI_RawData0, 0, sizeof(PI_RawData0));
+        RxState = 1;
+        RxCounter = 0;
+    } else if (RxState == 1) {
+        if (com_data == '!') {
+            RxState = 2;
+            RxCounter = 0;
+        } else {
+            PI_RawData0[RxCounter++] = com_data;
+        }
+    } else if (RxState == 2) {
+        if (com_data == '|') {
+            RxState = 3;
+            RxCounter = 0;
+        } else {
+            PI_RawData1[RxCounter++] = com_data;
+        }
+    } else if (RxState == 3) {
+        if (com_data == '#') {
+            // 完整帧接收完毕，设置标志位，主循环处理数据
+            RxFlag = 1;
+            RxCounter = 0;
+            RxState = 0;
+        } else {
+            PI_RawData2[RxCounter++] = com_data;
+        }
+    }
+}
+
 
 
 void PI_Data_Receive_Proc(void) {

@@ -3,9 +3,9 @@ import cv2
 import threading
 #import onnxruntime as ort
 import numpy as np
-from PyQt5.QtCore import center
-from networkx.algorithms.bipartite import color
-from sympy.physics.units.definitions.dimension_definitions import angle
+#from PyQt5.QtCore import center
+#from networkx.algorithms.bipartite import color
+#from sympy.physics.units.definitions.dimension_definitions import angle
 
 import Rknn
 import Vision
@@ -23,8 +23,8 @@ class Camera:
         self.center_sz = center_sz
         self.center_wk = center_wk
         if self.model:
-            self.rknn_wk = Rknn.Rknn("wk.onnx",obj_class=0.6,nms=0.6)
-            self.rknn_sh = Rknn.Rknn("sh.onnx",obj_class=0.7,nms=0.5)
+            self.onnx_wk = Rknn.Rknn("wk.rknn",obj_class=0.6,nms=0.6)
+            self.onnx_sh = Rknn.Rknn("sh.rknn",obj_class=0.7,nms=0.5)
         #使用threading的Thread方法创建一个新的线程，函数是self.update，args=()表明函数没有传入参数
         self.thread = threading.Thread(target=self.update,args=())
         for _ in range(10):
@@ -80,9 +80,9 @@ class Camera:
         center=self.center_wk if mod == "wk" else self.center_sz
         print(mod)
         while True:
-            boxes,classes = self.rknn_wk.rknn_detect(frame=self.frame) if mod == "wk" else self.rknn_sh.rknn_detect(frame=self.frame)
+            boxes,classes = self.onnx_wk.rknn_detect(frame=self.frame) if mod == "wk" else self.onnx_sh.rknn_detect(frame=self.frame)
             color, pos = Vision.find_closest_rectangle(boxes, classes, center)
-            print(f"target_scan ： {color} {pos}")
+            print(f"target_scan : {color} {pos}")
             if color and pos is not None:
                 return color,pos
 
@@ -102,7 +102,7 @@ class Camera:
         """
         center = self.center_wk if mod == "wk" else self.center_sz
         while True:
-            boxes, classes = self.rknn_wk.rknn_detect(frame=self.frame) if mod == "wk" else self.rknn_sh.rknn_detect(frame=self.frame)
+            boxes, classes = self.onnx_wk.rknn_detect(frame=self.frame) if mod == "wk" else self.onnx_sh.rknn_detect(frame=self.frame)
             pos = Vision.find_target_color(boxes, classes, center,target_color)
             if pos is not None:
                 print(f"target_scan_color {pos}")
