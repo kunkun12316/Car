@@ -3,7 +3,7 @@ import Uart
 import Camera
 
 class Car:
-    def __init__(self, com: str, cam: int, correct_times: int,center_sz=(290, 220) ,center_wk=(270, 185)):
+    def __init__(self, com: str, cam: int, correct_times: int,center_sz=(290, 220) ,center_wk=(270, 210)):
         """
         :param com: 串口号
         :param cam: 摄像头
@@ -11,7 +11,7 @@ class Car:
         :param center_sz:
         :param center_wk:
         """
-        self.task = [[2,1,3] , [3,2,1]]
+        self.task = [[1,2,3] , [1,2,3]]
         self.color_temp = [[0,0,0] , [0,0,0]]
         self.pos_now = 0
         self.correct_times = correct_times
@@ -49,9 +49,12 @@ class Car:
         车辆行驶到原料区域
         :return:
         """
+        self.camera.center_wk = (270, 210)
+
         self.uart.arm_move_angle(angle="out", wait=False)
-        self.uart.arm_move_height(height="high", wait=True)
-        #self.uart.car_move_xy_cm(12,83)
+        #self.uart.arm_move_height(height="high", wait=True)
+        time.sleep(1)
+        self.uart.car_move_xy_cm(12,83)
 
     def material_skip(self, color_skip):
         """
@@ -74,7 +77,7 @@ class Car:
         # 进行校准，对准原料区。防止偏移过大
         self.material_correct()
         # 若第一次扫到为第一个目标颜色，延时跳过（防止漏抓）。
-        self.material_skip(self.task[task_id][0])
+        #self.material_skip(self.task[task_id][0])
         # 遍历任务，若扫到颜色为目标颜色，进行抓取。
         for dict_id, color in enumerate(self.task[task_id]):
             while True:
@@ -83,7 +86,8 @@ class Car:
                         self.uart.arm_upload(dict_id,"high")
                     else: # 若是最后一个物块，在物块放置下去后直接进行下一个动作（无需等待升到最高）
                         self.uart.arm_upload(dict_id,"high",False)
-                        self.uart.wait_for_32_ack(10,85)
+                        time.sleep(1)
+                        self.uart.wait_for_32_ack(85,10)
                     break
 
     def material_first_times_task(self):
@@ -133,18 +137,21 @@ class Car:
                     self.uart.car_move_xy_mm(int((pos[1]) / 5), int((pos[0]) / 5))
                 break
 
-    def place_correct(self, mod: str, color=0):
+    def place_correct(self, mod: str, color=1):
         """
         圆心校准
         """
+        print("place_correct start !")
         for index in range(self.correct_times):
-            if color != 0:
+            print(f"place_correct {index}")
+            if color != 1:
                 pos = self.camera.target_scan_by_color(color,
                                                         "wk") if mod == "wk" else self.camera.target_scan_by_color(
-                    color, "sz")
+                    color, "sh")
             else:
-                pos = self.camera.target_scan("wk")[1] if mod == "wk" else self.camera.target_scan("sz")[1]
+                pos = self.camera.target_scan("wk")[1] if mod == "wk" else self.camera.target_scan("sh")[1]
             self.uart.car_move_xy_mm(int((pos[1]) / 5), int((pos[0]) / 5))
+            time.sleep(0.2)
 
     def place_with_correct(self, mod: str, disc_id: int, height: str, color: int=0):
         """
@@ -155,8 +162,9 @@ class Car:
         :param height:放置高度
         """
         self.place_correct(mod=mod, color=color)
+        time.sleep(1)
         self.uart.arm_download(disc_id, height,False)
-        self.uart.wait_for_32_ack(96,10) # 等待夹爪松开
+        self.uart.wait_for_32_ack(96,6) # 等待夹爪松开
 
     def move_to_temp(self):
         """
@@ -165,7 +173,9 @@ class Car:
         self.uart.car_move_calibration()
         self.uart.car_move_xy_cm(-5, 42)
         self.uart.car_move_angle(90)
+        self.uart.car_move_calibration()
         self.uart.car_move_xy_cm(10, 75)
+        time.sleep(1)
         self.uart.car_move_calibration()
 
     def download_function_first_times_to_place(self,task_id: int, temp_id: int):
@@ -175,77 +185,102 @@ class Car:
         :param temp_id: 区域号
         """
         self.pos_now = 0
-        color_now = self.camera.target_scan("sz")[0]
-
+        color_now = self.camera.target_scan("sh")[0]
+        print(f"color_now {color_now}")
+		
         self.color_temp[temp_id][0] = color_now
         if color_now == self.task[task_id][0]: # 若第一个点的颜色为任务的第一个颜色
-            self.place_with_correct("sz",0,"low",self.task[task_id][0])
-            self.uart.car_move_interval(1,False)
-            self.uart.wait_for_32_ack(1,6) # 等待走完15cm和机械臂到达最高点
-            color_now = self.camera.target_scan("sz")[0]
+            time.sleep(1)
+            self.place_with_correct("sh",0,"low",self.task[task_id][0])
+            self.uart.car_move_interval(1)
+            self.uart.wait_for_32_ack(1,2) # 等待走完15cm和机械臂到达最高点
+            color_now = self.camera.target_scan("sh")[0]
             self.color_temp[temp_id][1] = color_now # 这里可能需要修改，与自己训练的模型代号相关，如果是1，2，3则不需要修改，反之0，1，2则要改为5
-            self.color_temp[temp_id][2] = (5 - self.task[task_id][0] - self.color_temp[temp_id][1])
+            self.color_temp[temp_id][2] = (6 - self.task[task_id][0] - self.color_temp[temp_id][1])
 
             if color_now == self.task[task_id][1]:
-                self.place_with_correct("sz", 1, "low", self.task[task_id][1])
-                self.uart.car_move_interval(1, False)
-                self.uart.wait_for_32_ack(1, 6)
-                self.place_with_correct("sz", 2, "low", self.task[task_id][2])
+                time.sleep(1)
+                self.place_with_correct("sh", 1, "low", self.task[task_id][1])
+                time.sleep(1)
+                self.uart.car_move_interval(1)
+                self.uart.wait_for_32_ack(1, 1)
+                self.place_with_correct("sh", 2, "low", self.task[task_id][2])
                 self.pos_now = 2
             else:
+                time.sleep(1)
                 self.uart.car_move_interval(1)
-                self.place_with_correct("sz", 1, "low", self.task[task_id][1])
-                self.uart.car_move_interval(-1, False)
-                self.uart.wait_for_32_ack(1, 6)
-                self.place_with_correct("sz", 2, "low", self.task[task_id][2])
+                time.sleep(1)
+                self.place_with_correct("sh", 1, "low", self.task[task_id][1])
+                self.uart.car_move_interval(-1)
+                self.uart.wait_for_32_ack(1, 1)
+                self.place_with_correct("sh", 2, "low", self.task[task_id][2])
                 self.pos_now = 1
         else: # 第一个点的颜色不是任务的第一个颜色
             self.uart.car_move_interval(1)
-            color_now = self.camera.target_scan("sz")[0]
+            time.sleep(1)
+            color_now = self.camera.target_scan("sh")[0]
             self.color_temp[temp_id][1] = color_now
             self.color_temp[temp_id][2] = (6 - self.color_temp[temp_id][0] - self.color_temp[temp_id][1])
 
             if color_now == self.task[task_id][0]:
-                self.place_with_correct("sz", 0, "low", self.task[task_id][0])
+                self.place_with_correct("sh", 0, "low", self.task[task_id][0])
                 if self.color_temp[temp_id][0] == self.task[task_id][1]:
                     self.uart.car_move_interval(-1, False)
-                    self.uart.wait_for_32_ack(1, 6,)
-                    self.place_with_correct("sz", 1, "low", self.task[task_id][1])
+                    time.sleep(1)
+                    self.uart.wait_for_32_ack(1, 1)
+                    time.sleep()
+                    self.place_with_correct("sh", 1, "low", self.task[task_id][1])
 
                     self.uart.car_move_interval(2, False)
-                    self.uart.wait_for_32_ack(1, 6)
-                    self.place_with_correct("sz", 2, "low", self.task[task_id][2])
+                    time.sleep(1)
+                    self.uart.wait_for_32_ack(1, 1)
+                    time.sleep(0.3)
+                    self.place_with_correct("sh", 2, "low", self.task[task_id][2])
 
                     self.pos_now = 2
                 else:
                     self.uart.car_move_interval(1, False)
-                    self.uart.wait_for_32_ack(1, 6)
-                    self.place_with_correct("sz", 1, "low", self.task[task_id][1])
+                    time.sleep(1)
+                    self.uart.wait_for_32_ack(1, 1)
+                    time.sleep(1)
+                    self.place_with_correct("sh", 1, "low", self.task[task_id][1])
 
                     self.uart.car_move_interval(-2, False)
-                    self.uart.wait_for_32_ack(1, 6, 9)
-                    self.place_with_correct("sz", 2, "low", self.task[task_id][2])
+                    time.sleep(1)
+                    self.uart.wait_for_32_ack(1, 1)
+                    time.sleep(1)
+                    self.place_with_correct("sh", 2, "low", self.task[task_id][2])
                     self.pos_now = 0
             else:
                 self.uart.car_move_interval(1)
-                self.place_with_correct("sz", 0, "low", self.task[task_id][0])
+                time.sleep(1)
+                self.place_with_correct("sh", 0, "low", self.task[task_id][0])
                 if self.task[task_id][1] == self.color_temp[temp_id][0]:
+                    time.sleep(1)
                     self.uart.car_move_interval(-2, False)
-                    self.uart.wait_for_32_ack(1, 6)
-                    self.place_with_correct("sz", 1, "low", self.task[task_id][1])
+                    time.sleep(1)
+                    self.uart.wait_for_32_ack(1, 1)
+                    time.sleep(1)
+                    self.place_with_correct("sh", 1, "low", self.task[task_id][1])
 
+                    time.sleep(1)
                     self.uart.car_move_interval(1, False)
-                    self.uart.wait_for_32_ack(1, 6)
-                    self.place_with_correct("sz", 2, "low", self.task[task_id][2])
+                    self.uart.wait_for_32_ack(1, 1)
+                    time.sleep(1)
+                    self.place_with_correct("sh", 2, "low", self.task[task_id][2])
                     self.pos_now = 1
                 else:
+                    time.sleep(1)
                     self.uart.car_move_interval(-1, False)
-                    self.uart.wait_for_32_ack(1, 6)
-                    self.place_with_correct("sz", 1, "low", self.task[task_id][1])
+                    self.uart.wait_for_32_ack(1, 1)
+                    time.sleep(1)
+                    self.place_with_correct("sh", 1, "low", self.task[task_id][1])
 
+                    time.sleep(1)
                     self.uart.car_move_interval(-1, False)
-                    self.uart.wait_for_32_ack(1, 6)
-                    self.place_with_correct("sz", 2, "low", self.task[task_id][2])
+                    self.uart.wait_for_32_ack(1, 1)
+                    time.sleep(1)
+                    self.place_with_correct("sh", 2, "low", self.task[task_id][2])
                     self.pos_now = 0
 
     def download_function_second_times_to_place(self,task_id: int, temp_id: int,height: str):
@@ -275,18 +310,20 @@ class Car:
         for task_index, color_task in enumerate(self.task[task_id]):
             for list_index, color_temp in enumerate(self.color_temp[task_id]):
                 if color_temp == color_task:
+                    time.sleep(0.5)
                     self.uart.car_move_interval(list_index - self.pos_now) # # 每一次行走一段15cm过后
+                    self.uart.wait_for_32_ack(10,3)
                     if task_index == 0: # 到达第一个目标，对第一个靶心进行校准，保证后续能直接抓取物块而节省了校准时间
                         self.place_correct("wk", color_temp)
                         print("up load correct")
                     else:
-                        self.uart.wait_for_32_ack(10,5) # 等待装载完毕，机械臂转出且到最高点
+                        time.sleep(1)
 
                     self.uart.arm_upload(task_index, "low", False) # 装载
                     if task_index != 2: # 若不是最后一个物块，等待95返回，即成功抓起后
-                        self.uart.wait_for_32_ack(10,95)
+                        self.uart.wait_for_32_ack(95,5)
                     else: # 若是最后一个物块，等待85返回，即成功装在托盘后，小车移动
-                        self.uart.wait_for_32_ack(10,85)
+                        self.uart.wait_for_32_ack(85,5)
                     self.pos_now = list_index  # 更新当前位置，用于遍历颜色序列
 
     def temp_first_times_task(self):
@@ -296,9 +333,10 @@ class Car:
         print("temp_first_times_download")
         # 放置
 
-        #self.place_correct("sz")
+        self.place_correct("sh")
         self.download_function_first_times_to_place(0,0)
         print("temp_first_times_upload")
+        time.sleep(0.5)
         self.uart.car_move_calibration()
         #装载
         self.upload_function(0)
@@ -323,16 +361,20 @@ class Car:
         车辆行驶到存放区域
         """
         self.uart.car_move_calibration()
-        self.uart.car_move_xy_cm(-5, 55 + 15 * (2 - self.pos_now))
-        self.uart.car_move_calibration(90)
-        self.uart.car_move_xy_cm(7, 70)
+        self.uart.car_move_xy_cm(-10, 65 + 30 * (2 - self.pos_now))
+        time.sleep(1)
+        self.uart.car_move_angle(90)
+        self.uart.car_move_calibration()
+        
+        time.sleep(1)
+        self.uart.car_move_xy_cm(15, 70)
         self.uart.car_move_calibration()
 
     def store_first_times_task(self):
         """
         第一次到达装载区任务
         """
-        self.place_correct("sz")
+        self.place_correct("sh")
         print("store_first_times_task")
         self.download_function_first_times_to_place(0, 1)
 
@@ -347,13 +389,23 @@ class Car:
     def back_to_material(self):
         """
         返回原料区
-        """
+        """                
+        time.sleep(0.5)
         self.uart.car_move_calibration()
-        self.uart.car_move_xy_cm(-10, -(93 + 15 * (self.pos_now - 2)))
-        self.uart.car_move_angle(-90)
-        self.uart.car_move_xy_cm(0, -165)
-        self.uart.car_move_angle(-90)
-        self.uart.car_move_xy_cm(0, -38)
+        time.sleep(1)
+        self.uart.car_move_xy_cm(-10, -(15 * (self.pos_now - 1)))
+        time.sleep(1)
+        self.uart.car_move_angle(90)
+        time.sleep(0.5)
+        self.uart.car_move_calibration()
+        time.sleep(0.5)
+        self.uart.car_move_xy_cm(0, 175,False)
+        time.sleep(3.5)
+        self.uart.car_move_angle(90)
+        time.sleep(0.5)
+        
+        self.uart.car_move_xy_cm(7, 40)
+        time.sleep(0.5)
 
     def back_to_begin(self):
         """

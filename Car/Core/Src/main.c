@@ -128,7 +128,7 @@ int main(void)
 
 //        printf(" x : %.2f", JY901_data.angle.angle[0]);
 //        printf(" y : %.2f", JY901_data.angle.angle[1]);
-//        printf(" z : %.2f ", JY901_data.angle.angle[2]);
+        printf(" z : %.2f \n", JY901_data.angle.angle[2]);
 
 //        printf(" SP_x : %.2f", JY901_data.acc.a[0]);
 //        printf(" SP_y : %.2f", JY901_data.acc.a[1]);

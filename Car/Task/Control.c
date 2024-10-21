@@ -266,9 +266,9 @@ void Control_Proc(void) {
             if (temp_state == 1) {
                 temp = 1;
             } else if (temp_state == 2) {
-                HAL_UART_Transmit(&huart6, "95", 2, 0xffff);
+                HAL_UART_Transmit(&huart4, "95", 2, 0xffff);
             } else if (temp_state == 3) {
-                HAL_UART_Transmit(&huart6, "85", 2, 0xffff);
+                HAL_UART_Transmit(&huart4, "85", 2, 0xffff);
             }
         } else if (temp == 1) {
             temp = 0;
@@ -372,7 +372,7 @@ void Control_Proc(void) {
             }
         }
     }
-    if (Task_Flag[10]) //扫描二维码任务
+    if (Task_Flag[11]) //扫描二维码任务
     {
         static uint8_t temp = 0;
         if (temp == 0) {
@@ -413,10 +413,10 @@ void Control_Proc(void) {
             printf("Qr status : %d",statue);
             if (statue)
                 temp = 3;
-            HAL_UART_Transmit(&huart4, "10", 2, 0xffff);
+            HAL_UART_Transmit(&huart4, "11", 2, 0xffff);
         } else if (temp == 3){
             temp = 0;
-            Task_Flag[10] = 0;
+            Task_Flag[11] = 0;
             Running_Flag = 0;
         }
     }

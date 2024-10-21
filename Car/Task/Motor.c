@@ -794,8 +794,9 @@ uint8_t Car_Calibration(uint16_t Speed_Limit, uint16_t Car_ACC) {
     static float Temp_Yaw = 0;
     uint8_t ret = 0;
     if (Temp_State == 0) {
-        Temp_State++;
-        Temp_Yaw = JY_Yaw;
+        Temp_Yaw = JY901_data.angle.angle[2];
+        printf("Tamp_Yaw : %.2f \n",Temp_Yaw);
+        Temp_State = 1;
     } else if (Temp_State == 1) {
         uint8_t temp = 0;
         if (Temp_Yaw <= 10 && Temp_Yaw >= -10) {
