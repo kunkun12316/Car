@@ -1,5 +1,6 @@
 #include "gm65.h"
 
+uint8_t gm65_status = 1;
 uint8_t Gm65_RxFlag = 0;
 uint8_t data[19]="t0.txt=\"000+000\"\xff\xff\xff";
 uint8_t gm65_buf[8]={0};

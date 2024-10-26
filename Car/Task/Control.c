@@ -14,7 +14,6 @@ uint16_t Car_Turn_Speed_Limit = 50;
 uint16_t Motor_HuaGui_Speed = 250;
 uint16_t Motor_HuaGui_ACC = 240;
 
-
 /*
 uint8_t Task_Move_Flag[10] = {0};
 uint8_t Task_Turn_Flag[10] = {0};
@@ -112,6 +111,8 @@ void Control_Proc(void) {
         Car_Counter_Times = 1000;
 
         if (temp == 0) {
+            HAL_UART_Transmit(&huart4, "66", 2, 0xffff);
+
             if (Task_Data1[1] != 0 && Task_Data2[1] != 0) {
                 Car_Go_Target(Task_Data1[1] * 128, 0, Car_Speed, Car_Acc);
                 Car_Counter_Enable = 1;
@@ -183,6 +184,8 @@ void Control_Proc(void) {
         static uint8_t temp = 0;
         static uint8_t Last_Data1 = 0;
         if (temp == 0) {
+            HAL_UART_Transmit(&huart4, "66", 2, 0xffff);
+
             switch (Task_Data1[3]) {
                 case 0:
                     HuaGui_UP(Motor_HuaGui_Speed, Motor_HuaGui_ACC);
@@ -230,6 +233,7 @@ void Control_Proc(void) {
     {
         static uint8_t temp = 0;
         if (temp == 0) {
+            HAL_UART_Transmit(&huart4, "66", 2, 0xffff);
             if (Task_Data1[4] == 0) {
                 if (HuaGui_Turn(HuaGui_IN) == 1) {
                     temp = 1;
@@ -340,6 +344,8 @@ void Control_Proc(void) {
             Car_Counter_Times = 400;
         }
         if (temp == 0) {
+            HAL_UART_Transmit(&huart4, "66", 2, 0xffff);
+
             if (Task_Data1[9] != 0 && Task_Data2[9] != 0) {
                 Car_Go_Target(Task_Data1[9] * 13, 0, Car_Speed_Slow, Car_Acc_Slow);
                 temp = 1;
@@ -376,11 +382,18 @@ void Control_Proc(void) {
     {
         static uint8_t temp = 0;
         if (temp == 0) {
-            if (Gm65_RxFlag == 0) {
-                printf("Task 10 Run !\n");
-                GM65_QR_Send();
-                temp = 1;
+            if (gm65_status)
+            {
+                HAL_UART_Transmit(&huart4, "66", 2, 0xffff);
+                if (Gm65_RxFlag == 0) {
+                    printf("Task 10 Run !\n");
+                    GM65_QR_Send();
+                    temp = 1;
+                }
+            } else {
+                temp = 3;
             }
+
         } else if (temp == 1) {
             if (Gm65_RxFlag == 1) {
                 QR_Data_1[0] = ASC_TO_INT(gm65_buf[0]);
@@ -414,6 +427,8 @@ void Control_Proc(void) {
             if (statue)
                 temp = 3;
             HAL_UART_Transmit(&huart4, "11", 2, 0xffff);
+
+            gm65_status = 0;
         } else if (temp == 3){
             temp = 0;
             Task_Flag[11] = 0;
@@ -422,6 +437,8 @@ void Control_Proc(void) {
     }
     if (Task_Flag[99]) //初始化任务
     {
+        HAL_UART_Transmit(&huart4, "66", 2, 0xffff);
+
         HuaGui_Init_State = 1;
         Task_Flag[99] = 0;
     }

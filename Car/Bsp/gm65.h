@@ -3,6 +3,7 @@
 
 #include "Bsp.h"
 
+extern uint8_t gm65_status;
 extern uint8_t Gm65_RxFlag;
 extern uint8_t data[19];
 extern uint8_t gm65_buf[8];

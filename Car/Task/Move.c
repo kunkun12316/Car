@@ -122,6 +122,8 @@ uint8_t Get_Loads(uint8_t Dir, uint8_t From, uint16_t Motor_HuaGui_Speed, uint16
 //            printf("Stop_Flag_HuaGui : %d, Counter_Enable : %d\n",Stop_Flag_HuaGui,Counter_Enable);
             Get_Loads_State = Ready_State;
             Counter_Enable = 0;
+            HAL_UART_Transmit(&huart4, "66", 2, 0xffff);
+
         }
     } else if (Get_Loads_State == Ready_State) {
         uint8_t temp2, temp3;
@@ -241,6 +243,7 @@ uint8_t Put_Loads(uint8_t Dir, uint8_t Tar, uint16_t Motor_HuaGui_Speed, uint16_
         Put_Loads_State = Put_JiaoZhun_State;
         printf("Put_JiaoZhun_State");
     } else if (Put_Loads_State == Put_JiaoZhun_State) {
+
         Put_Loads_State = Put_Ready_State;
         HuaGui_Counter_Enable = 1;
         printf("Put_Ready_State");
@@ -258,6 +261,7 @@ uint8_t Put_Loads(uint8_t Dir, uint8_t Tar, uint16_t Motor_HuaGui_Speed, uint16_
             temp3 = HuaGui_Turn(HuaGui_IN);
             printf("temp1 : %d,temp2 : %d, temp3 : %d\n",temp1,temp2,temp3);
             if (temp1 == 1 && temp2 == 1 && temp3 == 1) {
+                HAL_UART_Transmit(&huart4, "66", 2, 0xffff);
                 Put_Loads_State = Put_State1;
                 printf("Put_State1");
                 HuaGui_Qu(Motor_HuaGui_Speed, Motor_HuaGui_Acc);

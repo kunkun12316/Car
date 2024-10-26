@@ -765,6 +765,8 @@ uint8_t Car_Turn(int16_t Tar_Yaw, uint16_t Speed_Limit, uint16_t Car_ACC) {
     static uint8_t Temp_State = 0; //临时状态
     if (Temp_State == 0) {
         Temp_State = 1;
+        HAL_UART_Transmit(&huart4, "66", 2, 0xffff);
+
         if (Tar_Yaw >= 0) {
             Motor_SetPosition(1, Tar_Yaw * Alpha, -Speed_Limit, Car_ACC);
             Motor_SetPosition(2, Tar_Yaw * Alpha, Speed_Limit, Car_ACC);

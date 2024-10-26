@@ -51,7 +51,6 @@ class Uart:
 				break  # 超时跳出循环
 			elif time.time() - time_begin > 1 and success_status is False:
 				time_begin = time.time()
-				print(f"@{task_id:02d}!{data1:+04d}|{date2:+04d}#")
 				self.uart.write(f"@{task_id:02d}!{data1:+04d}|{date2:+04d}#\n".encode("utf-8"))
 				print("Send again")
 
@@ -63,9 +62,6 @@ class Uart:
 					print(f"get ack:{ack}")
 				except UnicodeDecodeError:
 					print(f"Failed to decode: {rx_buf}")
-					continue
-				except ValueError:
-					print(f"Failed to convert to integer: {rx_buf_str}")
 					continue
 
 				if ack in task:  # 如果接收到的确认信号在任务列表中
@@ -173,7 +169,7 @@ class Uart:
 		print("car qr read")
 		self.uart_send_command(task_id=11, param1=0, param2=0, wait=false)
 
-	def car_move_calibration(self, wait=False):
+	def car_move_calibration(self, wait=True):
 		"""
 		车身角度回正
 		:param wait:
@@ -182,7 +178,7 @@ class Uart:
 		print(f"car_move_calibration")
 		self.uart_send_command(task_id=7, param1=0, param2=0, wait=wait)
 
-	def car_move_interval(self, length, wait=True):
+	def car_move_interval(self, length, wait=False):
 		"""
 		Y轴 150*mm移动
 		:param length: 移动长度
