@@ -7,14 +7,14 @@
 #define SERVO_MIN_PULSE 500
 #define SERVO_MAX_PULSE 2500
 //夹爪的打开和关闭角度
-#define JiaZhua_Angle_Open  45   //45
-#define JiaZhua_Angle_Close 153    //153
+#define JiaZhua_Angle_Open 99   //45
+#define JiaZhua_Angle_Close 160    //153
 //滑轨舵机的内外角度
-#define HuaGui_Angle_OUT 37.7 //初始36
-#define HuaGui_Angle_IN 155
+#define HuaGui_Angle_OUT 35 //初始36
+#define HuaGui_Angle_IN 150
 //载物舵机的左、中、右角度
 #define ZaiWu_Angle_Left 20 //默认20
-#define ZaiWu_Angle_Mid 83
+#define ZaiWu_Angle_Mid 80.5
 #define ZaiWu_Angle_Right 138
 
 typedef enum {

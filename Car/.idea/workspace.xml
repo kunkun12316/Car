@@ -65,32 +65,17 @@
       <change afterPath="$PROJECT_DIR$/../../Init/abcd/stm32f4discovery.cfg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../try/.idea/try.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bsp/gm65.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/gm65.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bsp/gm65.h" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/gm65.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Car.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/Car.ioc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/usart.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/usart.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task/Control.c" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Control.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task/Motor.c" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Motor.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task/Move.c" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Move.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2024-10-22T01-11-08-0489.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bsp/Bsp.c" beforeDir="false" afterPath="$PROJECT_DIR$/Bsp/Bsp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task/Servo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Task/Servo.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.23.2/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/gm65.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/gm65.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/stm32f4xx_it.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/stm32f4xx_it.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/usart.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Core/Src/usart.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Control.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Control.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Motor.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Motor.c.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Move.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Move.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Bsp.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Bsp/Bsp.c.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Servo.c.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Car.elf.dir/Task/Servo.c.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.elf" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.hex" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.hex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Car.map" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Car.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../PI/Car.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PI/Car.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PI/Uart.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PI/Uart.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PI/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../PI/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,6 +242,10 @@
       <workItem from="1729719245989" duration="5138000" />
       <workItem from="1729908881558" duration="1120000" />
       <workItem from="1729910450908" duration="365000" />
+      <workItem from="1730291743350" duration="1419000" />
+      <workItem from="1730483566210" duration="5403000" />
+      <workItem from="1730520416638" duration="1431000" />
+      <workItem from="1730612303084" duration="1000" />
     </task>
     <servers />
   </component>

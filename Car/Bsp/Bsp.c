@@ -25,7 +25,7 @@ void HuaGui_Init_Proc(void) {
     }
 
     if (HuaGui_Init_State == 1) {
-        Motor_SetPosition(5, 4500, -50, 0);
+        Motor_SetPosition(5, 4300, -50, 0);
         Motor_Run();
         HuaGui_Init_State = 2;
     } else if (HuaGui_Init_State == 2) {

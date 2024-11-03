@@ -594,55 +594,7 @@ class Car:
         #装载
         self.upload_function(0)
         
-        """
-        self.camera.center_sz = (290, 235)
-        
-        time.sleep(0.5)
-        self.place_correct_move("sh",1)
-        time.sleep(2)
-        self.uart.arm_download(0, 0,True)
 
-        time.sleep(1)
-        self.uart.car_move_interval(1)
-        time.sleep(1)
-        self.place_correct_move("sh",2)
-        time.sleep(0.5)
-        self.uart.arm_download(1, 0,True)
-
-        time.sleep(1)
-        self.uart.car_move_interval(1)
-        time.sleep(1)
-        self.place_correct_move("sh",3)
-        time.sleep(0.5)
-        self.uart.arm_download(2, 0,True)
-        
-        time.sleep(1)
-        self.uart.car_move_interval(-2)
-        time.sleep(2) 
-        self.place_correct_move("wk",1)
-        time.sleep(1)
-        self.uart.arm_upload(0,"low",True)
-        time.sleep(0.5)
-
-        time.sleep(1)
-        self.uart.car_move_interval(1)
-        time.sleep(1) 
-        self.place_correct_move("wk",2)
-        time.sleep(1)
-        self.uart.arm_upload(1,"low",True)
-        time.sleep(0.5)
-        
-        time.sleep(1)
-        self.uart.car_move_interval(1)
-        time.sleep(1) 
-        self.place_correct_move("wk",3)
-        time.sleep(1)
-        self.uart.arm_upload(2,"low",True)
-        time.sleep(0.5)
-        
-        self.pos_now = 2
-        """
-        
     def temp_second_times_task(self):
         """
         第二次到达暂存区任务
@@ -663,53 +615,6 @@ class Car:
 
         # 装载
         self.upload_function(1)
-        """
-        self.camera.center_sz = (290, 235)
-        
-        self.place_correct_move("sh",1)
-        time.sleep(2)
-        self.uart.arm_download(0, 0,True)
-
-        time.sleep(1)
-        self.uart.car_move_interval(1)
-        time.sleep(1)
-        self.place_correct_move("sh",2)
-        time.sleep(0.5)
-        self.uart.arm_download(1, 0,True)
-
-        time.sleep(1)
-        self.uart.car_move_interval(1)
-        time.sleep(1)
-        self.place_correct_move("sh",3)
-        time.sleep(0.5)
-        self.uart.arm_download(2, 0,True)
-        
-        time.sleep(1)
-        self.uart.car_move_interval(-2)
-        time.sleep(1) 
-        self.place_correct_move("wk",1)
-        time.sleep(0.5)
-        self.uart.arm_upload(0,"low",True)
-        time.sleep(0.5)
-
-        time.sleep(1)
-        self.uart.car_move_interval(1)
-        time.sleep(1) 
-        self.place_correct_move("wk",2)
-        time.sleep(0.5)
-        self.uart.arm_upload(1,"low",True)
-        time.sleep(0.5)
-        
-        time.sleep(1)
-        self.uart.car_move_interval(1)
-        time.sleep(1) 
-        self.place_correct_move("wk",3)
-        time.sleep(0.5)
-        self.uart.arm_upload(2,"low",True)
-        time.sleep(0.5)
-        
-        self.pos_now = 2
-        """
         
     def move_to_store(self):
         """
